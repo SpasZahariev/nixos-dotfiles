@@ -1,7 +1,7 @@
 ## Set values
 # Hide welcome message
-set fish_greeting
-set VIRTUAL_ENV_DISABLE_PROMPT "1"
+set -g fish_greeting ""
+set VIRTUAL_ENV_DISABLE_PROMPT "0"
 # set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
 set -gx MANPAGER most 
 
@@ -52,12 +52,12 @@ end
 
 ## Starship prompt
 # if status --is-interactive
-#    source ("/usr/bin/starship" init fish --print-full-init | psub)
+#    source (/usr/bin/starship init fish --print-full-init | psub)
 # end
 
 
 ## Advanced command-not-found hook
-source /usr/share/doc/find-the-command/ftc.fish
+#source /usr/share/doc/find-the-command/ftc.fish
 
 
 ## Functions
@@ -113,7 +113,7 @@ end
 ## Useful aliases
 # Replace ls with eza
 alias ls='eza -al --color=always --group-directories-first --icons' # preferred listing
-zlias la='eza -a --color=always --group-directories-first --icons'  # all files and dirs
+alias la='eza -a --color=always --group-directories-first --icons'  # all files and dirs
 alias ll='eza -l --color=always --group-directories-first --icons'  # long format
 alias lt='eza -aT --color=always --group-directories-first --icons' # tree listing
 alias l.='eza -ald --color=always --group-directories-first --icons .*' # show only dotfiles
@@ -197,8 +197,8 @@ zoxide init fish | source
 
 eval "$(thefuck --alias)"
 # You can use whatever you want as an alias like for Mondays:
-eval $(thefuck --alias FUCK)
-eval $(thefuck --alias fuck)
+# eval $(thefuck --alias FUCK)
+# eval $(thefuck --alias fuck)
 
 
 # make nvim the default editor
@@ -232,3 +232,5 @@ function mpd_update
 end
 
 fish_add_path /home/spas/.spicetify
+
+starship init fish | source

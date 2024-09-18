@@ -43,4 +43,5 @@ return {
             which_key = true,
         },
     },
+    -- enabled = false,
 }
