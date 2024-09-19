@@ -1,6 +1,8 @@
 ## Set values
 # Hide welcome message
-set -g fish_greeting ""
+# set -g fish_greeting ""
+# print a nice picture
+neofetch
 set VIRTUAL_ENV_DISABLE_PROMPT "0"
 # set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
 set -gx MANPAGER most 
@@ -214,7 +216,8 @@ eval $(gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark')
 # end
 
 function fish_greeting
-    clear
+    # if function is called - clears all the startup text
+    # clear
 end
 
 function fishfetch

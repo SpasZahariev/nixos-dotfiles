@@ -27,7 +27,6 @@ keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
 keymap.set("n", "<leader>tn", ":tabn<CR>") --  go to next tab
 keymap.set("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
 
-
 ----------------------
 -- Plugin Keybinds
 ----------------------
@@ -52,7 +51,6 @@ keymap.set("i", "", "<c-w>")
 keymap.set("n", "<leader>f", function()
 	vim.lsp.buf.format()
 end)
-
 
 -- vim does not recognize the Alt character -> it basically appears as ^[
 
@@ -81,8 +79,10 @@ keymap.set("n", "Y", "y$") -- make Y copy until the end of the line
 keymap.set("v", "Y", "y$") -- make Y copy until the end of the line
 
 -- move lines  up and down and tries to indent them correctly
-keymap.set("n", "<leader>j", ":m.+1<CR>==") -- moves the current line one line down
-keymap.set("n", "<leader>k", ":m.-2<CR>==") -- moves the current line one line above
+keymap.set("n", "<C-S-Down>", ":m.+1<CR>==") -- moves the current line one line down
+-- keymap.set("n", "<leader>j", ":m.+1<CR>==") -- moves the current line one line down
+keymap.set("n", "<C-S-Up>", ":m.-2<CR>==") -- moves the current line one line above
+-- keymap.set("n", "<leader>k", ":m.-2<CR>==") -- moves the current line one line above
 
 -- move SELECTION up and down and reformat it
 keymap.set("v", "<leader>j", ":m'>+1<CR>gv=gv") -- tries to move, reformat, reselect
