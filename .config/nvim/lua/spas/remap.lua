@@ -47,10 +47,11 @@ keymap.set("i", "", "<c-w>")
 -- keymap.set("n", "<c-backspace>", "dw")
 
 -- try formatting the document
+-- 19.09.2024: I AM FORMATTING on SAVE now
 -- keymap.set("n", "<leader>fd", "<cmd>lua vim.lsp.buf.format{async = true}<CR>")
-keymap.set("n", "<leader>f", function()
-	vim.lsp.buf.format()
-end)
+-- keymap.set("n", "<leader>f", function()
+-- 	vim.lsp.buf.format()
+-- end)
 
 -- vim does not recognize the Alt character -> it basically appears as ^[
 
