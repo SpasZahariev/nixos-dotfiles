@@ -46,6 +46,10 @@ return {
 			vim.keymap.set("n", "<leader>vrn", function()
 				vim.lsp.buf.rename()
 			end, opts)
+			-- this is Ctrl + Alt + o
+			vim.keymap.set("n", "<C-M-o>", function()
+				vim.lsp.buf.organize_imports()
+			end, opts)
 			vim.keymap.set("i", "<C-h>", function()
 				vim.lsp.buf.signature_help()
 			end, opts)
