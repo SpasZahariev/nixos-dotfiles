@@ -41,7 +41,9 @@ keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>") -- toggle split window max
 keymap.set("n", "<leader>rs", ":LspRestart<CR>") -- mapping to restart lsp if necessary
 
 -- delete word with ctrl+backspace in insert mode. Should be super normal but vim sees this weird ^H character
-keymap.set("i", "", "<c-w>")
+-- keymap.set("i", "", "<C-w>")
+-- above one didn't work on nvim + alacritty + tmux so I'm doing this again -> works as of 19.09.2024
+keymap.set("i", "<c-bs>", "<C-W>", { noremap = true, silent = true })
 
 -- keymap.set("i", "<c-backspace>", "<c-w>")
 -- keymap.set("n", "<c-backspace>", "dw")

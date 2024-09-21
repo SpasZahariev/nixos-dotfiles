@@ -71,6 +71,8 @@ return {
 				"black", -- python formatter
 				"isort", -- python formatter
 				"stylua", -- lua formatter
+				"google-java-format", -- java formatter
+				-- "sonarlint-language-server", -- java linter and maaany more languages
 				"pylint", -- python linter
 				"eslint_d", -- javascript linter
 			},

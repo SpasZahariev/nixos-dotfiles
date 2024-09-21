@@ -2,6 +2,10 @@
 live_config_reload = true
 #"window.opacity" = 1.0
 
+# to make it work with tmux
+[env]
+term = "xterm-256color"
+
 [[colors.indexed_colors]]
 color = "#F5A97F"
 index = 16
@@ -90,7 +94,10 @@ style = "Regular"
 # key = "Return"
 # mods = "Control|Shift"
 [keyboard]
-bindings = [{ key = "F11", action = "ToggleFullscreen" }]
+bindings = [
+{ key = "F11", action = "ToggleFullscreen" },
+{ key= "Back", mods= "Control", chars= "\u001b[127;5u" },
+]
 
 [shell]
 program = "/bin/fish"

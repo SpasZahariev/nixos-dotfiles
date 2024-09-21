@@ -11,6 +11,7 @@ return {
 			javascriptreact = { "eslint_d" },
 			typescriptreact = { "eslint_d" },
 			python = { "pylint" },
+			-- java = { "sonarlint-language-server" },
 		}
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
@@ -28,4 +29,5 @@ return {
 		-- 	lint.try_lint()
 		-- end, { desc = "Trigger linting for current file" })
 	end,
+	enabled = false, --disable for now to see if my java linter handles itself nicely
 }
