@@ -109,3 +109,14 @@ keymap.set("v", "<C-p>", "y'>o<Esc>p") -- also adds one space between the duplic
 
 -- start replacing the current word I am on and any other occurance
 keymap.set("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
+
+-- disable the lsp linting
+-- Add this to your init.lua or init.vim file
+local isLspDiagnosticsVisible = true
+keymap.set("n", "<leader>lx", function()
+	isLspDiagnosticsVisible = not isLspDiagnosticsVisible
+	vim.diagnostic.config({
+		virtual_text = isLspDiagnosticsVisible,
+		underline = isLspDiagnosticsVisible,
+	})
+end)

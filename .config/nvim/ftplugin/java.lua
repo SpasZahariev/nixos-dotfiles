@@ -1,3 +1,5 @@
+local jdtls = require("jdtls")
+
 local home = os.getenv("HOME")
 local workspace_path = home .. "/.local/share/nvim/jdtls-workspace/"
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
@@ -7,9 +9,14 @@ local status, jdtls = pcall(require, "jdtls")
 if not status then
 	return
 end
-local extendedClientCapabilities = jdtls.extendedClientCapabilities
+-- Change or delete this if you don't depend on nvim-cmp for completions.
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
+-- for completions
+local client_capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = cmp_nvim_lsp.default_capabilities(client_capabilities)
 
 local config = {
+	capabilities = capabilities,
 	cmd = {
 		"java",
 		"-Declipse.application=org.eclipse.jdt.ls.core.id1",
@@ -59,9 +66,10 @@ local config = {
 
 	init_options = {
 		bundles = {},
+		extendedClientCapabilities = jdtls.extendedClientCapabilities,
 	},
 }
-require("jdtls").start_or_attach(config)
+jdtls.start_or_attach(config)
 
 vim.keymap.set("n", "<leader>co", "<Cmd>lua require'jdtls'.organize_imports()<CR>", { desc = "Organize Imports" })
 vim.keymap.set("n", "<leader>crv", "<Cmd>lua require('jdtls').extract_variable()<CR>", { desc = "Extract Variable" })
