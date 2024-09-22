@@ -60,6 +60,9 @@ return {
 		require("mason-lspconfig").setup({
 			handlers = {
 				function(server_name)
+					if server_name == "jdtls" then -- I don't want to start up the default jdtls here
+						return
+					end
 					require("lspconfig")[server_name].setup({})
 				end,
 			},
@@ -72,7 +75,6 @@ return {
 				"isort", -- python formatter
 				"stylua", -- lua formatter
 				"google-java-format", -- java formatter
-				-- "sonarlint-language-server", -- java linter and maaany more languages
 				"pylint", -- python linter
 				"eslint_d", -- javascript linter
 			},
