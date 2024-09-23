@@ -194,8 +194,22 @@ alias jctl="journalctl -p 3 -xb"
 alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 
 # Setup cli apps
+
+set -Ux FZF_DEFAULT_OPTS "\
+--color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
+--color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
+--color=marker:#b7bdf8,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
+--color=selected-bg:#494d64 \
+--multi"
+
 fzf --fish | source
+
+
+# I love this one. Better cd
 zoxide init fish | source
+
+# better ctrl+r search history
+atuin init fish | source
 
 eval "$(thefuck --alias)"
 # You can use whatever you want as an alias like for Mondays:
