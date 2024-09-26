@@ -41,7 +41,7 @@
     "format-icons": {
       "active": "",
       "urgent": "",
-      "default": ""
+      "default": "",
     }
   },
   "sway/workspaces": {
