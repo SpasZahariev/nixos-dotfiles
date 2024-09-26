@@ -8,5 +8,11 @@
 # didn't work
 # copyq show; wtype $(copyq read 0)
 
-copyq show
-
+# Check if CopyQ is visible
+if copyq visible | rg -q "true"; then
+    # If visible, hide it
+    copyq hide
+else
+    # If not visible, show it
+    copyq show
+fi

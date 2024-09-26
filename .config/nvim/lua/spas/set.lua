@@ -33,6 +33,19 @@ opt.backspace = "indent,eol,start"
 -- use system clipboard
 opt.clipboard:append("unnamedplus")
 
+vim.g.clipboard = {
+	name = "myClipboard",
+	copy = {
+		["+"] = "copyq add -",
+		["*"] = "copyq add -",
+	},
+	paste = {
+		["+"] = "copyq read 0",
+		["*"] = "copyq read 0",
+	},
+	cache_enabled = true,
+}
+
 -- split windows
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom

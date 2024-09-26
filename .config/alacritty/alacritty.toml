@@ -96,7 +96,7 @@ style = "Regular"
 [keyboard]
 bindings = [
 { key = "F11", action = "ToggleFullscreen" },
-{ key= "Back", mods= "Control", chars= "\u001b[127;5u" },
+# { key= "Back", mods= "Control", chars= "\u001b[127;5u" },
 ]
 
 [shell]
