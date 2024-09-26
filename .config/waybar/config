@@ -16,7 +16,6 @@
     "mpd"
   ],
   "modules-center": [
-    //"clock",
     "hyprland/workspaces",
   ],
   "modules-right": [
@@ -27,6 +26,7 @@
     //"memory",
     //"battery",
     "network",
+    "clock",
     "custom/power"
   ],
 
@@ -162,8 +162,9 @@
       "on-scroll-up": "shift_up",
       "on-scroll-down": "shift_down"
     },
-    "format": "  {:%a %d %b  %I:%M %p}", //12 hour format
-    // "format": " {:%d %m %Y  %H:%M}",	//24 hour format
+    //"format": "  {:%a %d %b  %I:%M %p}", //12 hour format
+    //"format": " {:%d %m %Y  %H:%M}",	//24 hour format
+    "format": " {:%H:%M}",	//my 24 hour format
     "format-alt": "  {:%d/%m/%Y  %H:%M:%S}",
     // //"timezones": [ "Kolkata" ],
     // //"max-length": 200
@@ -209,7 +210,7 @@
     "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
     "critical-threshold": 80,
     // "format-critical": "{temperatureC}°C ",
-    "format": "  {temperatureC}°C"
+    "format": "{temperatureC}°C"
   },
   "backlight": {
     // "device": "acpi_video1",
