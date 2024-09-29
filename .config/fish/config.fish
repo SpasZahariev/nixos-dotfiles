@@ -125,6 +125,9 @@ alias ip='ip -color'
 alias cat='bat --style header --style snip --style changes --style header'
 [ ! -x /usr/bin/yay ] && [ -x /usr/bin/paru ] && alias yay='paru'
 
+# Replace less with paging syntax highlighted bat
+alias less='bat --paging=always'
+
 # Replace find with fd
 alias find='fd'
 
