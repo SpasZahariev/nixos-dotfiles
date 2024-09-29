@@ -9,20 +9,27 @@
 # copyq show; wtype $(copyq read 0)
 
 
+# checks the type of the item and IF IT IS A TEXT DUPLICATE, THEN REMOVE IT
+# should skip over images
 clear_duplicates() {
     copyq eval "
     var seen = {};
     for (var i = size() - 1; i >= 0; --i) {
-        var item = str(read(i));
-        if (seen[item]) {
+
+        var mimeType = str(read('?',i));
+        if (mimeType.indexOf('image') !== -1) {
+            continue;
+        }
+
+        var text = str(read(i));
+        if (seen[text]) {
             remove(i);
         } else {
-            seen[item] = true;
+            seen[text] = true;
         }
     }
     ";
 }
-
 
 # Check if CopyQ is visible
 if copyq visible | rg -q "true"; then
