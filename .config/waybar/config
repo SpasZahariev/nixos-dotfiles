@@ -10,10 +10,12 @@
    // "hyprland/workspaces",
     "tray",
     "custom/cava-internal",
-    "mpd#2",
-    "mpd#3",
-    "mpd#4",
-    "mpd"
+    "custom/spotify"
+    //"custom/mpd",
+    //"mpd#2",
+    //"mpd#3",
+    //"mpd#4",
+    //"mpd"
   ],
   "modules-center": [
     "hyprland/workspaces",
@@ -63,6 +65,20 @@
       "10": ""
     }
   },
+  // waybar-spotify
+  "custom/spotify": {
+      "exec": "$HOME/.config/hypr/waybar/spotify",
+      "interval": 1,
+      "format": "{}",
+      "tooltip": true,
+      "max-length": 40,
+      "on-click": "playerctl play-pause",
+      "on-click-middle": "playerctl previous",
+      "on-click-right": "playerctl next",
+      "on-scroll-up": "playerctl position 05+",
+      "on-scroll-down": "playerctl position 05-",
+      "smooth-scrolling-threshold": 1,
+  },
   "mpd": {
     "tooltip": true,
     "tooltip-format": "{artist} - {album} - {title} - Total Time : {totalTime:%M:%S}",
@@ -72,8 +88,8 @@
     "on-click": "mpc toggle",
     "state-icons": {
       "playing": "",
-      "paused": ""
-    }
+      "paused": ""
+    },
   },
   "mpd#2": {
     "format": "",
