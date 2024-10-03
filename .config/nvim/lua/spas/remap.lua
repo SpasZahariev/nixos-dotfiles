@@ -87,6 +87,10 @@ keymap.set("n", "<C-S-Down>", ":m.+1<CR>==") -- moves the current line one line 
 keymap.set("n", "<C-S-Up>", ":m.-2<CR>==") -- moves the current line one line above
 -- keymap.set("n", "<leader>k", ":m.-2<CR>==") -- moves the current line one line above
 
+-- like in intellij jumpt to next new line regardless of where my cursor is. ctrl + enter doesn't work for some reason and it should
+-- keymap.set("i", "<C-CR>", "<Esc>o", { noremap = true, silent = true })
+keymap.set("i", "<C-\\>", "<Esc>o", { noremap = true, silent = true })
+
 -- move SELECTION up and down and reformat it
 keymap.set("v", "<leader>j", ":m'>+1<CR>gv=gv") -- tries to move, reformat, reselect
 keymap.set("v", "<leader>k", ":m'>-2<CR>gv=gv") -- tries to move, reformat, reselect

@@ -54,6 +54,7 @@ return {
 			vim.keymap.set("n", "<leader>fd", telescope_builtin.lsp_definitions, opts)
 		end)
 
+		local capabilities = require("cmp_nvim_lsp").default_capabilities()
 		-- Language servers!
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
@@ -62,7 +63,9 @@ return {
 					if server_name == "jdtls" then -- I don't want to start up the default jdtls here
 						return
 					end
-					require("lspconfig")[server_name].setup({})
+					require("lspconfig")[server_name].setup({
+						capabilities = capabilities,
+					})
 				end,
 			},
 		})
