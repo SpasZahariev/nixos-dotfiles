@@ -52,6 +52,13 @@ if test -d ~/.spicetify
     end
 end
 
+# Add ~/go/bin/ to PATH
+if test -d ~/go/bin
+    if not contains -- ~/go/bin $PATH
+        set -p PATH ~/go/bin
+    end
+end
+
 ## Starship prompt
 # if status --is-interactive
 #    source (/usr/bin/starship init fish --print-full-init | psub)
