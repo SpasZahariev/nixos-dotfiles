@@ -16,4 +16,3 @@ eval "$(thefuck --alias)"
 source /home/spas/.config/broot/launcher/bash/br
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
-eval "$(atuin init bash)"

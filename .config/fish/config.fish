@@ -218,8 +218,9 @@ fzf --fish | source
 # I love this one. Better cd
 zoxide init fish | source
 
+# I'll go back to fzf to try it
 # better ctrl+r search history
-atuin init fish | source
+#atuin init fish | source
 
 eval "$(thefuck --alias)"
 # You can use whatever you want as an alias like for Mondays:
