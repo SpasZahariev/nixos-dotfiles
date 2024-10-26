@@ -35,16 +35,16 @@
   // Modules configuration
 
   "hyprland/workspaces": {
-    "format": "{icon}",
+//    "format": "{icon}",
     "on-click": "activate",
     "on-scroll-up": "hyprctl dispatch workspace e-1",
     "on-scroll-down": "hyprctl dispatch workspace e+1",
-    "spacing": 5,
-    "format-icons": {
-      "active": "",
-      "urgent": "",
-      "default": "",
-    }
+//    "spacing": 5,
+//    "format-icons": {
+//      "active": "",
+//      "urgent": "",
+//      "default": "",
+//    }
   },
   "sway/workspaces": {
     "disable-scroll": true,
