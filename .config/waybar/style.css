@@ -72,10 +72,7 @@ window#waybar {
 }
 
 #workspaces button {
-  /* border-radius: 50%; */
-  /* background-color: @base; */
   margin: 0px 0px;
-  /* padding: 4px 11px 4px 5px; */
   padding: 4px 6px 4px 6px;
 }
 
@@ -91,11 +88,8 @@ window#waybar {
 #workspaces button.active * {
   color: @base;
   font-weight: bold;
-  /* background-color: @mauve; */
-  /* border-top: 1px solid @mauve; */
 }
 #workspaces button.active {
-  /* background-color: rgba(0, 0, 0, 0.3); */
   background-color: @mauve;
 }
 
