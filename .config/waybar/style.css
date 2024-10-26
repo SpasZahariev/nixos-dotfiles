@@ -86,11 +86,11 @@ window#waybar {
 }
 
 #workspaces button.active * {
-  color: @base;
+  color: @yellow;
   font-weight: bold;
 }
 #workspaces button.active {
-  background-color: @mauve;
+  background-color: @crust;
 }
 
 #mode {
