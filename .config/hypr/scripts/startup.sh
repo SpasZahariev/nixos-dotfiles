@@ -22,7 +22,7 @@ done
 # fi
 # exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-# pipewire &
+pipewire &
 wireplumber &
 # Set wallpaper
 # swaybg --output '*' --mode fill --image ~/.config/backgrounds/march7.jpg &

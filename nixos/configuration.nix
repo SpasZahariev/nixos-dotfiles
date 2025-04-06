@@ -8,9 +8,13 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      inputs.spicetify-nix.nixosModules.default
     ];
 
   nix.settings.experimental-features = [ "flakes" "nix-command"];
+  # GPU
+  # make the kernel use the correct driver early
+  boot.initrd.kernelModules = ["amdgpu"];
  # Bootloader
  # boot.loader.grub.device = "/dev/nvme1n1p5";
   #boot.loader.efi.efiSysMountPoint = "/mnt/boot"
@@ -52,6 +56,7 @@
 
   # Enable Wayland and Hyprland (ignore the xserver part - that is bad naming)
   services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
   programs.hyprland.enable = true;
   
   # Enable seatd for better input handling in wayland with keyboard and mouse of non-root users
@@ -59,7 +64,7 @@
 
   # OpenGl (for hardware acceleration)
   hardware.graphics.enable = true;
-
+  hardware.graphics.enable32Bit = true;
 
   # Start Hyprland on startup and use Greetd for a quick login
   # With the help of greetd enable autologin for my user
@@ -111,6 +116,25 @@
   # programs.ghostty.enable = true;
   # nixpkgs.channel = "nixos-unstable";
   
+  ### spotify customization
+  programs.spicetify = 
+  let
+    spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+  in
+  {
+     enable = true;
+     # theme = spicePkgs.themes.starryNight;
+     theme = spicePkgs.themes.ziro;
+     colorScheme = "rose-pine";
+     enabledCustomApps = with spicePkgs.apps; [
+       ncsVisualizer
+     ];
+     enabledSnippets = with spicePkgs.snippets; [
+       rotatingCoverart
+       pointer
+     ];
+  };
+
   nixpkgs.config.allowUnfree = true; # FU Spotify
   
   # List packages installed in system profile. To search, run:
@@ -147,15 +171,19 @@
      fastfetch # like neofetch but faster and actively maintained
      mpd # music player client
      wireplumber # manages where the pipewire sound is going (headphones, speakers - etc)
-     spotify
-     spicetify-cli
      inputs.swww.packages.${pkgs.system}.swww # daemon for changing wallpapers
      hyprpaper
      nodejs
      ripgrep
      unzip
      yazi
-     ffmpeg
+     ffmpeg-full
+     widevine-cdm # DRM support (e.g., Netflix, Spotify, YouTube Music)
+     vlc
+     mpv
+     mesa.drivers # amd gpu drivers
+     vesktop
+     spotify
   ];
 
   # Env session variables for better wayland support
@@ -164,6 +192,7 @@
     XDG_CURRENT_DESKTOP = "Hyprland";
     QT_QPA_PLATFORM = "wayland"; # Force Wayland for Qt apps like VLC
     SDL_VIDEODRIVER = "wayland";
+    # VDPAU_DRIVER = "radeonsi"; # idk if this will fix my video playback problem, let's try
   };
   environment.variables = {
     EDITOR = "nvim";
@@ -174,6 +203,13 @@
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
+
+  # browser video playback doesn't work and adding this didn't fix it
+  nixpkgs.config = {
+    brave = {
+      enableWideVine = true;
+    };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

@@ -4,6 +4,7 @@
   inputs = {
      nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
      swww.url = "github:LGFae/swww";
+     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
   };
 
   outputs = { nixpkgs, ... } @ inputs: {
