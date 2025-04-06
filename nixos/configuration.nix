@@ -16,6 +16,7 @@
   #boot.loader.efi.efiSysMountPoint = "/mnt/boot"
   #boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.timeout = 20; #wait for 20 secs before going to default option
   boot.loader.grub = {
     enable = true;
     devices = ["nodev"];
@@ -24,7 +25,6 @@
     # theme = ./nixosModules/programs/grub-themes/CyberRe;
     theme = ./nixosModules/programs/grub-themes/CyberGRUB-2077;
     # theme = ./nixosModules/programs/grub-themes/virtuaverse;
-    timeout = 20; #wait for 20 secs before going to default option
     default = "2";
     # default = "Windows Boot Manager";
 
@@ -155,7 +155,7 @@
      ripgrep
      unzip
      yazi
-     ffmpeg_5
+     ffmpeg
   ];
 
   # Env session variables for better wayland support
