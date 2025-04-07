@@ -184,6 +184,7 @@
      mesa.drivers # amd gpu drivers
      vesktop
      spotify
+     jq
   ];
 
   # Env session variables for better wayland support

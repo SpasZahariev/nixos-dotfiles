@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+### SHOULD put one wallpaper on all three monitors ###
 WALLPAPER_DIR="$HOME/wallpapers/"
 CURRENT_WALL=$(hyprctl hyprpaper listloaded)
 
