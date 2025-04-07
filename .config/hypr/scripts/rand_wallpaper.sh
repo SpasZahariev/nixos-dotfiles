@@ -1,11 +1,44 @@
+# #!/usr/bin/env bash
+#
+# ### SHOULD put one wallpaper on all three monitors ###
+# WALLPAPER_DIR="$HOME/wallpapers/"
+# CURRENT_WALL=$(hyprctl hyprpaper listloaded)
+#
+# # Get a random wallpaper that is not the current one
+# WALLPAPER=$(find "$WALLPAPER_DIR" -type f ! -name "$(basename "$CURRENT_WALL")" | shuf -n 1)
+#
+# # Apply the selected wallpaper
+# hyprctl hyprpaper reload ,"$WALLPAPER"
+
 #!/usr/bin/env bash
 
-### SHOULD put one wallpaper on all three monitors ###
-WALLPAPER_DIR="$HOME/wallpapers/"
+# === Config ===
+WIDE_WALLPAPER_DIR="$HOME/dotfiles/wallpapers/wide"
 CURRENT_WALL=$(hyprctl hyprpaper listloaded)
 
-# Get a random wallpaper that is not the current one
-WALLPAPER=$(find "$WALLPAPER_DIR" -type f ! -name "$(basename "$CURRENT_WALL")" | shuf -n 1)
+MONITORS=(
+  "HDMI-A-1"
+  "DP-1"
+  "DP-2"
+)
 
-# Apply the selected wallpaper
-hyprctl hyprpaper reload ,"$WALLPAPER"
+# === Functions ===
+
+get_random_wallpaper() {
+  local dir="$1"
+  find "$dir" -type f ! -name "$(basename "$CURRENT_WALL")" | shuf -n 1
+}
+
+# === Main ===
+
+# Reload hyprpaper and apply
+hyprctl hyprpaper unload all
+
+for MONITOR in "${MONITORS[@]}"; do
+  WALL="$(get_random_wallpaper "$WIDE_WALLPAPER_DIR")"
+  echo "Setting wallpaper for $MONITOR: $WALL"
+  hyprctl hyprpaper preload "$WALL"
+  hyprctl hyprpaper wallpaper "$MONITOR,$WALL"
+done
+
+
