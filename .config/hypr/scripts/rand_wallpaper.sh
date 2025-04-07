@@ -34,8 +34,8 @@ get_random_wallpaper() {
 # Reload hyprpaper and apply
 hyprctl hyprpaper unload all
 
+WALL="$(get_random_wallpaper "$WIDE_WALLPAPER_DIR")"
 for MONITOR in "${MONITORS[@]}"; do
-  WALL="$(get_random_wallpaper "$WIDE_WALLPAPER_DIR")"
   echo "Setting wallpaper for $MONITOR: $WALL"
   hyprctl hyprpaper preload "$WALL"
   hyprctl hyprpaper wallpaper "$MONITOR,$WALL"
