@@ -1,70 +1,59 @@
-/* window { */
-/*     margin: 0px; */
-/*     border: 5px solid #f5c2e7; */
-/*     background-color: #f5c2e7; */
-/*     border-radius: 15px; */
-/* } */
-/**/
-/* #input { */
-/*     padding: 4px; */
-/*     margin: 4px; */
-/*     padding-left: 20px; */
-/*     border: none; */
-/*     color: #fff; */
-/*     font-weight: bold; */
-/*     background-color: #fff; */
-/*     background: linear-gradient(90deg, rgba(203,166,247,1) 0%, rgba(245,194,231,1) 100%); */
-/*    	outline: none; */
-/*     border-radius: 15px; */
-/*     margin: 10px; */
-/*     margin-bottom: 2px; */
-/* } */
-/* #input:focus { */
-/*     border: 0px solid #fff; */
-/*     margin-bottom: 0px; */
-/* } */
-/**/
-/* #inner-box { */
-/*     margin: 4px; */
-/*     border: 10px solid #fff; */
-/*     color: #cba6f7; */
-/*     font-weight: bold; */
-/*     background-color: #fff; */
-/*     border-radius: 15px; */
-/* } */
-/**/
-/* #outer-box { */
-/*     margin: 0px; */
-/*     border: none; */
-/*     border-radius: 15px; */
-/*     background-color: #fff; */
-/* } */
-/**/
-/* #scroll { */
-/*     margin-top: 5px; */
-/*     border: none; */
-/*     border-radius: 15px; */
-/*     margin-bottom: 5px; */
-/*     /* background: rgb(255,255,255); */ */
-/* } */
-/**/
-/* #text:selected { */
-/*     color: #fff; */
-/*     margin: 0px 0px; */
-/*     border: none; */
-/*     border-radius: 15px; */
-/* } */
-/**/
-/* #entry { */
-/*     margin: 0px 0px; */
-/*     border: none; */
-/*     border-radius: 15px; */
-/*     background-color: transparent; */
-/* } */
-/**/
-/* #entry:selected { */
-/*     margin: 0px 0px; */
-/*     border: none; */
-/*     border-radius: 15px; */
-/*     background: linear-gradient(45deg, rgba(203,166,247,1) 30%, rgba(245,194,231,1) 100%); */
-/* } */
+/* # By knightfall01 on Github as a part of https://github.com/Knightfall01/Hyprland-config */
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  color: #c4d3da;
+}
+
+window {
+  border: 3px solid #94e2d5;
+  background: #1e2030;
+  border-radius: 15px;
+}
+
+#input {
+  margin: 1.5em;
+  margin-bottom: 0em;
+  padding: 1em;
+  border: none;
+  font-weight: bold;
+  background: #1e2030;
+  color: #c4d3da;
+  border-radius: 15px;
+}
+
+#input:focus {
+  border: 1px solid #94e2d5;
+}
+
+#inner-box {
+  margin: 1.5em;
+  margin-top: 0.5em;
+}
+
+#outer-box {
+  margin-bottom: 0.5em;
+}
+
+#scroll {
+  margin-top: 5px 0;
+  display: none;
+}
+
+#text {
+  margin-left: 0.5em;
+  color: #c4d3da;
+}
+
+#text:selected {
+  color: #16161e;
+}
+
+#entry {
+  margin-top: 0.5em;
+  border-radius: 15px;
+}
+
+#entry:selected {
+  background: linear-gradient(90deg, #90cdfa 0%, #b69bf1 80%);
+}
