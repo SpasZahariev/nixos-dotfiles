@@ -336,8 +336,6 @@
      stow 
      tree
      wofi
-     kdePackages.dolphin
-     # waybar
      cava
      python3
      rustup
@@ -347,7 +345,6 @@
      starship
      bat
      btop-rocm
-     # dunst  # notification service. Hyprpanel should be using Astal instead
      gcc
      # copyq
      wl-clipboard
@@ -369,6 +366,7 @@
      spotify
      jq # json query - useful in bash commands
      hyprpanel
+     thunar
   ];
 
   # Env session variables for better wayland support

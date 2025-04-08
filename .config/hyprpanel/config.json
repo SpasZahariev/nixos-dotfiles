@@ -27,12 +27,12 @@
       "right": ["volume", "cpu", "network", "bluetooth", "kbinput", "clock"]
     },
     "1": {
-      "left": ["dashboard", "windowtitle"],
+      "left": ["dashboard", "windowtitle", "cava"],
       "middle": ["workspaces"],
       "right": ["media"]
     },
     "2": {
-      "left": ["dashboard", "windowtitle"],
+      "left": ["dashboard", "windowtitle", "cava"],
       "middle": ["workspaces"],
       "right": ["media"]
     }
