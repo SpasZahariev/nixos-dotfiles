@@ -1,14 +1,3 @@
 #!/usr/bin/env bash
 
-## Copyright (C) 2020-2023 Aditya Shakya <adi1090x@gmail.com>
-##
-## launch waybar with alt config
-
-# CONFIG="~/.config/hypr/waybar/config"
-# STYLE="~/.config/hypr/waybar/style.css"
-#
-# if [[ ! `pidof waybar` ]]; then
-# 	waybar --bar main-bar --log-level error --config ${CONFIG} --style ${STYLE}
-# fi
-#
-waybar &
+hyprpanel &

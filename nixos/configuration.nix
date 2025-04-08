@@ -58,12 +58,86 @@
     enable = true;
     videoDrivers = [ "amdgpu" ];
 
-    layout = "us,bg";
-    xkbVariant = ",phonetic"; # Empty for "us", phonetic for "bg"
+    xkb.layout = "us,bg";
+    xkb.variant = ",phonetic"; # Empty for "us", phonetic for "bg"
     # xkbOptions = "grp:alt_shift_toggle"; # Switch layout with Shift + Alt
-    xkbOptions = "grp:caps_toggle,grp_led:caps"; # Switch with caps and light says on for second layout
+    xkb.options = "grp:caps_toggle,grp_led:caps"; # Switch with caps and light says on for second layout
   };
   programs.hyprland.enable = true;
+  # programs.hyprpanel = {
+
+    # Enable the module.
+    # Default: false
+    # enable = true;
+
+    # Automatically restart HyprPanel with systemd.
+    # Useful when updating your config so that you
+    # don't need to manually restart it.
+    # Default: false
+    # systemd.enable = true;
+
+    # Add '/nix/store/.../hyprpanel' to your
+    # Hyprland config 'exec-once'.
+    # Default: false
+    # hyprland.enable = true;
+
+    # Fix the overwrite issue with HyprPanel.
+    # See below for more information.
+    # Default: false
+    # overwrite.enable = true;
+
+    # Import a theme from './themes/*.json'.
+    # Default: ""
+    # theme = "gruvbox_split";
+
+    # Override the final config with an arbitrary set.
+    # Useful for overriding colors in your selected theme.
+    # Default: {}
+    # override = {
+    #   theme.bar.menus.text = "#123ABC";
+    # };
+    #
+    # # Configure bar layouts for monitors.
+    # # See 'https://hyprpanel.com/configuration/panel.html'.
+    # # Default: null
+    # layout = {
+    #   "bar.layouts" = {
+    #     "0" = {
+    #       left = [ "dashboard" "workspaces" ];
+    #       middle = [ "media" ];
+    #       right = [ "volume" "systray" "notifications" ];
+    #     };
+    #   };
+    # };
+    #
+    # # Configure and theme almost all options from the GUI.
+    # # Options that require '{}' or '[]' are not yet implemented,
+    # # except for the layout above.
+    # # See 'https://hyprpanel.com/configuration/settings.html'.
+    # # Default: <same as gui>
+    # settings = {
+    #   bar.launcher.autoDetectIcon = true;
+    #   bar.workspaces.show_icons = true;
+    #
+    #   menus.clock = {
+    #     time = {
+    #       military = true;
+    #       hideSeconds = true;
+    #     };
+    #     weather.unit = "metric";
+    #   };
+    #
+    #   menus.dashboard.directories.enabled = false;
+    #   menus.dashboard.stats.enable_gpu = true;
+    #
+    #   theme.bar.transparent = true;
+    #
+    #   theme.font = {
+    #     name = "CaskaydiaCove NF";
+    #     size = "16px";
+    #   };
+    # };
+  # };
   
   # Enable seatd for better input handling in wayland with keyboard and mouse of non-root users
   services.seatd.enable = true;
@@ -71,6 +145,9 @@
   # OpenGl (for hardware acceleration)
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
+
+  # bluetooth
+  hardware.bluetooth.enable = true;
 
   # Start Hyprland on startup and use Greetd for a quick login
   # With the help of greetd enable autologin for my user
@@ -260,7 +337,7 @@
      tree
      wofi
      kdePackages.dolphin
-     waybar
+     # waybar
      cava
      python3
      rustup
@@ -270,7 +347,7 @@
      starship
      bat
      btop-rocm
-     dunst
+     # dunst  # notification service. Hyprpanel should be using Astal instead
      gcc
      # copyq
      wl-clipboard
@@ -291,6 +368,7 @@
      vesktop
      spotify
      jq # json query - useful in bash commands
+     hyprpanel
   ];
 
   # Env session variables for better wayland support
