@@ -184,7 +184,8 @@
      mesa.drivers # amd gpu drivers
      vesktop
      spotify
-     jq
+     jq # json query - useful in bash commands
+     tmux
   ];
 
   # Env session variables for better wayland support

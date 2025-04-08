@@ -51,3 +51,6 @@ exec mpd &
 #exec agsv1 &
 # For v2
 #exec hyprpanel &
+
+# did't work
+# exec $HOME/.config/hypr/scripts/set_wallpaper_all.sh $HOME/wallpapers/wide/ford-gt-3440x1440.png
