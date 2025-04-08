@@ -22,8 +22,8 @@ done
 # fi
 # exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-wireplumber &
-pipewire &
+# wireplumber &
+# pipewire &
 # Set wallpaper
 # swaybg --output '*' --mode fill --image ~/.config/backgrounds/march7.jpg &
 # swww-daemon &
@@ -44,7 +44,7 @@ pipewire &
 #tuxedo-control-center --tray &
 
 # Start mpd
-exec mpd &
+# exec mpd &
 
 # Start AGS Enable if not using Waybar
 # For v1
