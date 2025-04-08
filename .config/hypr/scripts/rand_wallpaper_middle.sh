@@ -1,4 +1,4 @@
-# #!/usr/bin/env bash
+#!/usr/bin/env bash
 
 # === Config ===
 WIDE_WALLPAPER_DIR="$HOME/dotfiles/wallpapers/wide"
