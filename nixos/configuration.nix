@@ -54,8 +54,15 @@
   };
 
   # Enable Wayland and Hyprland (ignore the xserver part - that is bad naming)
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver = {
+    enable = true;
+    videoDrivers = [ "amdgpu" ];
+
+    layout = "us,bg";
+    xkbVariant = ",phonetic"; # Empty for "us", phonetic for "bg"
+    # xkbOptions = "grp:alt_shift_toggle"; # Switch layout with Shift + Alt
+    xkbOptions = "grp:caps_toggle,grp_led:caps"; # Switch with caps and light says on for second layout
+  };
   programs.hyprland.enable = true;
   
   # Enable seatd for better input handling in wayland with keyboard and mouse of non-root users
