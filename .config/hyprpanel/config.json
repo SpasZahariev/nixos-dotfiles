@@ -1,0 +1,40 @@
+{
+  "theme.font.name": "JetBrainsMono Nerd Font",
+  "theme.font.label": "JetBrainsMono Nerd Font",
+  "theme.bar.menus.enableShadow": true,
+  "menus.power.showLabel": false,
+  "menus.clock.time.military": true,
+  "menus.clock.time.hideSeconds": false,
+  "menus.clock.weather.location": "Zurich",
+  "menus.clock.weather.unit": "metric",
+  "theme.bar.menus.background": "#11111b",
+  "theme.bar.menus.opacity": 100,
+  "theme.bar.menus.border.color": "#313244",
+  "theme.bar.buttons.style": "default",
+  "theme.bar.transparent": true,
+  "bar.workspaces.show_numbered": true,
+  "bar.workspaces.numbered_active_indicator": "underline",
+  "theme.bar.buttons.volume.enableBorder": false,
+  "theme.bar.buttons.battery.enableBorder": false,
+  "bar.clock.format": "%H:%M",
+  "theme.bar.buttons.systray.enableBorder": false,
+  "bar.battery.hideLabelWhenFull": false,
+  "menus.dashboard.powermenu.avatar.image": "/home/spas/wallpapers/icons/nixos-logo.png",
+  "bar.layouts": {
+    "0": {
+      "left": ["dashboard", "windowtitle", "media", "cava"],
+      "middle": ["workspaces"],
+      "right": ["volume", "cpu", "network", "bluetooth", "kbinput", "clock"]
+    },
+    "1": {
+      "left": ["dashboard", "windowtitle"],
+      "middle": ["workspaces"],
+      "right": ["media"]
+    },
+    "2": {
+      "left": ["dashboard", "windowtitle"],
+      "middle": ["workspaces"],
+      "right": ["media"]
+    }
+  }
+}
