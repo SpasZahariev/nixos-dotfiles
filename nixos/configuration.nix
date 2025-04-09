@@ -400,6 +400,10 @@
      catppuccin-papirus-folders # nice folder icons for thunar
      nwg-look
      catppuccin-gtk # should turn thunar dark
+     ###
+     playerctl #control media with keyboard keys
+     brightnessctl #change brightness with keyboard (didn't work but that's fine)
+     code-cursor
   ];
 
   # Env session variables for better wayland support
