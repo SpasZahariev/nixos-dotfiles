@@ -321,6 +321,30 @@
       set -g @continuum-save-interval '10'
     '';
   };
+  ####################
+
+  # gtk thunar setup
+
+  # gtk = {
+  #   iconTheme = {
+  #     name = "Papirus-Dark";
+  #     package = pkgs.catppuccin-papirus-folders.override {
+  #       flavor = "macchiato"; 
+  #       accent = "pink";  # or blue, green, etc.
+  #     };
+  #   };
+  # };
+
+  # bookmarks for the left side panel
+  # gtk.gtk3.bookmarks = [
+  #   "file:///home/spas/Downloads Downloads"
+  #   "file:///home/spas/nextcloud Nextcloud"
+  #   "file:///home/spas/dotfiles Dotfiles"
+  #   "file:///home/spas/.config/nixos NixOS"
+  #   "file:///home/spas/dev Development"
+  # ];
+
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -366,7 +390,16 @@
      spotify
      jq # json query - useful in bash commands
      hyprpanel
-     thunar
+     # Thunar file manager GTK stuff
+     xfce.xfconf
+     xfce.tumbler # nice thumbnails for files and pictures
+     p7zip
+     unrar
+     xfce.thunar
+     xfce.thunar-archive-plugin
+     catppuccin-papirus-folders # nice folder icons for thunar
+     nwg-look
+     catppuccin-gtk # should turn thunar dark
   ];
 
   # Env session variables for better wayland support
@@ -376,6 +409,8 @@
     QT_QPA_PLATFORM = "wayland"; # Force Wayland for Qt apps like VLC
     SDL_VIDEODRIVER = "wayland";
     # VDPAU_DRIVER = "radeonsi"; # idk if this will fix my video playback problem, let's try
+    # GTK_THEME = "Papirus-Dark";
+    # XDG_ICON_DIR = "${pkgs.catppuccin-papirus-folders}/share/icons/Papirus-Dark";
   };
   environment.variables = {
     EDITOR = "nvim";
