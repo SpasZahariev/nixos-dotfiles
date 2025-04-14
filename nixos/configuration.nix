@@ -423,7 +423,8 @@
   };
   
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    # (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) # for nix-os stable
+    pkgs.nerd-fonts.jetbrains-mono # new syntax in nios-unstable branch
   ];
 
   # browser video playback doesn't work and adding this didn't fix it
