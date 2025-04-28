@@ -2,8 +2,8 @@
   description = "A very basic flake that adds packages to my configuration.nix";
 
   inputs = {
-     # nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
-     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # I like to live dangerously
+     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
+     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # I like to live dangerously
      swww.url = "github:LGFae/swww";
      spicetify-nix.url = "github:Gerg-L/spicetify-nix";
      hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";

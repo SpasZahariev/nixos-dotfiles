@@ -403,7 +403,8 @@
      ###
      playerctl #control media with keyboard keys
      brightnessctl #change brightness with keyboard (didn't work but that's fine)
-     code-cursor
+     # code-cursor
+     qbittorrent
   ];
 
   # Env session variables for better wayland support
@@ -423,8 +424,8 @@
   };
   
   fonts.packages = with pkgs; [
-    # (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) # for nix-os stable
-    pkgs.nerd-fonts.jetbrains-mono # new syntax in nios-unstable branch
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) # for nix-os stable
+    # pkgs.nerd-fonts.jetbrains-mono # new syntax in nios-unstable branch
   ];
 
   # browser video playback doesn't work and adding this didn't fix it
