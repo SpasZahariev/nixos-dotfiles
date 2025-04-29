@@ -6,7 +6,8 @@
 }
 
 window {
-  border: 3px solid #94e2d5;
+  /*border: 3px solid #94e2d5;*/
+  border: 1px solid #51556C;
   background: #1e2030;
   border-radius: 15px;
 }
