@@ -209,6 +209,9 @@
   # programs.ghostty.enable = true;
   # nixpkgs.channel = "nixos-unstable";
   
+  # Rust version of fuck aka pay-respects
+  programs.pay-respects.enable = true;
+  programs.pay-respects.alias = "fuck";
   ### spotify customization
   programs.spicetify = 
   let
@@ -408,6 +411,7 @@
      fd
      fzf
      lazygit
+     pay-respects # alternative to fuck cli
   ];
 
   # Env session variables for better wayland support

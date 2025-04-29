@@ -910,6 +910,9 @@ alias nix-switch = sudo nixos-rebuild switch --flake ~/dotfiles/nixos#nixos -I n
 # to set my wallpapers easily
 alias sw = ~/dotfiles/.config/hypr/scripts/set_wallpaper_all.sh
 
+# set alias for pay-respects aka the Rust fuck version
+alias fuck = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : "",_PR_SHELL : nu } { /run/current-system/sw/bin/pay-respects }
+
 # print pretty distro text
 fastfetch
 
@@ -917,3 +920,4 @@ source ~/.zoxide.nu
 
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+alias f = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : "",_PR_SHELL : nu } { /run/current-system/sw/bin/pay-respects }
