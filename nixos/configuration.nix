@@ -405,6 +405,9 @@
      brightnessctl #change brightness with keyboard (didn't work but that's fine)
      # code-cursor
      qbittorrent
+     fd
+     fzf
+     lazygit
   ];
 
   # Env session variables for better wayland support
