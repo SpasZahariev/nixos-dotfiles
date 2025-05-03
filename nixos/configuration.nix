@@ -27,8 +27,8 @@
     useOSProber = true;
     efiSupport = true;
     # theme = ./nixosModules/programs/grub-themes/CyberRe;
-    theme = ./nixosModules/programs/grub-themes/CyberGRUB-2077;
-    # theme = ./nixosModules/programs/grub-themes/virtuaverse;
+    # theme = ./nixosModules/programs/grub-themes/CyberGRUB-2077;
+    theme = ./nixosModules/programs/grub-themes/virtuaverse;
     default = "2";
     # default = "Windows Boot Manager";
   };
@@ -212,6 +212,11 @@
   # Rust version of fuck aka pay-respects
   programs.pay-respects.enable = true;
   programs.pay-respects.alias = "fuck";
+
+
+  # fallback dynamic linker for binaries that expect a traditional Linux environment
+  programs.nix-ld.enable = true;
+
   ### spotify customization
   programs.spicetify = 
   let
@@ -381,6 +386,7 @@
      inputs.swww.packages.${pkgs.system}.swww # daemon for changing wallpapers
      hyprpaper
      nodejs
+     yarn # or npm
      ripgrep
      unzip
      yazi
@@ -412,6 +418,8 @@
      fzf
      lazygit
      pay-respects # alternative to fuck cli
+     gnumake # so I can use the "make command"
+     go
   ];
 
   # Env session variables for better wayland support

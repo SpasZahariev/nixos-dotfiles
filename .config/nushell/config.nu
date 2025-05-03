@@ -916,6 +916,7 @@ alias fuck = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : 
 # print pretty distro text
 fastfetch
 
+source ~/.config/nushell/.secrets.nu
 source ~/.zoxide.nu
 
 mkdir ($nu.data-dir | path join "vendor/autoload")
