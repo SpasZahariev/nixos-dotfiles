@@ -22,19 +22,52 @@
   "menus.dashboard.powermenu.avatar.image": "/home/spas/wallpapers/icons/nixos-logo.png",
   "bar.layouts": {
     "0": {
-      "left": ["dashboard", "windowtitle", "media", "cava"],
-      "middle": ["workspaces"],
-      "right": ["volume", "cpu", "network", "bluetooth", "kbinput", "clock"]
+      "left": [
+        "dashboard",
+        "windowtitle",
+        "media",
+        "cava"
+      ],
+      "middle": [
+        "workspaces"
+      ],
+      "right": [
+        "volume",
+        "network",
+        "bluetooth",
+        "kbinput",
+        "ram",
+        "cputemp",
+        "clock"
+      ]
     },
     "1": {
-      "left": ["dashboard", "windowtitle", "cava"],
-      "middle": ["workspaces"],
-      "right": ["media"]
+      "left": [
+        "dashboard",
+        "windowtitle",
+        "cava"
+      ],
+      "middle": [
+        "workspaces"
+      ],
+      "right": [
+        "media"
+      ]
     },
     "2": {
-      "left": ["dashboard", "windowtitle", "cava"],
-      "middle": ["workspaces"],
-      "right": ["media"]
+      "left": [
+        "dashboard",
+        "windowtitle",
+        "cava"
+      ],
+      "middle": [
+        "workspaces"
+      ],
+      "right": [
+        "media"
+      ]
     }
-  }
+  },
+  "theme.bar.buttons.modules.cpuTemp.enableBorder": false,
+  "bar.customModules.cpuTemp.sensor": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon4/temp1_input"
 }

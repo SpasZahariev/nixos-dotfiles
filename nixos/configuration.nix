@@ -33,6 +33,7 @@
     # default = "Windows Boot Manager";
   };
 
+
   networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -212,7 +213,6 @@
   # Rust version of fuck aka pay-respects
   programs.pay-respects.enable = true;
   programs.pay-respects.alias = "fuck";
-
 
   # fallback dynamic linker for binaries that expect a traditional Linux environment
   programs.nix-ld.enable = true;
