@@ -919,6 +919,19 @@ fastfetch
 source ~/.config/nushell/.secrets.nu
 source ~/.zoxide.nu
 
+# setup yazi wrapper so that when i exit with q - it moves me to the currently viewed directly
+def ya [...args] {
+    let tmp = (mktemp -t "yazi-cwd.XXXXXX")
+    yazi ...$args --cwd-file $tmp
+    if ($tmp | path exists) {
+        let cwd = (open $tmp | str trim)
+        rm -f $tmp
+        if ($cwd | path exists) {
+            cd $cwd
+        }
+    }
+}
+
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 alias f = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : "",_PR_SHELL : nu } { /run/current-system/sw/bin/pay-respects }

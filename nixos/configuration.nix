@@ -65,87 +65,11 @@
     xkb.options = "grp:caps_toggle,grp_led:caps"; # Switch with caps and light says on for second layout
   };
   programs.hyprland.enable = true;
-  # programs.hyprpanel = {
-
-    # Enable the module.
-    # Default: false
-    # enable = true;
-
-    # Automatically restart HyprPanel with systemd.
-    # Useful when updating your config so that you
-    # don't need to manually restart it.
-    # Default: false
-    # systemd.enable = true;
-
-    # Add '/nix/store/.../hyprpanel' to your
-    # Hyprland config 'exec-once'.
-    # Default: false
-    # hyprland.enable = true;
-
-    # Fix the overwrite issue with HyprPanel.
-    # See below for more information.
-    # Default: false
-    # overwrite.enable = true;
-
-    # Import a theme from './themes/*.json'.
-    # Default: ""
-    # theme = "gruvbox_split";
-
-    # Override the final config with an arbitrary set.
-    # Useful for overriding colors in your selected theme.
-    # Default: {}
-    # override = {
-    #   theme.bar.menus.text = "#123ABC";
-    # };
-    #
-    # # Configure bar layouts for monitors.
-    # # See 'https://hyprpanel.com/configuration/panel.html'.
-    # # Default: null
-    # layout = {
-    #   "bar.layouts" = {
-    #     "0" = {
-    #       left = [ "dashboard" "workspaces" ];
-    #       middle = [ "media" ];
-    #       right = [ "volume" "systray" "notifications" ];
-    #     };
-    #   };
-    # };
-    #
-    # # Configure and theme almost all options from the GUI.
-    # # Options that require '{}' or '[]' are not yet implemented,
-    # # except for the layout above.
-    # # See 'https://hyprpanel.com/configuration/settings.html'.
-    # # Default: <same as gui>
-    # settings = {
-    #   bar.launcher.autoDetectIcon = true;
-    #   bar.workspaces.show_icons = true;
-    #
-    #   menus.clock = {
-    #     time = {
-    #       military = true;
-    #       hideSeconds = true;
-    #     };
-    #     weather.unit = "metric";
-    #   };
-    #
-    #   menus.dashboard.directories.enabled = false;
-    #   menus.dashboard.stats.enable_gpu = true;
-    #
-    #   theme.bar.transparent = true;
-    #
-    #   theme.font = {
-    #     name = "CaskaydiaCove NF";
-    #     size = "16px";
-    #   };
-    # };
-  # };
+  # programs.hyprpanel.enable = true;
   
   # Enable seatd for better input handling in wayland with keyboard and mouse of non-root users
   services.seatd.enable = true;
 
-  # OpenGl (for hardware acceleration)
-  hardware.graphics.enable = true;
-  hardware.graphics.enable32Bit = true;
 
   # bluetooth
   hardware.bluetooth.enable = true;
@@ -352,6 +276,14 @@
   #   "file:///home/spas/dev Development"
   # ];
 
+  # setup steam and stuff
+  # OpenGl (for hardware acceleration)
+  hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
+  programs.steam.enable = true;
+  programs.steam.gamescopeSession.enable = true; # used to start game in an optimized microcompositor... can help if game has issues with upscaling or monitor resolutions
+  programs.gamemode.enable = true; # daemon that will improve game performance on linux
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -394,11 +326,10 @@
      widevine-cdm # DRM support (e.g., Netflix, Spotify, YouTube Music)
      vlc
      mpv
-     mesa.drivers # amd gpu drivers
+     mesa # amd gpu drivers
      vesktop
      spotify
      jq # json query - useful in bash commands
-     hyprpanel
      # Thunar file manager GTK stuff
      xfce.xfconf
      xfce.tumbler # nice thumbnails for files and pictures
@@ -420,6 +351,9 @@
      pay-respects # alternative to fuck cli
      gnumake # so I can use the "make command"
      go
+     mangohud # hame overlay FPS counter
+     protonup # for installing proton GE for playing games
+     hyprpanel
   ];
 
   # Env session variables for better wayland support
@@ -431,6 +365,9 @@
     # VDPAU_DRIVER = "radeonsi"; # idk if this will fix my video playback problem, let's try
     # GTK_THEME = "Papirus-Dark";
     # XDG_ICON_DIR = "${pkgs.catppuccin-papirus-folders}/share/icons/Papirus-Dark";
+    
+    # Setup env vars for where steam should be installed
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/home/user/.steam/root/compatibilitytools.d";
   };
   environment.variables = {
     EDITOR = "nvim";
@@ -439,8 +376,8 @@
   };
   
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) # for nix-os stable
-    # pkgs.nerd-fonts.jetbrains-mono # new syntax in nios-unstable branch
+    # (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) # for nix-os stable
+    pkgs.nerd-fonts.jetbrains-mono # new syntax in nios-unstable branch
   ];
 
   # browser video playback doesn't work and adding this didn't fix it
