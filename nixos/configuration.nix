@@ -387,6 +387,15 @@
     };
   };
 
+  # Settings to remember mount points instead of editing etc/fstab (in this case for the shared drive with windows)
+  fileSystems = {
+	"/mnt/shared" = {
+		device = "UUID=BCFACBFAFACBAF48";
+		fsType = "ntfs";
+		options = [ "rw" "uid=1000" "gid=100" "unmask=0022" "nofail" ];
+	};
+  };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
