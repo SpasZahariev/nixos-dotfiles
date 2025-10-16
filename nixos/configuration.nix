@@ -164,94 +164,6 @@
   
   programs.tmux = {
     enable = true;
-    plugins = with pkgs; [
-        tmuxPlugins.vim-tmux-navigator
-        # not going to work i need to manually pull
-        # tmuxPlugins.tmux-nvim # like tmux-vim-navigator allowes moving between panes
-        tmuxPlugins.tmux-thumbs # cool pasting text and links into my command line
-	  #      {
-	  # # not going to work 
-	  #        plugin = tmux-super-fingers; # opening links and paths in neovim
-	  #        extraConfig = "set -g @super-fingers-key f";
-	  #      }
-
-        tmuxPlugins.sensible # sensible tmux settings+bindings that look pretty like what I would set anyway
-        # must be before continuum edits right status bar
-	tmuxPlugins.catppuccin
-	tmuxPlugins.resurrect
-	tmuxPlugins.continuum
-        tmuxPlugins.better-mouse-mode # scrolling to the bottom will disable visual mode!
-        tmuxPlugins.yank # need to look into it. Should give me easier copying from tmux window
-     ];
-    extraConfig = ''
-      set -g default-terminal "tmux-256color"
-      set -ag terminal-overrides ",xterm-256color:RGB"
-
-      # set Ctrl + Space as the bind key
-      unbind C-Space
-      unbind C-b
-      set -g prefix C-Space
-      bind C-Space send-prefix
-
-      # Setting windows to star with 1 for easy access with Bind + 1, Bind + 2, ... etc
-      set -g base-index 1
-      set -g pane-base-index 1
-      set-window-option -g pane-base-index 1
-
-      set -g mouse on
-      # tmux keeps 2000 lines by default in the terminal history. Lets increase it to 5000
-      set-option -g history-limit 5000
-
-      # renumber windows so that there isn't a mess when a window is deleted
-      set -g renumber-windows on
-
-      # better vertical and horizontal splits. The defaults for these are % and "
-      # two mappings each so I don't have to worry about pressing shift
-      unbind %
-      bind "|" split-window -h -c "#{pane_current_path}"
-      bind "\\" split-window -fh -c "#{pane_current_path}"
-
-      unbind '"'
-      bind "-" split-window -v -c "#{pane_current_path}"
-      bind "_" split-window -fv -c "#{pane_current_path}"
-
-      # toggling between last two windows
-      bind Space last-window
-
-      # toggling between the last two sessions
-      bind-key C-Space switch-client -l
-
-      # Use vim keybindings in copy mode
-      set-window-option -g mode-keys vi
-
-      # v in copy mode starts making selection
-      bind-key -T copy-mode-vi v send-keys -X begin-selection
-      bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
-      bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
-
-      # Escape turns on copy mode
-      bind Escape copy-mode
-
-      # Easier reload of config
-      bind r source-file ~/.config/tmux/tmux.conf
-
-      # make Prefix p paste the buffer.
-      unbind p
-      bind p paste-buffer
-
-      set -g @catppuccin_flavour 'frappe'
-      set -g @catppuccin_window_tabs_enabled on
-      set -g @catppuccin_date_time "%H:%M"
-      
-
-      set -g @resurrect-strategy-vim 'session'
-      set -g @resurrect-strategy-nvim 'session'
-      set -g @resurrect-capture-pane-contents 'on'
-
-      set -g @continuum-restore 'on'
-      set -g @continuum-boot 'on'
-      set -g @continuum-save-interval '10'
-    '';
   };
   ####################
 
@@ -437,7 +349,7 @@
   # and migrated your data accordingly.
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 
 }
 

@@ -903,8 +903,10 @@ $env.config.show_banner = false
 alias v = nvim
 alias vim = nvim
 alias z = zoxide
+alias t = tmux
 alias cat = bat
 alias nix-vim = sudo nvim /etc/nixos/configuration.nix
+alias vim-nix = sudo nvim /etc/nixos/configuration.nix
 alias nix-switch = sudo nixos-rebuild switch --flake ~/dotfiles/nixos#nixos -I nixos-config=~/dotfiles/nixos/configuration.nix
 
 # to set my wallpapers easily
