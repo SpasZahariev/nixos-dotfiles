@@ -266,6 +266,7 @@
      mangohud # hame overlay FPS counter
      protonup # for installing proton GE for playing games
      hyprpanel
+     opencode # terminal ai agent
   ];
 
   # Env session variables for better wayland support
