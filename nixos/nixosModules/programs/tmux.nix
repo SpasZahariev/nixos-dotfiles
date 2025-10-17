@@ -36,12 +36,21 @@
       # Better splits
       unbind %
       bind "|" split-window -h -c "#{pane_current_path}"
+      bind "\\" split-window -fh -c "#{pane_current_path}"
       unbind '"'
       bind "-" split-window -v -c "#{pane_current_path}"
+      bind "_" split-window -fv -c "#{pane_current_path}"
 
       # Window/session switching
       bind Space last-window
       bind-key C-Space switch-client -l
+
+      # vim-tmux-navigator (move from neovim to other tmux panes)
+      set -g @vim_navigator_mapping_left "C-Left C-h"  # use C-h and C-Left
+      set -g @vim_navigator_mapping_right "C-Right C-l"
+      set -g @vim_navigator_mapping_up "C-k"
+      set -g @vim_navigator_mapping_down "C-j"
+      set -g @vim_navigator_mapping_prev ""  # removes the C-\ binding
 
       # Copy mode (vim style)
       set-window-option -g mode-keys vi
