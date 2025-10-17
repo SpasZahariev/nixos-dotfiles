@@ -24,6 +24,7 @@
         modules = [
           # {nixpkgs.overlays = [inputs.hyprpanel.overlay];}
           ./configuration.nix
+          ./nixosModules/programs/tmux.nix
         ];
       };
     };

@@ -162,9 +162,6 @@
 
   nixpkgs.config.allowUnfree = true; # FU Spotify
   
-  programs.tmux = {
-    enable = true;
-  };
   ####################
 
   # gtk thunar setup
