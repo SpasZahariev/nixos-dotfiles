@@ -908,7 +908,7 @@ alias cat = bat
 alias nix-vim = sudo nvim /etc/nixos/configuration.nix
 alias vim-nix = sudo nvim /etc/nixos/configuration.nix
 alias nix-switch = sudo nixos-rebuild switch --flake ~/dotfiles/nixos#nixos -I nixos-config=~/dotfiles/nixos/configuration.nix
-alias nix-fast = sudo nixos-rebuild switch --flake ~/dotfiles/nixos#nixos -I nixos-config=~/dotfiles/nixos/configuration.nix --fast --no-write-lock-file --offline
+alias nix-fast = sudo nixos-rebuild switch --flake ~/dotfiles/nixos#nixos -I nixos-config=~/dotfiles/nixos/configuration.nix --fast --no-write-lock-file --offline --option eval-cache true
 
 # to set my wallpapers easily
 alias sw = ~/dotfiles/.config/hypr/scripts/set_wallpaper_all.sh
@@ -933,6 +933,20 @@ def ya [...args] {
             cd $cwd
         }
     }
+}
+
+# setup a cool function that pretty prints stuff when called
+def show_git_info [] {
+    let branch = (git rev-parse --abbrev-ref HEAD err> /dev/null | default "None")
+    let status_count = (git status --short err> /dev/null | lines | length)
+
+    let output = $"
+╭─ Git Repo ───────────────────────────────╮
+│ Branch: ($branch)
+│ Status: ($status_count) changed files
+╰──────────────────────────────────────────╯
+    "
+    echo $output
 }
 
 mkdir ($nu.data-dir | path join "vendor/autoload")

@@ -24,13 +24,16 @@
   boot.loader.grub = {
     enable = true;
     devices = ["nodev"];
-    useOSProber = true;
     efiSupport = true;
     # theme = ./nixosModules/programs/grub-themes/CyberRe;
     # theme = ./nixosModules/programs/grub-themes/CyberGRUB-2077;
     theme = ./nixosModules/programs/grub-themes/virtuaverse;
     default = "2";
     # default = "Windows Boot Manager";
+
+    # skip grub-install and grub-mkconfig for faster nixos rebuilds
+    useOSProber = false; # if true will scan for windows boot config and add it to grub window!
+    forceInstall = false; # nix rebuild switch will skip GRUB regeneration unless the bootloader config actually changed
   };
 
 

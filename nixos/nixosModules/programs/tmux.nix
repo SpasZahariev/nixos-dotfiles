@@ -19,6 +19,10 @@
       set -g default-terminal "tmux-256color"
       set -ag terminal-overrides ",xterm-256color:RGB"
 
+      # make sure tmux knows to use nushell
+      set -g default-command "nu"
+      set -g default-shell "/run/current-system/sw/bin/nu"
+
       # Prefix key
       unbind C-b
       set -g prefix C-Space
@@ -45,9 +49,11 @@
       bind Space last-window
       bind-key C-Space switch-client -l
 
-      bind v split-window -h -p 25 'opencode' \; \
+      # make my super cool dev env windows
+      bind v split-window -h -p 15 -c "#{pane_current_path}" 'opencode' \; \
        select-pane -L \; \
-       split-window -v -p 25 \; \
+       split-window -v -p 25 -c "#{pane_current_path}" \; \
+       send-keys 'source ~/.config/nushell/top-3-ps.nu' C-m \; \
        select-pane -U \; \
        send-keys 'nvim .' C-m
 
@@ -67,7 +73,8 @@
       bind Escape copy-mode
 
       # Reload config
-      bind r source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded!"
+      # bind r source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded!"
+      bind r source-file /etc/tmux.conf \; display-message "Config reloaded!"
 
       # Paste buffer
       unbind p
