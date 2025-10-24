@@ -903,6 +903,7 @@ $env.config.show_banner = false
 alias v = nvim
 alias vim = nvim
 alias z = zoxide
+alias cd = z # I hope i don't end up in a bad situation due to this
 alias t = tmux
 alias cat = bat
 alias nix-vim = sudo nvim /etc/nixos/configuration.nix
@@ -919,8 +920,6 @@ alias fuck = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : 
 # print pretty distro text
 fastfetch
 
-source ~/.config/nushell/.secrets.nu
-source ~/.zoxide.nu
 
 # setup yazi wrapper so that when i exit with q - it moves me to the currently viewed directly
 def ya [...args] {
@@ -952,3 +951,6 @@ def show_git_info [] {
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 alias f = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : "",_PR_SHELL : nu } { /run/current-system/sw/bin/pay-respects }
+
+source ~/.config/nushell/.secrets.nu
+source ~/.zoxide.nu
