@@ -1,2 +1,2 @@
-flake.lock
+# flake.lock # it is suggested that I git commit this
 ~/.config/nushell/.secrets.nu

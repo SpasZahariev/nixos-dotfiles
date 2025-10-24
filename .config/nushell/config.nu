@@ -908,6 +908,7 @@ alias cat = bat
 alias nix-vim = sudo nvim /etc/nixos/configuration.nix
 alias vim-nix = sudo nvim /etc/nixos/configuration.nix
 alias nix-switch = sudo nixos-rebuild switch --flake ~/dotfiles/nixos#nixos -I nixos-config=~/dotfiles/nixos/configuration.nix
+alias nix-fast = sudo nixos-rebuild switch --flake ~/dotfiles/nixos#nixos -I nixos-config=~/dotfiles/nixos/configuration.nix --fast --no-write-lock-file --offline
 
 # to set my wallpapers easily
 alias sw = ~/dotfiles/.config/hypr/scripts/set_wallpaper_all.sh

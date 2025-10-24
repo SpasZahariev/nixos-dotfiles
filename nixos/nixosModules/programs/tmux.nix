@@ -8,11 +8,11 @@
       tmuxPlugins.vim-tmux-navigator
       tmuxPlugins.sensible
       tmuxPlugins.catppuccin
-      tmuxPlugins.resurrect
-      tmuxPlugins.continuum
       tmuxPlugins.better-mouse-mode
       tmuxPlugins.yank
       tmuxPlugins.tmux-thumbs
+      tmuxPlugins.resurrect
+      tmuxPlugins.continuum
     ];
 
     extraConfig = ''
@@ -45,6 +45,13 @@
       bind Space last-window
       bind-key C-Space switch-client -l
 
+      bind v split-window -h -p 25 'opencode' \; \
+       select-pane -L \; \
+       split-window -v -p 25 \; \
+       select-pane -U \; \
+       send-keys 'nvim .' C-m
+
+
       # vim-tmux-navigator (move from neovim to other tmux panes)
       set -g @vim_navigator_mapping_left "C-Left C-h"  # use C-h and C-Left
       set -g @vim_navigator_mapping_right "C-Right C-l"
@@ -75,9 +82,9 @@
       set -g @resurrect-strategy-vim 'session'
       set -g @resurrect-strategy-nvim 'session'
       set -g @resurrect-capture-pane-contents 'on'
-      set -g @continuum-restore 'on'
       set -g @continuum-boot 'on'
       set -g @continuum-save-interval '10'
+      set -g @continuum-restore 'on'
     '';
   };
 }
