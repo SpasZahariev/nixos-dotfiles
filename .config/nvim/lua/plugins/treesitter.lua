@@ -48,7 +48,7 @@ return {
       "vimdoc",
       "xml",
       "yaml",
-      "nushell",
+      "nu",
     },
   },
   ---@param opts lazyvim.TSConfig
