@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, unstablePkgs, ... }:
 
 {
   imports =
@@ -269,7 +269,7 @@
      mangohud # hame overlay FPS counter
      protonup # for installing proton GE for playing games
      hyprpanel
-     opencode # terminal ai agent
+     unstablePkgs.opencode # terminal ai agent from unstable channel
      hyprsunset # Blue light filtering during night
      rose-pine-hyprcursor # hyprcursor theme
      catppuccin-cursors.mochaMauve # i can see it in nwg but can't make it work right now soo rose pine it is
