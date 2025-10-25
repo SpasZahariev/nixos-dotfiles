@@ -270,7 +270,7 @@
      protonup # for installing proton GE for playing games
      hyprpanel
      opencode # terminal ai agent
-     gammastep # Blue light filtering during night
+     hyprsunset # Blue light filtering during night
      rose-pine-hyprcursor # hyprcursor theme
      catppuccin-cursors.mochaMauve # i can see it in nwg but can't make it work right now soo rose pine it is
      hyprshot # screenshots
