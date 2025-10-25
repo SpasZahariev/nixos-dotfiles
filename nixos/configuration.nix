@@ -272,8 +272,8 @@
      opencode # terminal ai agent
      gammastep # Blue light filtering during night
      rose-pine-hyprcursor # hyprcursor theme
-     catppuccin-cursors.mochaMauve
-
+     catppuccin-cursors.mochaMauve # i can see it in nwg but can't make it work right now soo rose pine it is
+     hyprshot # screenshots
   ];
 
   # Env session variables for better wayland support
