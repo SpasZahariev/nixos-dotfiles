@@ -32,7 +32,7 @@
     # default = "Windows Boot Manager";
 
     # skip grub-install and grub-mkconfig for faster nixos rebuilds
-    useOSProber = false; # if true will scan for windows boot config and add it to grub window!
+    useOSProber = true; # if true will scan for windows boot config and add it to grub window!
     forceInstall = false; # nix rebuild switch will skip GRUB regeneration unless the bootloader config actually changed
   };
 
@@ -51,6 +51,7 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+  # the basic console doesn't support nerdfonts
   console = {
     font = "Lat2-Terminus16";
   #    keyMap = "us";
@@ -143,6 +144,8 @@
 
   # fallback dynamic linker for binaries that expect a traditional Linux environment
   programs.nix-ld.enable = true;
+
+
 
   ### spotify customization
   programs.spicetify = 
@@ -267,6 +270,8 @@
      protonup # for installing proton GE for playing games
      hyprpanel
      opencode # terminal ai agent
+     gammastep # Blue light filtering during night
+     rose-pine-hyprcursor # hyprcursor theme
   ];
 
   # Env session variables for better wayland support
@@ -290,7 +295,8 @@
   
   fonts.packages = with pkgs; [
     # (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) # for nix-os stable
-    pkgs.nerd-fonts.jetbrains-mono # new syntax in nios-unstable branch
+    nerd-fonts.jetbrains-mono # new syntax in nios-unstable branch
+    nerd-fonts.hack
   ];
 
   # browser video playback doesn't work and adding this didn't fix it

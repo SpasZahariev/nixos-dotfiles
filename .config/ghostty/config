@@ -19,7 +19,9 @@
 # ==========================
 # # The config file consists of simple key-value pairs,
 # # separated by equals signs.
-font-family = "JetBrainsMono Nerd Font"
+# font-family = "JetBrainsMono Nerd Font"
+font-family = "Hack"
+font-size = 12
 theme = catppuccin-macchiato.conf
 # window-padding-x = 2
 #
