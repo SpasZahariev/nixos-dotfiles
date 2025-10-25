@@ -19,9 +19,11 @@
 # ==========================
 # # The config file consists of simple key-value pairs,
 # # separated by equals signs.
-# font-family = "JetBrainsMono Nerd Font"
-font-family = "Hack"
+# The same font is applied everywhere in the ghostty terminal
+font-family = "JetBrainsMono Nerd Font"
+# font-family = "Hack"
 font-size = 12
+font-feature = liga # enables standard ligatures => != ==
 theme = catppuccin-macchiato.conf
 # window-padding-x = 2
 #
