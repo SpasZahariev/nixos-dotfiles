@@ -274,6 +274,7 @@
      rose-pine-hyprcursor # hyprcursor theme
      catppuccin-cursors.mochaMauve # i can see it in nwg but can't make it work right now soo rose pine it is
      hyprshot # screenshots
+     lsof # "List open files" in unix everything is a file including sockets, network ports and directories
   ];
 
   # Env session variables for better wayland support
