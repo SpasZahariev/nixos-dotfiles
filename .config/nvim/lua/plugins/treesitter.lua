@@ -22,7 +22,15 @@ return {
     -- LazyVim config for treesitter
     indent = { enable = true }, ---@type lazyvim.TSFeat
     highlight = { enable = true }, ---@type lazyvim.TSFeat
+    incremental_selection = {
+      enable = true,
+    },
     folds = { enable = true }, ---@type lazyvim.TSFeat
+    textobjects = {
+      select = {
+        enable = false,
+      },
+    },
     ensure_installed = {
       "bash",
       "c",

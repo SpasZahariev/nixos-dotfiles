@@ -1,6 +1,6 @@
 return {
   {
-    "echasnovski/mini.ai", -- adds moveminets Inside and Around stuff
+    "nvim-mini/mini.ai", -- adds moveminets Inside and Around stuff
     version = false, -- latest unstable changes here we go!
     event = "VeryLazy", -- neovim thing. Will load the plugin after everything is ready
     config = function()
@@ -11,7 +11,7 @@ return {
   },
 
   {
-    "echasnovski/mini.surround", -- better surround than tpopes
+    "nvim-mini/mini.surround", -- better surround than tpopes
     version = false,
     event = "VeryLazy",
     config = function()
@@ -20,7 +20,7 @@ return {
   },
 
   {
-    "echasnovski/mini.files",
+    "nvim-mini/mini.files",
     version = false,
     event = "VeryLazy",
     config = function()
