@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-# Command to start spotify
+# Command to start steam
 
 setsid steam &
