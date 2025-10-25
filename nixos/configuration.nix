@@ -272,6 +272,8 @@
      opencode # terminal ai agent
      gammastep # Blue light filtering during night
      rose-pine-hyprcursor # hyprcursor theme
+     catppuccin-cursors.mochaMauve
+
   ];
 
   # Env session variables for better wayland support
