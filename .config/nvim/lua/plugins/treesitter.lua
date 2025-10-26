@@ -1,3 +1,5 @@
+-- started off as the default config from lazyvim.org/treesitter
+
 return {
   "nvim-treesitter/nvim-treesitter",
   branch = "main",
@@ -57,6 +59,7 @@ return {
       "xml",
       "yaml",
       "nu",
+      "css",
     },
   },
   ---@param opts lazyvim.TSConfig

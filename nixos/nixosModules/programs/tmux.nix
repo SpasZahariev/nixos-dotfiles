@@ -73,12 +73,17 @@
       bind Escape copy-mode
 
       # Reload config
+      # Don't forget to nix-fast rebuild before you reload the config
       # bind r source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded!"
       bind r source-file /etc/tmux.conf \; display-message "Config reloaded!"
 
       # Paste buffer
       unbind p
       bind p paste-buffer
+
+      # Bind 'l' to open URLs from the current pane
+      unbind l
+      bind l run-shell -b "tmux capture-pane -J -p | rg -o '(https?://[^\s>]+)' | fzf-tmux -d20 --multi --bind 'alt-a:select-all,alt-d:deselect-all' | xargs -r xdg-open"
 
       # Catppuccin theme
       set -g @catppuccin_flavour 'frappe'
