@@ -275,6 +275,7 @@
      catppuccin-cursors.mochaMauve # i can see it in nwg but can't make it work right now soo rose pine it is
      hyprshot # screenshots
      lsof # "List open files" in unix everything is a file including sockets, network ports and directories
+     unstablePkgs.gemini-cli # some ai terminal goodness
   ];
 
   # Env session variables for better wayland support
@@ -283,6 +284,8 @@
     XDG_CURRENT_DESKTOP = "Hyprland";
     QT_QPA_PLATFORM = "wayland"; # Force Wayland for Qt apps like VLC
     SDL_VIDEODRIVER = "wayland";
+    NO_UPDATE_NOTIFIER = "1"; # should Disable gemini-cli from autoupdating
+
     # VDPAU_DRIVER = "radeonsi"; # idk if this will fix my video playback problem, let's try
     # GTK_THEME = "Papirus-Dark";
     # XDG_ICON_DIR = "${pkgs.catppuccin-papirus-folders}/share/icons/Papirus-Dark";

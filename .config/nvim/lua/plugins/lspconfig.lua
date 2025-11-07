@@ -138,6 +138,8 @@ return {
       vtsls = {}, -- javascript, typescript, html lsp
       -- html = {},
       tailwindcss = {},
+      pyright = {}, -- python lsp from microsoft,
+      ruff = {}, -- python linting and formatting (should not conflict with pyright)
       -- you can do any additional lsp server setup here
       -- return true if you don't want this server to be setup with lspconfig
       ---@type table<string, fun(server:string, opts: vim.lsp.Config):boolean?>
