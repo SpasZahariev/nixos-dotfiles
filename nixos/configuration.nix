@@ -145,6 +145,10 @@
   # fallback dynamic linker for binaries that expect a traditional Linux environment
   programs.nix-ld.enable = true;
 
+  # for using direnv .envrc files in my programming projects so ican use package managers like pip npm cargo
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+
 
 
   ### spotify customization
@@ -216,7 +220,6 @@
      tree
      wofi
      cava
-     python3
      rustup
      xdg-desktop-portal-hyprland
      grim
@@ -239,7 +242,6 @@
      yazi
      ffmpeg-full
      widevine-cdm # DRM support (e.g., Netflix, Spotify, YouTube Music)
-     vlc
      mpv
      mesa # amd gpu drivers
      vesktop
@@ -276,6 +278,8 @@
      hyprshot # screenshots
      lsof # "List open files" in unix everything is a file including sockets, network ports and directories
      unstablePkgs.gemini-cli # some ai terminal goodness
+     python314Full
+     carapace # cli command completions and suggestions
   ];
 
   # Env session variables for better wayland support
