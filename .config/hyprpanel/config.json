@@ -20,6 +20,7 @@
   "theme.bar.buttons.systray.enableBorder": false,
   "bar.battery.hideLabelWhenFull": false,
   "menus.dashboard.powermenu.avatar.image": "/home/spas/wallpapers/icons/nixos-logo.png",
+  "os_icon": "/home/spas/.config/hyprpanel/icons/nixos.svg",
   "bar.layouts": {
     "0": {
       "left": [
