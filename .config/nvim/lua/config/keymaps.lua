@@ -25,3 +25,29 @@ vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", opts)
 -- Visual mode
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
+
+-- Reselect after indent/dedent in visual mode
+vim.keymap.set("v", "<", "<gv", opts)
+vim.keymap.set("v", ">", ">gv", opts)
+
+-- Keep cursor centered after jumps
+vim.keymap.set("n", "n", "nzzzv", opts)
+vim.keymap.set("n", "N", "Nzzzv", opts)
+vim.keymap.set("n", "<C-d>", "<C-d>zz", opts)
+vim.keymap.set("n", "<C-u>", "<C-u>zz", opts)
+
+-- Yank to system clipboard
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', opts)
+vim.keymap.set("n", "<leader>Y", '"+Y', opts)
+
+-- Paste over selection without losing clipboard
+vim.keymap.set("v", "p", '"_dP', opts)
+
+-- Delete without yanking
+vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', opts)
+
+-- Quickly reload config
+vim.keymap.set("n", "<leader>sv", ":source $MYVIMRC<CR>", opts)
+
+-- Keep visual selection after formatting
+vim.keymap.set("v", "=", "=gv", opts)
