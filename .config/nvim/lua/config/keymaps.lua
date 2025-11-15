@@ -12,3 +12,16 @@ vim.keymap.set("n", "s", "<Nop>")
 
 -- disable in visual mode
 vim.keymap.set("x", "s", "<Nop>")
+
+-- Primagen Join lines
+local opts = { noremap = true, silent = true }
+vim.keymap.set("n", "J", "mzJ`z", opts)
+
+-- Move lines up and down
+-- Normal mode
+vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", opts)
+vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", opts)
+
+-- Visual mode
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
