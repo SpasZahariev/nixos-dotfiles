@@ -29,7 +29,8 @@
       bind C-Space send-prefix
 
       # Indices
-      set -g base-index 1
+      set -g base-index 1 # window indices start from 1 instead of 0 for easier reach
+      set -g renumber-windows on # closing a window will rename the rest to fit
       set -g pane-base-index 1
 
       # Quality of life
@@ -85,10 +86,30 @@
       unbind l
       bind l run-shell -b "tmux capture-pane -J -p | rg -o '(https?://[^\s>]+)' | fzf-tmux -d20 --multi --bind 'alt-a:select-all,alt-d:deselect-all' | xargs -r xdg-open"
 
+      # move areound windows
+      bind H previous-window
+      bind L next-window
+
       # Catppuccin theme
-      set -g @catppuccin_flavour 'frappe'
+      set -g @catppuccin_flavour 'macchiato'
       set -g @catppuccin_window_tabs_enabled on
       set -g @catppuccin_date_time "%H:%M"
+      set -g @catppuccin_window_left_separator ""
+      set -g @catppuccin_window_right_separator " "
+      set -g @catppuccin_window_middle_separator " █"
+      set -g @catppuccin_window_number_position "right"
+      set -g @catppuccin_window_default_fill "number"
+      set -g @catppuccin_window_default_text "#W"
+      set -g @catppuccin_window_current_fill "number"
+      set -g @catppuccin_window_current_text "#W#{?window_zoomed_flag,(),}"
+      set -g @catppuccin_status_modules_right "directory" # date_time"
+      set -g @catppuccin_status_modules_left "session"
+      set -g @catppuccin_status_left_separator  " "
+      set -g @catppuccin_status_right_separator " "
+      set -g @catppuccin_status_right_separator_inverse "no"
+      set -g @catppuccin_status_fill "icon"
+      set -g @catppuccin_status_connect_separator "no"
+      set -g @catppuccin_directory_text "#{b:pane_current_path}"
 
       # Resurrect/Continuum
       set -g @resurrect-strategy-vim 'session'
