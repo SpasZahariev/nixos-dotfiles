@@ -934,8 +934,6 @@ alias sw = ~/dotfiles/.config/hypr/scripts/set_wallpaper_all.sh
 # set alias for pay-respects aka the Rust fuck version
 alias fuck = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : "",_PR_SHELL : nu } { /run/current-system/sw/bin/pay-respects }
 
-# print pretty distro text
-fastfetch --color 256
 
 
 # setup yazi wrapper so that when i exit with q - it moves me to the currently viewed directly
@@ -968,6 +966,14 @@ def show_git_info [] {
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 alias f = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : "",_PR_SHELL : nu } { /run/current-system/sw/bin/pay-respects }
+
+# env variable for bettwer color compatibility with tmux
+$env.TERM = "tmux-256color"
+$env.COLORTERM = "truecolor"
+$env.TERM_PROGRAM = "Ghostty"
+
+# print pretty distro text
+fastfetch --color 256
 
 source ~/.config/nushell/.secrets.nu
 source ~/.zoxide.nu
