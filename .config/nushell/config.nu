@@ -904,7 +904,21 @@ alias v = nvim
 alias vim = nvim
 alias z = zoxide
 # alias cd = z # if zoxide has a problem this messes me up
-alias t = tmux
+alias tk = tmux kill-server
+# like an alias create a main session or attach to it
+def t [] {
+    # Try to get sessions, ignore errors
+    let sessions = (tmux list-sessions err> /dev/null | default "")
+
+    if $sessions == "" {
+        # No server / no sessions → create new
+        tmux new -s main
+    } else {
+        # Server exists → attach to main
+        tmux attach -t main
+    }
+}
+
 alias cat = bat
 alias nix-vim = sudo nvim /etc/nixos/configuration.nix
 alias vim-nix = sudo nvim /etc/nixos/configuration.nix
