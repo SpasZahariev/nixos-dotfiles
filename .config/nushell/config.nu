@@ -970,10 +970,11 @@ alias f = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : "",
 # env variable for bettwer color compatibility with tmux
 # $env.TERM = "tmux-256color"
 # $env.COLORTERM = "truecolor"
-$env.TERM_PROGRAM = "Ghostty"
+# $env.TERM_PROGRAM = "Ghostty"
 
 # print pretty distro text
-fastfetch --color 256
+# fastfetch --color 256
+fastfetch 
 
 source ~/.config/nushell/.secrets.nu
 source ~/.zoxide.nu
