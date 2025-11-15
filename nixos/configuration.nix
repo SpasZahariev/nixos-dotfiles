@@ -158,6 +158,18 @@
   programs.direnv.nix-direnv.enable = true;
 
   programs.tmux.enable = true;
+  programs.git = {
+    enable = true;
+    config = {
+        # Fuck 3 way conflict resolution
+        mergetool = {
+            hideResolved = true;
+        };
+        init = {
+            defaultBranch = "main";
+        };
+    };
+  };
 
 
   ### spotify customization
@@ -215,7 +227,6 @@
      hyprland
      seatd
      brave
-     git
      stow 
      tree
      wofi
