@@ -8,7 +8,7 @@
      swww.url = "github:LGFae/swww";
      spicetify-nix.url = "github:Gerg-L/spicetify-nix";
      hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-     catppuccin.url = "github:catppuccin/nix";
+     # catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = { nixpkgs, nixpkgs-unstable, ... } @ inputs: 
@@ -27,7 +27,7 @@
         }; 
         modules = [
           ./configuration.nix
-          ./nixosModules/programs/tmux.nix
+          # ./nixosModules/programs/tmux.nix
         ];
       };
     };

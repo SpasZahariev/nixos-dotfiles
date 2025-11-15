@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.spicetify-nix.nixosModules.default
-      inputs.catppuccin.nixosModules.catppuccin
+      # inputs.catppuccin.nixosModules.catppuccin
       # inputs.home-manager.nixosModules.home-manager
     ];
 
@@ -158,6 +158,7 @@
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
+  programs.tmux.enable = true;
 
 
   ### spotify customization
