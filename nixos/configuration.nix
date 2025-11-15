@@ -9,6 +9,8 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.spicetify-nix.nixosModules.default
+      inputs.catppuccin.nixosModules.catppuccin
+      # inputs.home-manager.nixosModules.home-manager
     ];
 
   nix.settings.experimental-features = [ "flakes" "nix-command"];
@@ -92,6 +94,13 @@
   };
 
 
+  # #home manager config
+  # programs.home-manager.enable = true;
+  # home-manager.users.spas = { pkgs, ... }: {
+  #    home.packages = [
+  #      pkgs.tmux
+  #    ];
+  # };
   
 
   # Configure keymap in X11
@@ -172,6 +181,10 @@
 
   nixpkgs.config.allowUnfree = true; # FU Spotify
   
+  
+  # catppuccin.enable = true;
+  # catppuccin.flavor = "macchiato";
+
   ####################
 
   # gtk thunar setup
@@ -280,6 +293,8 @@
      unstablePkgs.gemini-cli # some ai terminal goodness
      python314Full
      carapace # cli command completions and suggestions
+     rustc
+     cargo
   ];
 
   # Env session variables for better wayland support

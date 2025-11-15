@@ -8,6 +8,7 @@
      swww.url = "github:LGFae/swww";
      spicetify-nix.url = "github:Gerg-L/spicetify-nix";
      hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+     catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = { nixpkgs, nixpkgs-unstable, ... } @ inputs: 
@@ -22,7 +23,7 @@
         specialArgs = {
           inherit system;
           inherit unstablePkgs;
-          inherit inputs; # i'll be able to use all inputs in all modules
+          inherit inputs; # i'll be able to acceess all inputs in all modules
         }; 
         modules = [
           ./configuration.nix
