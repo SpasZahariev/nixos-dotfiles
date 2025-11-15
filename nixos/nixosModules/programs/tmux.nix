@@ -6,12 +6,12 @@
     plugins = with pkgs; [
       tmuxPlugins.vim-tmux-navigator
       tmuxPlugins.sensible
-      tmuxPlugins.catppuccin
       tmuxPlugins.better-mouse-mode
       tmuxPlugins.yank
       tmuxPlugins.tmux-thumbs
       tmuxPlugins.resurrect
       tmuxPlugins.continuum
+      tmuxPlugins.catppuccin
     ];
     # catppuccin = {
     #   enable = true;
@@ -119,6 +119,8 @@
       bind L next-window
 
       # Catppuccin theme
+      # Doesn't seem to be working with these settings
+      set -g @catppuccin'on'
       set -g @catppuccin_flavour 'macchiato'
       set -g @catppuccin_window_tabs_enabled on
       set -g @catppuccin_date_time "%H:%M"
