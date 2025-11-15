@@ -73,6 +73,7 @@ vim.keymap.set("i", "?", "?<C-g>u", opts)
 -- deletes the visual selection and pastes from my clipboard
 vim.keymap.set("v", "<leader>p", '"_dP', opts) -- the clipboard wont be overwritten with the deleted text
 
+vim.keymap.set("n", "<C-q>", ":q!<CR>", opts)
 -- Lazyvim seems to do this by default!
 -- center the screen when I am moving to next and prev (also opens folds)
 -- vim.keymap.set("n", "n", "nzzzv", opts) -- center on pressing n
