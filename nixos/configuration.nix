@@ -9,7 +9,6 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.spicetify-nix.nixosModules.default
-      # inputs.catppuccin.nixosModules.catppuccin
       # inputs.home-manager.nixosModules.home-manager
     ];
 
@@ -183,22 +182,9 @@
   nixpkgs.config.allowUnfree = true; # FU Spotify
   
   
-  # catppuccin.enable = true;
-  # catppuccin.flavor = "macchiato";
-
   ####################
 
   # gtk thunar setup
-
-  # gtk = {
-  #   iconTheme = {
-  #     name = "Papirus-Dark";
-  #     package = pkgs.catppuccin-papirus-folders.override {
-  #       flavor = "macchiato"; 
-  #       accent = "pink";  # or blue, green, etc.
-  #     };
-  #   };
-  # };
 
   # bookmarks for the left side panel
   # gtk.gtk3.bookmarks = [
