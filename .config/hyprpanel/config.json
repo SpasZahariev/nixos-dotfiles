@@ -38,6 +38,7 @@
         "bluetooth",
         "kbinput",
         "ram",
+        "hyprsunset",
         "cputemp",
         "clock"
       ]
