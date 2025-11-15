@@ -968,8 +968,8 @@ starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.n
 alias f = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : "",_PR_SHELL : nu } { /run/current-system/sw/bin/pay-respects }
 
 # env variable for bettwer color compatibility with tmux
-$env.TERM = "tmux-256color"
-$env.COLORTERM = "truecolor"
+# $env.TERM = "tmux-256color"
+# $env.COLORTERM = "truecolor"
 $env.TERM_PROGRAM = "Ghostty"
 
 # print pretty distro text
