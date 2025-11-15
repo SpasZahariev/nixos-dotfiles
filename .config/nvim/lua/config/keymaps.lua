@@ -51,3 +51,29 @@ vim.keymap.set("n", "<leader>sv", ":source $MYVIMRC<CR>", opts)
 
 -- Keep visual selection after formatting
 vim.keymap.set("v", "=", "=gv", opts)
+
+vim.keymap.set("i", "<C-H>", "<C-w>", opts)     -- Ctrl+Backspace
+vim.keymap.set("i", "<C-Del>", "<C-o>dw", opts) -- Ctrl+Delete
+
+vim.keymap.set("n", "x", '"_x')                 -- when I delete with x it wont override my register
+
+-- toggle git blame on the current line
+vim.keymap.set("n", "<leader>gi", function()
+  local gs = require("gitsigns")
+  gs.current_line_blame = not gs.current_line_blame
+  gs.toggle_current_line_blame()
+end, { noremap = true, silent = true, desc = "Toggle Git Blame Inline" })
+
+-- undo break points. For when I don't want to undo all my new text
+vim.keymap.set("i", ",", ",<C-g>u", opts)
+vim.keymap.set("i", ".", ".<C-g>u", opts)
+vim.keymap.set("i", "!", "!<C-g>u", opts)
+vim.keymap.set("i", "?", "?<C-g>u", opts)
+
+-- deletes the visual selection and pastes from my clipboard
+vim.keymap.set("v", "<leader>p", '"_dP', opts) -- the clipboard wont be overwritten with the deleted text
+
+-- Lazyvim seems to do this by default!
+-- center the screen when I am moving to next and prev (also opens folds)
+-- vim.keymap.set("n", "n", "nzzzv", opts) -- center on pressing n
+-- vim.keymap.set("n", "N", "Nzzzv", opts) -- center on pressing N

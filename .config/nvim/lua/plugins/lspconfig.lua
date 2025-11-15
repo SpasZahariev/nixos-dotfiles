@@ -98,6 +98,7 @@ return {
               desc = "Next Reference", enabled = function() return Snacks.words.is_enabled() end },
             { "<a-p>", function() Snacks.words.jump(-vim.v.count1, true) end, has = "documentHighlight",
               desc = "Prev Reference", enabled = function() return Snacks.words.is_enabled() end },
+            { "<leader>lf", function() vim.lsp.buf.format({ async = true }) end, desc = "Format Document" },
           },
         },
         stylua = { enabled = false },
@@ -213,6 +214,14 @@ return {
       end
     end
     vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
+
+    -- format file/buffer on save
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      pattern = "*",
+      callback = function()
+        vim.lsp.buf.format({ async = false })
+      end,
+    })
 
     -- if opts.capabilities then
     --   LazyVim.deprecate("lsp-config.opts.capabilities", "Use lsp-config.opts.servers['*'].capabilities instead")
