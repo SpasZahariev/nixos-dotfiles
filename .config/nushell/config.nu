@@ -912,10 +912,10 @@ def t [] {
 
     if $sessions == "" {
         # No server / no sessions → create new
-        tmux new -s main
+        tmux new -s sess
     } else {
         # Server exists → attach to main
-        tmux attach -t main
+        tmux attach -t sess
     }
 }
 
@@ -935,7 +935,7 @@ alias sw = ~/dotfiles/.config/hypr/scripts/set_wallpaper_all.sh
 alias fuck = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : "",_PR_SHELL : nu } { /run/current-system/sw/bin/pay-respects }
 
 # print pretty distro text
-fastfetch
+fastfetch --color 256
 
 
 # setup yazi wrapper so that when i exit with q - it moves me to the currently viewed directly
