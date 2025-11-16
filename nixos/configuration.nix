@@ -21,7 +21,8 @@
   #boot.loader.efi.efiSysMountPoint = "/mnt/boot"
   #boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 20; #wait for 20 secs before going to default option
+  # boot.loader.timeout = 20; # wait for 20 secs before going to default option
+  boot.loader.timeout = -1; # wait forever until i manually select
   boot.loader.grub = {
     enable = true;
     devices = ["nodev"];

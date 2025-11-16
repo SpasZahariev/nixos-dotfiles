@@ -972,6 +972,9 @@ alias f = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : "",
 # $env.COLORTERM = "truecolor"
 # $env.TERM_PROGRAM = "Ghostty"
 
+# reset the terminal colors for tmux resurrect issue
+# tput init
+print "\u{1b}c"
 # print pretty distro text
 # fastfetch --color 256
 fastfetch 
