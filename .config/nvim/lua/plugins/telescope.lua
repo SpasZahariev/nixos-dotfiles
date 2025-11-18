@@ -6,7 +6,8 @@ return {
     {
       "nvim-telescope/telescope-fzf-native.nvim",
       build = (build_cmd ~= "cmake") and "make"
-        or "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+          or
+          "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
       enabled = build_cmd ~= nil,
       config = function(plugin)
         LazyVim.on_load("telescope.nvim", function()
@@ -22,6 +23,7 @@ return {
               LazyVim.error("Failed to load `telescope-fzf-native.nvim`:\n" .. err)
             end
           end
+          pcall(require("telescope").load_extension, "harpoon")
         end)
       end,
     },
@@ -32,53 +34,71 @@ return {
       "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
       desc = "Switch Buffer",
     },
-    { "<leader>/", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },
-    { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-    { "<leader><space>", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
+    { "<leader>/",       LazyVim.pick("live_grep"),            desc = "Grep (Root Dir)" },
+    { "<leader>:",       "<cmd>Telescope command_history<cr>", desc = "Command History" },
+    { "<leader><space>", LazyVim.pick("files"),                desc = "Find Files (Root Dir)" },
     -- find
     {
       "<leader>fb",
       "<cmd>Telescope buffers sort_mru=true sort_lastused=true ignore_current_buffer=true<cr>",
       desc = "Buffers",
     },
-    { "<leader>fB", "<cmd>Telescope buffers<cr>", desc = "Buffers (all)" },
-    { "<leader>fc", LazyVim.pick.config_files(), desc = "Find Config File" },
-    { "<leader>ff", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
-    { "<leader>fF", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
-    { "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Find Files (git-files)" },
-    { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
+    { "<leader>fB", "<cmd>Telescope buffers<cr>",                     desc = "Buffers (all)" },
+    { "<leader>fc", LazyVim.pick.config_files(),                      desc = "Find Config File" },
+    { "<leader>ff", LazyVim.pick("files"),                            desc = "Find Files (Root Dir)" },
+    { "<leader>fF", LazyVim.pick("files", { root = false }),          desc = "Find Files (cwd)" },
+    { "<leader>fg", "<cmd>Telescope git_files<cr>",                   desc = "Find Files (git-files)" },
+    { "<leader>fr", "<cmd>Telescope oldfiles<cr>",                    desc = "Recent" },
     { "<leader>fR", LazyVim.pick("oldfiles", { cwd = vim.uv.cwd() }), desc = "Recent (cwd)" },
     -- git
-    { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "Commits" },
-    { "<leader>gl", "<cmd>Telescope git_commits<CR>", desc = "Commits" },
-    { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Status" },
-    { "<leader>gS", "<cmd>Telescope git_stash<cr>", desc = "Git Stash" },
+    { "<leader>gc", "<cmd>Telescope git_commits<CR>",                 desc = "Commits" },
+    { "<leader>gl", "<cmd>Telescope git_commits<CR>",                 desc = "Commits" },
+    { "<leader>gs", "<cmd>Telescope git_status<CR>",                  desc = "Status" },
+    { "<leader>gS", "<cmd>Telescope git_stash<cr>",                   desc = "Git Stash" },
     -- search
-    { '<leader>s"', "<cmd>Telescope registers<cr>", desc = "Registers" },
-    { "<leader>s/", "<cmd>Telescope search_history<cr>", desc = "Search History" },
-    { "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
-    { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer Lines" },
-    { "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-    { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
-    { "<leader>sd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
-    { "<leader>sD", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Buffer Diagnostics" },
-    { "<leader>sg", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },
-    { "<leader>sG", LazyVim.pick("live_grep", { root = false }), desc = "Grep (cwd)" },
-    { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
-    { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
-    { "<leader>sj", "<cmd>Telescope jumplist<cr>", desc = "Jumplist" },
-    { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
-    { "<leader>sl", "<cmd>Telescope loclist<cr>", desc = "Location List" },
-    { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
-    { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
-    { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
-    { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
-    { "<leader>sq", "<cmd>Telescope quickfix<cr>", desc = "Quickfix List" },
-    { "<leader>sw", LazyVim.pick("grep_string", { word_match = "-w" }), desc = "Word (Root Dir)" },
+    { '<leader>s"', "<cmd>Telescope registers<cr>",                   desc = "Registers" },
+    { "<leader>s/", "<cmd>Telescope search_history<cr>",              desc = "Search History" },
+    { "<leader>sa", "<cmd>Telescope autocommands<cr>",                desc = "Auto Commands" },
+    { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>",   desc = "Buffer Lines" },
+    { "<leader>sc", "<cmd>Telescope command_history<cr>",             desc = "Command History" },
+    { "<leader>sC", "<cmd>Telescope commands<cr>",                    desc = "Commands" },
+    { "<leader>sd", "<cmd>Telescope diagnostics<cr>",                 desc = "Diagnostics" },
+    { "<leader>sD", "<cmd>Telescope diagnostics bufnr=0<cr>",         desc = "Buffer Diagnostics" },
+    { "<leader>sg", LazyVim.pick("live_grep"),                        desc = "Grep (Root Dir)" },
+    { "<leader>sG", LazyVim.pick("live_grep", { root = false }),      desc = "Grep (cwd)" },
+    { "<leader>sh", "<cmd>Telescope help_tags<cr>",                   desc = "Help Pages" },
+    {
+      "<leader>sH",
+      "<cmd>Telescope highlights<cr>",
+      desc = "Search Highlight Groups",
+    },
+    { "<leader>sj", "<cmd>Telescope jumplist<cr>",                                    desc = "Jumplist" },
+    { "<leader>sk", "<cmd>Telescope keymaps<cr>",                                     desc = "Key Maps" },
+    { "<leader>sl", "<cmd>Telescope loclist<cr>",                                     desc = "Location List" },
+    { "<leader>sM", "<cmd>Telescope man_pages<cr>",                                   desc = "Man Pages" },
+    { "<leader>sm", "<cmd>Telescope marks<cr>",                                       desc = "Jump to Mark" },
+    { "<leader>so", "<cmd>Telescope vim_options<cr>",                                 desc = "Options" },
+    { "<leader>sR", "<cmd>Telescope resume<cr>",                                      desc = "Resume" },
+    { "<leader>sq", "<cmd>Telescope quickfix<cr>",                                    desc = "Quickfix List" },
+    { "<leader>sw", LazyVim.pick("grep_string", { word_match = "-w" }),               desc = "Word (Root Dir)" },
     { "<leader>sW", LazyVim.pick("grep_string", { root = false, word_match = "-w" }), desc = "Word (cwd)" },
-    { "<leader>sw", LazyVim.pick("grep_string"), mode = "x", desc = "Selection (Root Dir)" },
-    { "<leader>sW", LazyVim.pick("grep_string", { root = false }), mode = "x", desc = "Selection (cwd)" },
-    { "<leader>uC", LazyVim.pick("colorscheme", { enable_preview = true }), desc = "Colorscheme with Preview" },
+    {
+      "<leader>sw",
+      LazyVim.pick("grep_string"),
+      mode = "x",
+      desc = "Selection (Root Dir)",
+    },
+    {
+      "<leader>sW",
+      LazyVim.pick("grep_string", { root = false }),
+      mode = "x",
+      desc = "Selection (cwd)",
+    },
+    {
+      "<leader>uC",
+      LazyVim.pick("colorscheme", { enable_preview = true }),
+      desc = "Colorscheme with Preview",
+    },
     {
       "<leader>ss",
       function()
@@ -97,6 +117,7 @@ return {
       end,
       desc = "Goto Symbol (Workspace)",
     },
+    { "<leader>fh", "<cmd>Telescope harpoon marks<CR>", desc = "Telescope: Harpoon marks" },
   },
   opts = function()
     local actions = require("telescope.actions")
@@ -161,9 +182,9 @@ return {
         -- Layout settings
         layout_strategy = "horizontal", -- horizontal split
         layout_config = {
-          prompt_position = "top", -- search prompt at top
-          width = 0.9, -- 90% of screen width
-          height = 0.85, -- 85% of screen height
+          prompt_position = "top",      -- search prompt at top
+          width = 0.9,                  -- 90% of screen width
+          height = 0.85,                -- 85% of screen height
         },
 
         -- Ignore some common files/folders
