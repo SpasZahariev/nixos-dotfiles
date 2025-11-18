@@ -281,29 +281,33 @@
     carapace # cli command completions and suggestions
     rustc
     cargo
-    clipmenu # default shortcut is Ctrl + Shift + V
+    cliphist # clipboard manager wayland compatible
+    wl-clip-persist # keep wl clipboard even after programs close
+    statix # linter for .nix files
   ];
 
   # Env session variables for better wayland support
-  environment.sessionVariables = {
-    XDG_SESSION_TYPE = "wayland";
-    XDG_CURRENT_DESKTOP = "Hyprland";
-    QT_QPA_PLATFORM = "wayland"; # Force Wayland for Qt apps like VLC
-    SDL_VIDEODRIVER = "wayland";
-    NO_UPDATE_NOTIFIER = "1"; # should Disable gemini-cli from autoupdating
+  environment = {
+    variables = {
+      EDITOR = "nvim";
+      TERMINAL = "ghostty";
+      HOME = "/home/spas";
+    };
+    sessionVariables = {
+      XDG_SESSION_TYPE = "wayland";
+      XDG_CURRENT_DESKTOP = "Hyprland";
+      QT_QPA_PLATFORM = "wayland"; # Force Wayland for Qt apps like VLC
+      SDL_VIDEODRIVER = "wayland";
+      NO_UPDATE_NOTIFIER = "1"; # should Disable gemini-cli from autoupdating
 
-    # VDPAU_DRIVER = "radeonsi"; # idk if this will fix my video playback problem, let's try
-    # GTK_THEME = "Papirus-Dark";
-    # XDG_ICON_DIR = "${pkgs.catppuccin-papirus-folders}/share/icons/Papirus-Dark";
+      # VDPAU_DRIVER = "radeonsi"; # idk if this will fix my video playback problem, let's try
+      # GTK_THEME = "Papirus-Dark";
+      # XDG_ICON_DIR = "${pkgs.catppuccin-papirus-folders}/share/icons/Papirus-Dark";
 
-    # Setup env vars for where steam should be installed
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
-      "/home/user/.steam/root/compatibilitytools.d";
-  };
-  environment.variables = {
-    EDITOR = "nvim";
-    TERMINAL = "ghostty";
-    HOME = "/home/spas";
+      # Setup env vars for where steam should be installed
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS =
+        "/home/user/.steam/root/compatibilitytools.d";
+    };
   };
 
   fonts.packages = with pkgs; [
