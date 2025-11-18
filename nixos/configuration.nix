@@ -181,9 +181,6 @@
 
   nixpkgs.config.allowUnfree = true; # FU Spotify
 
-  ### clipboard ui menu with history
-  # programs.clipmenu.enable = true; # default shortcut is Ctrl + Shift + V
-
   ####################
 
   # gtk thunar setup
@@ -284,6 +281,7 @@
     carapace # cli command completions and suggestions
     rustc
     cargo
+    clipmenu # default shortcut is Ctrl + Shift + V
   ];
 
   # Env session variables for better wayland support
