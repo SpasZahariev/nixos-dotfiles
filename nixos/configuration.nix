@@ -5,19 +5,18 @@
 { config, lib, pkgs, inputs, unstablePkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.spicetify-nix.nixosModules.default
-      # inputs.home-manager.nixosModules.home-manager
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    inputs.spicetify-nix.nixosModules.default
+    # inputs.home-manager.nixosModules.home-manager
+  ];
 
-  nix.settings.experimental-features = [ "flakes" "nix-command"];
+  nix.settings.experimental-features = [ "flakes" "nix-command" ];
   # GPU
   # make the kernel use the correct driver early
-  boot.initrd.kernelModules = ["amdgpu"];
- # Bootloader
- # boot.loader.grub.device = "/dev/nvme1n1p5";
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  # Bootloader
+  # boot.loader.grub.device = "/dev/nvme1n1p5";
   #boot.loader.efi.efiSysMountPoint = "/mnt/boot"
   #boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -25,7 +24,7 @@
   boot.loader.timeout = -1; # wait forever until i manually select
   boot.loader.grub = {
     enable = true;
-    devices = ["nodev"];
+    devices = [ "nodev" ];
     efiSupport = true;
     # theme = ./nixosModules/programs/grub-themes/CyberRe;
     # theme = ./nixosModules/programs/grub-themes/CyberGRUB-2077;
@@ -34,15 +33,17 @@
     # default = "Windows Boot Manager";
 
     # skip grub-install and grub-mkconfig for faster nixos rebuilds
-    useOSProber = true; # if true will scan for windows boot config and add it to grub window!
-    forceInstall = false; # nix rebuild switch will skip GRUB regeneration unless the bootloader config actually changed
+    useOSProber =
+      true; # if true will scan for windows boot config and add it to grub window!
+    forceInstall =
+      false; # nix rebuild switch will skip GRUB regeneration unless the bootloader config actually changed
   };
-
 
   networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable =
+    true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Europe/Zurich";
@@ -56,7 +57,7 @@
   # the basic console doesn't support nerdfonts
   console = {
     font = "Lat2-Terminus16";
-  #    keyMap = "us";
+    #    keyMap = "us";
     useXkbConfig = true; # use xkb.options in tty.
   };
 
@@ -68,14 +69,14 @@
     xkb.layout = "us,bg";
     xkb.variant = ",phonetic"; # Empty for "us", phonetic for "bg"
     # xkbOptions = "grp:alt_shift_toggle"; # Switch layout with Shift + Alt
-    xkb.options = "grp:caps_toggle,grp_led:caps"; # Switch with caps and light says on for second layout
+    xkb.options =
+      "grp:caps_toggle,grp_led:caps"; # Switch with caps and light says on for second layout
   };
   programs.hyprland.enable = true;
   # programs.hyprpanel.enable = true;
-  
+
   # Enable seatd for better input handling in wayland with keyboard and mouse of non-root users
   services.seatd.enable = true;
-
 
   # bluetooth
   hardware.bluetooth.enable = true;
@@ -83,16 +84,15 @@
   # Start Hyprland on startup and use Greetd for a quick login
   # With the help of greetd enable autologin for my user
   services.greetd = {
-     enable = true;
-     settings = rec {
-     	initial_session = {
-           command = "Hyprland";
-           user = "spas";
-	};
-        default_session = initial_session;
+    enable = true;
+    settings = rec {
+      initial_session = {
+        command = "Hyprland";
+        user = "spas";
+      };
+      default_session = initial_session;
     };
   };
-
 
   # #home manager config
   # programs.home-manager.enable = true;
@@ -101,7 +101,6 @@
   #      pkgs.tmux
   #    ];
   # };
-  
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -122,10 +121,10 @@
     jack.enable = true;
     wireplumber.extraConfig.bluetoothEnhancements = {
       "monitor.bluez.properties" = {
-      "bluez5.enable-sbc-xq" = true;
-      "bluez5.enable-msbc" = true;
-      "bluez5.enable-hw-volume" = true;
-      "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+        "bluez5.enable-sbc-xq" = true;
+        "bluez5.enable-msbc" = true;
+        "bluez5.enable-hw-volume" = true;
+        "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
       };
     };
   };
@@ -146,7 +145,7 @@
   # programs.firefox.enable = true;
   # programs.ghostty.enable = true;
   # nixpkgs.channel = "nixos-unstable";
-  
+
   # Rust version of fuck aka pay-respects
   programs.pay-respects.enable = true;
   programs.pay-respects.alias = "fuck";
@@ -162,39 +161,29 @@
   programs.git = {
     enable = true;
     config = {
-        # Fuck 3 way conflict resolution
-        mergetool = {
-            hideResolved = true;
-        };
-        init = {
-            defaultBranch = "main";
-        };
+      # Fuck 3 way conflict resolution
+      mergetool = { hideResolved = true; };
+      init = { defaultBranch = "main"; };
     };
   };
 
-
   ### spotify customization
-  programs.spicetify = 
-  let
-    spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
-  in
-  {
-     enable = true;
-     # theme = spicePkgs.themes.starryNight;
-     theme = spicePkgs.themes.ziro;
-     colorScheme = "rose-pine";
-     enabledCustomApps = with spicePkgs.apps; [
-       ncsVisualizer
-     ];
-     enabledSnippets = with spicePkgs.snippets; [
-       rotatingCoverart
-       pointer
-     ];
-  };
+  programs.spicetify =
+    let spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+    in {
+      enable = true;
+      # theme = spicePkgs.themes.starryNight;
+      theme = spicePkgs.themes.ziro;
+      colorScheme = "rose-pine";
+      enabledCustomApps = with spicePkgs.apps; [ ncsVisualizer ];
+      enabledSnippets = with spicePkgs.snippets; [ rotatingCoverart pointer ];
+    };
 
   nixpkgs.config.allowUnfree = true; # FU Spotify
-  
-  
+
+  ### clipboard ui menu with history
+  # programs.clipmenu.enable = true; # default shortcut is Ctrl + Shift + V
+
   ####################
 
   # gtk thunar setup
@@ -213,87 +202,88 @@
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
   programs.steam.enable = true;
-  programs.steam.gamescopeSession.enable = true; # used to start game in an optimized microcompositor... can help if game has issues with upscaling or monitor resolutions
-  programs.gamemode.enable = true; # daemon that will improve game performance on linux
-
+  programs.steam.gamescopeSession.enable =
+    true; # used to start game in an optimized microcompositor... can help if game has issues with upscaling or monitor resolutions
+  programs.gamemode.enable =
+    true; # daemon that will improve game performance on linux
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     wget
-     ghostty
-     neovim
-     nushell
-     hyprland
-     seatd
-     brave
-     stow 
-     tree
-     wofi
-     cava
-     rustup
-     xdg-desktop-portal-hyprland
-     grim
-     slurp
-     starship
-     bat
-     btop-rocm
-     gcc
-     # copyq
-     wl-clipboard
-     zoxide
-     fastfetch # like neofetch but faster and actively maintained
-     mpd # music player client
-     inputs.swww.packages.${pkgs.system}.swww # daemon for changing wallpapers
-     hyprpaper
-     nodejs
-     yarn # or npm
-     ripgrep
-     unzip
-     yazi
-     ffmpeg-full
-     widevine-cdm # DRM support (e.g., Netflix, Spotify, YouTube Music)
-     mpv
-     mesa # amd gpu drivers
-     vesktop
-     spotify
-     jq # json query - useful in bash commands
-     # Thunar file manager GTK stuff
-     xfce.xfconf
-     xfce.tumbler # nice thumbnails for files and pictures
-     p7zip
-     unrar
-     xfce.thunar
-     xfce.thunar-archive-plugin
-     catppuccin-papirus-folders # nice folder icons for thunar
-     nwg-look
-     catppuccin-gtk # should turn thunar dark
-     ###
-     playerctl #control media with keyboard keys
-     brightnessctl #change brightness with keyboard (didn't work but that's fine)
-     # code-cursor
-     qbittorrent
-     fd
-     fzf
-     lazygit
-     pay-respects # alternative to fuck cli
-     gnumake # so I can use the "make command"
-     go
-     mangohud # hame overlay FPS counter
-     protonup # for installing proton GE for playing games
-     hyprpanel
-     unstablePkgs.opencode # terminal ai agent from unstable channel
-     hyprsunset # Blue light filtering during night
-     rose-pine-hyprcursor # hyprcursor theme
-     catppuccin-cursors.mochaMauve # i can see it in nwg but can't make it work right now soo rose pine it is
-     hyprshot # screenshots
-     lsof # "List open files" in unix everything is a file including sockets, network ports and directories
-     unstablePkgs.gemini-cli # some ai terminal goodness
-     python314Full
-     carapace # cli command completions and suggestions
-     rustc
-     cargo
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+    ghostty
+    neovim
+    nushell
+    hyprland
+    seatd
+    brave
+    stow
+    tree
+    wofi
+    cava
+    rustup
+    xdg-desktop-portal-hyprland
+    grim
+    slurp
+    starship
+    bat
+    btop-rocm
+    gcc
+    # copyq
+    wl-clipboard
+    zoxide
+    fastfetch # like neofetch but faster and actively maintained
+    mpd # music player client
+    inputs.swww.packages.${pkgs.system}.swww # daemon for changing wallpapers
+    hyprpaper
+    nodejs
+    yarn # or npm
+    ripgrep
+    unzip
+    yazi
+    ffmpeg-full
+    widevine-cdm # DRM support (e.g., Netflix, Spotify, YouTube Music)
+    mpv
+    mesa # amd gpu drivers
+    vesktop
+    spotify
+    jq # json query - useful in bash commands
+    # Thunar file manager GTK stuff
+    xfce.xfconf
+    xfce.tumbler # nice thumbnails for files and pictures
+    p7zip
+    unrar
+    xfce.thunar
+    xfce.thunar-archive-plugin
+    catppuccin-papirus-folders # nice folder icons for thunar
+    nwg-look
+    catppuccin-gtk # should turn thunar dark
+    ###
+    playerctl # control media with keyboard keys
+    brightnessctl # change brightness with keyboard (didn't work but that's fine)
+    # code-cursor
+    qbittorrent
+    fd
+    fzf
+    lazygit
+    pay-respects # alternative to fuck cli
+    gnumake # so I can use the "make command"
+    go
+    mangohud # hame overlay FPS counter
+    protonup # for installing proton GE for playing games
+    hyprpanel
+    unstablePkgs.opencode # terminal ai agent from unstable channel
+    hyprsunset # Blue light filtering during night
+    rose-pine-hyprcursor # hyprcursor theme
+    catppuccin-cursors.mochaMauve # i can see it in nwg but can't make it work right now soo rose pine it is
+    hyprshot # screenshots
+    lsof # "List open files" in unix everything is a file including sockets, network ports and directories
+    unstablePkgs.gemini-cli # some ai terminal goodness
+    python314Full
+    carapace # cli command completions and suggestions
+    rustc
+    cargo
   ];
 
   # Env session variables for better wayland support
@@ -307,16 +297,17 @@
     # VDPAU_DRIVER = "radeonsi"; # idk if this will fix my video playback problem, let's try
     # GTK_THEME = "Papirus-Dark";
     # XDG_ICON_DIR = "${pkgs.catppuccin-papirus-folders}/share/icons/Papirus-Dark";
-    
+
     # Setup env vars for where steam should be installed
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/home/user/.steam/root/compatibilitytools.d";
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
+      "/home/user/.steam/root/compatibilitytools.d";
   };
   environment.variables = {
     EDITOR = "nvim";
     TERMINAL = "ghostty";
     HOME = "/home/spas";
   };
-  
+
   fonts.packages = with pkgs; [
     # (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) # for nix-os stable
     nerd-fonts.jetbrains-mono # new syntax in nios-unstable branch
@@ -324,19 +315,15 @@
   ];
 
   # browser video playback doesn't work and adding this didn't fix it
-  nixpkgs.config = {
-    brave = {
-      enableWideVine = true;
-    };
-  };
+  nixpkgs.config = { brave = { enableWideVine = true; }; };
 
   # Settings to remember mount points instead of editing etc/fstab (in this case for the shared drive with windows)
   fileSystems = {
-	"/shared" = {
-		device = "LABEL=Caring";
-		fsType = "ntfs";
-		options = [ "rw" "uid=1000" "gid=100" "unmask=0022" "nofail" ];
-	};
+    "/shared" = {
+      device = "LABEL=Caring";
+      fsType = "ntfs";
+      options = [ "rw" "uid=1000" "gid=100" "unmask=0022" "nofail" ];
+    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are
