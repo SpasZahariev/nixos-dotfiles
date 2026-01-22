@@ -260,6 +260,7 @@
     playerctl # control media with keyboard keys
     brightnessctl # change brightness with keyboard (didn't work but that's fine)
     # code-cursor
+    unstablePkgs.code-cursor
     qbittorrent
     fd
     fzf
