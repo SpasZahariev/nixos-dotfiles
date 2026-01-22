@@ -260,7 +260,7 @@
     playerctl # control media with keyboard keys
     brightnessctl # change brightness with keyboard (didn't work but that's fine)
     # code-cursor
-    # unstablePkgs.code-cursor-fhs
+    unstablePkgs.code-cursor-fhs
     qbittorrent
     fd
     fzf
@@ -279,12 +279,14 @@
     lsof # "List open files" in unix everything is a file including sockets, network ports and directories
     unstablePkgs.gemini-cli # some ai terminal goodness
     python314Full
+    uv # better venv
     carapace # cli command completions and suggestions
     rustc
     cargo
     cliphist # clipboard manager wayland compatible
     wl-clip-persist # keep wl clipboard even after programs close
     statix # linter for .nix files
+    bun # javascript package manager
   ];
 
   # Env session variables for better wayland support
