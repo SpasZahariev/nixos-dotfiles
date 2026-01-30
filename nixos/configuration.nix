@@ -12,31 +12,36 @@
   ];
 
   nix.settings.experimental-features = [ "flakes" "nix-command" ];
-  # GPU
-  # make the kernel use the correct driver early
-  boot.initrd.kernelModules = [ "amdgpu" ];
-  # Bootloader
-  # boot.loader.grub.device = "/dev/nvme1n1p5";
-  #boot.loader.efi.efiSysMountPoint = "/mnt/boot"
-  #boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  # boot.loader.timeout = 20; # wait for 20 secs before going to default option
-  boot.loader.timeout = -1; # wait forever until i manually select
-  boot.loader.grub = {
-    enable = true;
-    devices = [ "nodev" ];
-    efiSupport = true;
-    # theme = ./nixosModules/programs/grub-themes/CyberRe;
-    # theme = ./nixosModules/programs/grub-themes/CyberGRUB-2077;
-    theme = ./nixosModules/programs/grub-themes/virtuaverse;
-    default = "2";
-    # default = "Windows Boot Manager";
 
-    # skip grub-install and grub-mkconfig for faster nixos rebuilds
-    useOSProber =
-      true; # if true will scan for windows boot config and add it to grub window!
-    forceInstall =
-      false; # nix rebuild switch will skip GRUB regeneration unless the bootloader config actually changed
+  boot = {
+    # GPU
+    # make the kernel use the correct driver early
+    initrd.kernelModules = [ "amdgpu" ];
+    # Bootloader
+    # boot.loader.grub.device = "/dev/nvme1n1p5";
+    #boot.loader.efi.efiSysMountPoint = "/mnt/boot"
+    #boot.loader.systemd-boot.enable = true;
+    loader = {
+      efi.canTouchEfiVariables = true;
+      # boot.loader.timeout = 20; # wait for 20 secs before going to default option
+      timeout = -1; # wait forever until i manually select
+      grub = {
+        enable = true;
+        devices = [ "nodev" ];
+        efiSupport = true;
+        # theme = ./nixosModules/programs/grub-themes/CyberRe;
+        # theme = ./nixosModules/programs/grub-themes/CyberGRUB-2077;
+        theme = ./nixosModules/programs/grub-themes/virtuaverse;
+        default = "2";
+        # default = "Windows Boot Manager";
+
+        # skip grub-install and grub-mkconfig for faster nixos rebuilds
+        useOSProber =
+          true; # if true will scan for windows boot config and add it to grub window!
+        forceInstall =
+          false; # nix rebuild switch will skip GRUB regeneration unless the bootloader config actually changed
+      };
+    };
   };
 
   networking.hostName = "nixos"; # Define your hostname.
@@ -62,36 +67,103 @@
   };
 
   # Enable Wayland and Hyprland (ignore the xserver part - that is bad naming)
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "amdgpu" ];
+  services = {
+    xserver = {
+      enable = true;
+      videoDrivers = [ "amdgpu" ];
 
-    xkb.layout = "us,bg";
-    xkb.variant = ",phonetic"; # Empty for "us", phonetic for "bg"
-    # xkbOptions = "grp:alt_shift_toggle"; # Switch layout with Shift + Alt
-    xkb.options =
-      "grp:caps_toggle,grp_led:caps"; # Switch with caps and light says on for second layout
-  };
-  programs.hyprland.enable = true;
-  # programs.hyprpanel.enable = true;
-
-  # Enable seatd for better input handling in wayland with keyboard and mouse of non-root users
-  services.seatd.enable = true;
-
-  # bluetooth
-  hardware.bluetooth.enable = true;
-
-  # Start Hyprland on startup and use Greetd for a quick login
-  # With the help of greetd enable autologin for my user
-  services.greetd = {
-    enable = true;
-    settings = rec {
-      initial_session = {
-        command = "Hyprland";
-        user = "spas";
+      xkb = {
+        layout = "us,bg";
+        variant = ",phonetic"; # Empty for "us", phonetic for "bg"
+        # xkbOptions = "grp:alt_shift_toggle"; # Switch layout with Shift + Alt
+        options =
+          "grp:caps_toggle,grp_led:caps"; # Switch with caps and light says on for second layout
       };
-      default_session = initial_session;
     };
+    # Enable seatd for better input handling in wayland with keyboard and mouse of non-root users
+    seatd.enable = true;
+    # Start Hyprland on startup and use Greetd for a quick login
+    # With the help of greetd enable autologin for my user
+    greetd = {
+      enable = true;
+      settings = rec {
+        initial_session = {
+          command = "Hyprland";
+          user = "spas";
+        };
+        default_session = initial_session;
+      };
+    };
+    # Enable sound.
+    # hardware.pulseaudio.enable = true;
+    # OR
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      audio.enable = true;
+      jack.enable = true;
+      wireplumber.extraConfig.bluetoothEnhancements = {
+        "monitor.bluez.properties" = {
+          "bluez5.enable-sbc-xq" = true;
+          "bluez5.enable-msbc" = true;
+          "bluez5.enable-hw-volume" = true;
+          "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+        };
+      };
+    };
+  };
+  programs = {
+    hyprland.enable = true;
+    # programs.hyprpanel.enable = true;
+
+    # Rust version of fuck aka pay-respects
+    pay-respects.enable = true;
+    pay-respects.alias = "fuck";
+
+    # fallback dynamic linker for binaries that expect a traditional Linux environment
+    nix-ld.enable = true;
+
+    # for using direnv .envrc files in my programming projects so ican use package managers like pip npm cargo
+    direnv.enable = true;
+    direnv.nix-direnv.enable = true;
+
+    tmux.enable = true;
+    git = {
+      enable = true;
+      config = {
+        # Fuck 3 way conflict resolution
+        mergetool = { hideResolved = true; };
+        init = { defaultBranch = "main"; };
+      };
+    };
+
+    ### spotify customization
+    spicetify =
+      let spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+      in {
+        enable = true;
+        # theme = spicePkgs.themes.starryNight;
+        theme = spicePkgs.themes.ziro;
+        colorScheme = "rose-pine";
+        enabledCustomApps = with spicePkgs.apps; [ ncsVisualizer ];
+        enabledSnippets = with spicePkgs.snippets; [ rotatingCoverart pointer ];
+      };
+
+    steam = {
+      enable = true;
+      # starts game in an optimized microcompositor. good if issues with upscaling or monitor resolutions
+      gamescopeSession.enable = true;
+    };
+    gamemode.enable = true; # daemon that will improve game performance on linux
+
+  };
+
+  # Enable Docker
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
   };
 
   # #home manager config
@@ -109,26 +181,6 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable sound.
-  # hardware.pulseaudio.enable = true;
-  # OR
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    audio.enable = true;
-    jack.enable = true;
-    wireplumber.extraConfig.bluetoothEnhancements = {
-      "monitor.bluez.properties" = {
-        "bluez5.enable-sbc-xq" = true;
-        "bluez5.enable-msbc" = true;
-        "bluez5.enable-hw-volume" = true;
-        "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
-      };
-    };
-  };
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
   users.defaultUserShell = pkgs.nushell;
@@ -136,7 +188,8 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.spas = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups =
+      [ "wheel" "docker" "video" "render" ]; # Enable ‘sudo’ for the user.
   };
 
   security.sudo.extraConfig = ''
@@ -145,39 +198,6 @@
   # programs.firefox.enable = true;
   # programs.ghostty.enable = true;
   # nixpkgs.channel = "nixos-unstable";
-
-  # Rust version of fuck aka pay-respects
-  programs.pay-respects.enable = true;
-  programs.pay-respects.alias = "fuck";
-
-  # fallback dynamic linker for binaries that expect a traditional Linux environment
-  programs.nix-ld.enable = true;
-
-  # for using direnv .envrc files in my programming projects so ican use package managers like pip npm cargo
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
-
-  programs.tmux.enable = true;
-  programs.git = {
-    enable = true;
-    config = {
-      # Fuck 3 way conflict resolution
-      mergetool = { hideResolved = true; };
-      init = { defaultBranch = "main"; };
-    };
-  };
-
-  ### spotify customization
-  programs.spicetify =
-    let spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
-    in {
-      enable = true;
-      # theme = spicePkgs.themes.starryNight;
-      theme = spicePkgs.themes.ziro;
-      colorScheme = "rose-pine";
-      enabledCustomApps = with spicePkgs.apps; [ ncsVisualizer ];
-      enabledSnippets = with spicePkgs.snippets; [ rotatingCoverart pointer ];
-    };
 
   nixpkgs.config.allowUnfree = true; # FU Spotify
 
@@ -194,16 +214,21 @@
   #   "file:///home/spas/dev Development"
   # ];
 
-  # setup steam and stuff
-  # OpenGl (for hardware acceleration)
-  hardware.graphics.enable = true;
-  hardware.graphics.enable32Bit = true;
-  programs.steam.enable = true;
-  programs.steam.gamescopeSession.enable =
-    true; # used to start game in an optimized microcompositor... can help if game has issues with upscaling or monitor resolutions
-  programs.gamemode.enable =
-    true; # daemon that will improve game performance on linux
+  hardware = {
+    # bluetooth
+    bluetooth.enable = true;
 
+    # AMD GPU (used to be OpenGl)/ ROCm support 
+    graphics = {
+      enable = true;
+      enable32Bit = true; # some 32 Bit software might need my GPU too
+      extraPackages = with pkgs; [
+        rocmPackages.clr
+        rocmPackages.clr.icd
+        rocmPackages.rocm-runtime
+      ];
+    };
+  };
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -287,6 +312,9 @@
     wl-clip-persist # keep wl clipboard even after programs close
     statix # linter for .nix files
     bun # javascript package manager
+    docker-compose
+    rocmPackages.rocminfo
+    rocmPackages.rocm-smi
   ];
 
   # Env session variables for better wayland support
@@ -295,6 +323,7 @@
       EDITOR = "nvim";
       TERMINAL = "ghostty";
       HOME = "/home/spas";
+      HSA_OVERRIDE_GFX_VERSION = "11.0.0";
     };
     sessionVariables = {
       XDG_SESSION_TYPE = "wayland";
@@ -375,4 +404,3 @@
   system.stateVersion = "25.05"; # Did you read the comment?
 
 }
-
