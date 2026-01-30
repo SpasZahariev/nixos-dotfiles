@@ -140,16 +140,17 @@
     };
 
     ### spotify customization
-    spicetify =
-      let spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
-      in {
-        enable = true;
-        # theme = spicePkgs.themes.starryNight;
-        theme = spicePkgs.themes.ziro;
-        colorScheme = "rose-pine";
-        enabledCustomApps = with spicePkgs.apps; [ ncsVisualizer ];
-        enabledSnippets = with spicePkgs.snippets; [ rotatingCoverart pointer ];
-      };
+    spicetify = let
+      spicePkgs =
+        inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+    in {
+      enable = true;
+      # theme = spicePkgs.themes.starryNight;
+      theme = spicePkgs.themes.ziro;
+      colorScheme = "rose-pine";
+      enabledCustomApps = with spicePkgs.apps; [ ncsVisualizer ];
+      enabledSnippets = with spicePkgs.snippets; [ rotatingCoverart pointer ];
+    };
 
     steam = {
       enable = true;
@@ -216,7 +217,7 @@
 
   hardware = {
     # bluetooth
-    bluetooth.enable = true;
+    # bluetooth.enable = true;
 
     # AMD GPU (used to be OpenGl)/ ROCm support 
     graphics = {
@@ -257,7 +258,7 @@
     zoxide
     fastfetch # like neofetch but faster and actively maintained
     mpd # music player client
-    inputs.swww.packages.${pkgs.system}.swww # daemon for changing wallpapers
+    inputs.swww.packages.${pkgs.stdenv.hostPlatform.system}.swww # daemon for changing wallpapers
     hyprpaper
     nodejs
     yarn # or npm
@@ -294,7 +295,7 @@
     gnumake # so I can use the "make command"
     go
     mangohud # hame overlay FPS counter
-    protonup # for installing proton GE for playing games
+    protonup-ng # for installing proton GE for playing games
     hyprpanel
     unstablePkgs.opencode # terminal ai agent from unstable channel
     hyprsunset # Blue light filtering during night
@@ -303,7 +304,7 @@
     hyprshot # screenshots
     lsof # "List open files" in unix everything is a file including sockets, network ports and directories
     unstablePkgs.gemini-cli # some ai terminal goodness
-    python314Full
+    python315
     uv # better venv
     carapace # cli command completions and suggestions
     rustc
