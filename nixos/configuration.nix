@@ -193,7 +193,7 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
-  users.defaultUserShell = pkgs.nushell;
+  users.defaultUserShell = unstablePkgs.nushell;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.spas = {
@@ -246,7 +246,7 @@
     wget
     ghostty
     neovim
-    nushell
+    unstablePkgs.nushell
     hyprland
     seatd
     brave
@@ -334,6 +334,7 @@
       TERMINAL = "ghostty";
       HOME = "/home/spas";
       HSA_OVERRIDE_GFX_VERSION = "11.0.0";
+      NPM_CONFIG_PREFIX = "$HOME/.npm-global";
     };
     sessionVariables = {
       XDG_SESSION_TYPE = "wayland";
@@ -341,6 +342,11 @@
       QT_QPA_PLATFORM = "wayland"; # Force Wayland for Qt apps like VLC
       SDL_VIDEODRIVER = "wayland";
       NO_UPDATE_NOTIFIER = "1"; # should Disable gemini-cli from autoupdating
+      PATH = [
+        "$HOME/.bun/bin"
+        "$HOME/.npm-global/bin"
+        "$PATH" # Existing PATH at the end
+      ];
 
       # VDPAU_DRIVER = "radeonsi"; # idk if this will fix my video playback problem, let's try
       # GTK_THEME = "Papirus-Dark";
