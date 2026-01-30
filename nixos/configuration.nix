@@ -165,6 +165,9 @@
   virtualisation.docker = {
     enable = true;
     enableOnBoot = true;
+    daemon.settings = { experimental = true; };
+    rootless.enable = true;
+    package = unstablePkgs.docker;
   };
 
   # #home manager config
