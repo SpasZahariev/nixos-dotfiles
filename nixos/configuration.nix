@@ -113,6 +113,12 @@
         };
       };
     };
+    ollama = {
+
+      enable = true;
+      package = unstablePkgs.ollama-rocm or unstablePkgs.ollama;
+      acceleration = "rocm";
+    };
   };
   programs = {
     hyprland.enable = true;
