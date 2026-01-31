@@ -342,10 +342,10 @@
       QT_QPA_PLATFORM = "wayland"; # Force Wayland for Qt apps like VLC
       SDL_VIDEODRIVER = "wayland";
       NO_UPDATE_NOTIFIER = "1"; # should Disable gemini-cli from autoupdating
-      PATH = [
+      PATH = builtins.concatStringsSep ":" [
         "$HOME/.bun/bin"
         "$HOME/.npm-global/bin"
-        "$PATH" # Existing PATH at the end
+        "$PATH"
       ];
 
       # VDPAU_DRIVER = "radeonsi"; # idk if this will fix my video playback problem, let's try

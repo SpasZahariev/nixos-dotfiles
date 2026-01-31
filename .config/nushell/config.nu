@@ -934,7 +934,12 @@ alias sw = ~/dotfiles/.config/hypr/scripts/set_wallpaper_all.sh
 # set alias for pay-respects aka the Rust fuck version
 alias fuck = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : "",_PR_SHELL : nu } { /run/current-system/sw/bin/pay-respects }
 
-
+$env.PATH = (
+  $env.PATH
+  | prepend $"($env.HOME)/.bun/bin"
+  | prepend $"($env.HOME)/.npm-global/bin"
+  | prepend $"($env.HOME)/.local/bin"
+)
 
 # setup yazi wrapper so that when i exit with q - it moves me to the currently viewed directly
 def ya [...args] {
