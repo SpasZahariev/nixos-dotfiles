@@ -211,6 +211,16 @@
 
   nixpkgs.config.allowUnfree = true; # FU Spotify
 
+  systemd.user.services.diary-habit-tracker = {
+    description = "habit tracker";
+    wantedBy = [ "default.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart =
+        "${pkgs.python3}/bin/python /home/spas/dev/py-projects/diary-habit-tracker/main.py";
+      WorkingDirectory = "/home/spas/dev/py-projects/diary-habit-tracker";
+    };
+  };
   ####################
 
   # gtk thunar setup

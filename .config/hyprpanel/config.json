@@ -14,7 +14,6 @@
   "theme.bar.transparent": true,
   "bar.workspaces.show_numbered": true,
   "bar.workspaces.numbered_active_indicator": "underline",
-
   "bar.autoHide": "fullscreen",
   "theme.bar.buttons.volume.enableBorder": false,
   "theme.bar.buttons.battery.enableBorder": false,
