@@ -214,11 +214,13 @@
   systemd.user.services.diary-habit-tracker = {
     description = "habit tracker";
     wantedBy = [ "default.target" ];
+    path = [ pkgs.git pkgs.openssh ]; # depends on these cli apps
     serviceConfig = {
       Type = "oneshot";
       ExecStart =
         "${pkgs.python3}/bin/python /home/spas/dev/py-projects/diary-habit-tracker/main.py";
       WorkingDirectory = "/home/spas/dev/py-projects/diary-habit-tracker";
+      Environment = "SSH_AUTH_SOCK=%t/ssh-agent"; # If using ssh-agent
     };
   };
   ####################
