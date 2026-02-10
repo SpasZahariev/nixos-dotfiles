@@ -214,13 +214,16 @@
   systemd.user.services.diary-habit-tracker = {
     description = "habit tracker";
     wantedBy = [ "default.target" ];
-    after = [ "network-online.target" ]; # Dependency on internet setup
+    after = [
+      "network-online.target"
+      "ssh-agent.service"
+    ]; # Dependency on internet setup
     wants = [ "network-online.target" ]; # Depend on internet is setup
     path = [ pkgs.git pkgs.openssh ]; # depends on these cli apps
     serviceConfig = {
       Type = "oneshot";
       ExecStartPre =
-        "${pkgs.coreutils}/bin/sleep 15"; # Wait 15 seconds after OS started
+        "${pkgs.coreutils}/bin/sleep 30"; # Wait 30 seconds after OS started
       ExecStart =
         "${pkgs.python3}/bin/python /home/spas/dev/py-projects/diary-habit-tracker/main.py";
       WorkingDirectory = "/home/spas/dev/py-projects/diary-habit-tracker";
