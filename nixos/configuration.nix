@@ -29,6 +29,8 @@
         enable = true;
         devices = [ "nodev" ];
         efiSupport = true;
+        gfxmodeEfi = "3440x1440x32,auto";
+        gfxpayloadEfi = "keep";
         # theme = ./nixosModules/programs/grub-themes/CyberRe;
         # theme = ./nixosModules/programs/grub-themes/CyberGRUB-2077;
         theme = ./nixosModules/programs/grub-themes/virtuaverse;
@@ -162,9 +164,17 @@
       enable = true;
       # starts game in an optimized microcompositor. good if issues with upscaling or monitor resolutions
       gamescopeSession.enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
     };
     gamemode.enable = true; # daemon that will improve game performance on linux
 
+  };
+
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
   };
 
   # Enable Docker

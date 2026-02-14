@@ -6,7 +6,7 @@
 ## Edited for Garuda Linux by yurihikari
 
 # Kill already running process
-_ps=(waybar mako)
+_ps=(waybar)
 for _prs in "${_ps[@]}"; do
 	if [[ `pidof ${_prs}` ]]; then
 		killall -9 ${_prs}
@@ -30,9 +30,6 @@ done
 
 # Apply themes
 # ~/.config/hypr/scripts/gtkthemes &
-
-# Lauch notification daemon (mako) Enable if not using AGS
-# ~/.config/hypr/scripts/notifications &
 
 # Lauch statusbar (waybar) Disable if using AGS
 ~/.config/hypr/scripts/statusbar.sh &
