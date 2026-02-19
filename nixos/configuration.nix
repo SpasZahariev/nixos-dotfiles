@@ -319,7 +319,11 @@
     xfce.thunar-archive-plugin
     catppuccin-papirus-folders # nice folder icons for thunar
     nwg-look
-    catppuccin-gtk # should turn thunar dark
+    # catppuccin-gtk # should turn thunar dark
+    (catppuccin-gtk.override {
+      variant = "macchiato";
+      accents = [ "mauve" ];
+    })
     ###
     playerctl # control media with keyboard keys
     brightnessctl # change brightness with keyboard (didn't work but that's fine)
@@ -364,6 +368,7 @@
       HOME = "/home/spas";
       HSA_OVERRIDE_GFX_VERSION = "11.0.0";
       NPM_CONFIG_PREFIX = "$HOME/.npm-global";
+      GTK_THEME = "catppuccin-macchiato-muave-standard";
     };
     sessionVariables = {
       XDG_SESSION_TYPE = "wayland";
@@ -378,7 +383,6 @@
       ];
 
       # VDPAU_DRIVER = "radeonsi"; # idk if this will fix my video playback problem, let's try
-      # GTK_THEME = "Papirus-Dark";
       # XDG_ICON_DIR = "${pkgs.catppuccin-papirus-folders}/share/icons/Papirus-Dark";
 
       # Setup env vars for where steam should be installed
