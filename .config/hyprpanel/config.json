@@ -79,6 +79,6 @@
   ],
   "menus.dashboard.powermenu.avatar.image": "/home/spas/.config/hyprpanel/icons/nixos-logo.png",
   "menus.dashboard.powermenu.avatar.icon": "nix-snowflake",
-  "menus.dashboard.powermenu.shutdown": "./home/spas/.config/hypr/scripts/shutdown.sh",
-  "menus.power.shutdown": "./home/spas/.config/hypr/scripts/shutdown.sh"
+  "menus.dashboard.powermenu.shutdown": "/home/spas/.config/hypr/scripts/shutdown.sh",
+  "menus.power.shutdown": "/home/spas/.config/hypr/scripts/shutdown.sh"
 }

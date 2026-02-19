@@ -11,4 +11,4 @@ done
 # Wait for windows to close
 sleep 2
 
-# systemctl poweroff
+systemctl poweroff
