@@ -40,8 +40,8 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", opts)
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', opts)
 vim.keymap.set("n", "<leader>Y", '"+Y', opts)
 
--- Paste over selection without losing clipboard
-vim.keymap.set("v", "p", '"_dP', opts)
+-- Ignore these and Use the default neovim VoidPaste with shift + P !!!!
+-- vim.keymap.set("v", "<leader>p", '"_dP', opts) -- the clipboard wont be overwritten with the deleted text
 
 -- Delete without yanking
 vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', opts)
@@ -69,9 +69,6 @@ vim.keymap.set("i", ",", ",<C-g>u", opts)
 vim.keymap.set("i", ".", ".<C-g>u", opts)
 vim.keymap.set("i", "!", "!<C-g>u", opts)
 vim.keymap.set("i", "?", "?<C-g>u", opts)
-
--- deletes the visual selection and pastes from my clipboard
--- vim.keymap.set("v", "<leader>p", '"_dP', opts) -- the clipboard wont be overwritten with the deleted text
 
 -- quick way to exit vim
 vim.keymap.set("n", "<C-q>", ":q!<CR>", opts)
