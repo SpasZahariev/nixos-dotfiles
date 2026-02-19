@@ -7,7 +7,7 @@
   "menus.clock.time.hideSeconds": false,
   "menus.clock.weather.location": "Zurich",
   "menus.clock.weather.unit": "metric",
-  "menus.power.shutdown.command.shutdown": "/home/spas/.config/hypr/scripts/shutdown.sh",
+  "menus.power.shutdown.command": "/home/spas/.config/hypr/scripts/shutdown.sh",
   "theme.bar.menus.background": "#11111b",
   "theme.bar.menus.opacity": 100,
   "theme.bar.menus.border.color": "#313244",
