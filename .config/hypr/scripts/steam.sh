@@ -2,4 +2,4 @@
 
 # Command to start steam
 
-setsid steam &
+setsid steam &>/dev/null
