@@ -982,7 +982,11 @@ alias f = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : "",
 print "\u{1b}c"
 # print pretty distro text
 # fastfetch --color 256
-fastfetch 
+# show fastfetch if there is enough space
+let size = term size
+if $size.columns >= 90 and $size.rows >= 24 {
+    fastfetch
+}
 
 source ~/.config/nushell/.secrets.nu
 source ~/.zoxide.nu

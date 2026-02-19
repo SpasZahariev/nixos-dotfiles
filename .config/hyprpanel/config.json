@@ -21,7 +21,6 @@
   "bar.clock.format": "%H:%M",
   "theme.bar.buttons.systray.enableBorder": false,
   "bar.battery.hideLabelWhenFull": false,
-  "menus.dashboard.powermenu.avatar.image": "/home/spas/wallpapers/icons/nixos-logo.png",
   "os_icon": "/home/spas/.config/hyprpanel/icons/nixos.svg",
   "bar.layouts": {
     "0": {
@@ -77,5 +76,9 @@
   "bar.customModules.cpuTemp.sensor": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon4/temp1_input",
   "bar.customModules.storage.paths": [
     "/"
-  ]
+  ],
+  "menus.dashboard.powermenu.avatar.image": "/home/spas/.config/hyprpanel/icons/nixos-logo.png",
+  "menus.dashboard.powermenu.avatar.icon": "nix-snowflake",
+  "menus.dashboard.powermenu.shutdown": "./home/spas/.config/hypr/scripts/shutdown.sh",
+  "menus.power.shutdown": "./home/spas/.config/hypr/scripts/shutdown.sh"
 }
