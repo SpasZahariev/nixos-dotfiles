@@ -35,11 +35,12 @@
         "workspaces"
       ],
       "right": [
+        "systray",
         "volume",
         "network",
         "bluetooth",
         "kbinput",
-        "hyprsunset",
+        "_hyprsunset",
         "ram",
         "cputemp",
         "clock"
