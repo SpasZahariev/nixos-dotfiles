@@ -124,6 +124,7 @@
   };
   programs = {
     hyprland.enable = true;
+    ydotool.enable = true;
     # programs.hyprpanel.enable = true;
 
     # Rust version of fuck aka pay-respects
@@ -208,8 +209,13 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.spas = {
     isNormalUser = true;
-    extraGroups =
-      [ "wheel" "docker" "video" "render" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "docker"
+      "video"
+      "render"
+      "ydotool"
+    ]; # Enable ‘sudo’ for the user.
   };
 
   security.sudo.extraConfig = ''
@@ -319,11 +325,11 @@
     xfce.thunar-archive-plugin
     catppuccin-papirus-folders # nice folder icons for thunar
     nwg-look
-    # catppuccin-gtk # should turn thunar dark
-    (catppuccin-gtk.override {
-      variant = "macchiato";
-      accents = [ "mauve" ];
-    })
+    catppuccin-gtk # should turn thunar dark
+    # (catppuccin-gtk.override {
+    #   variant = "macchiato";
+    #   accents = [ "mauve" ];
+    # })
     ###
     playerctl # control media with keyboard keys
     brightnessctl # change brightness with keyboard (didn't work but that's fine)
@@ -348,6 +354,10 @@
     unstablePkgs.gemini-cli # some ai terminal goodness
     python315
     uv # better venv
+    cmake # build dependency for hyprwhspr/whisper backends
+    portaudio # microphone I/O backend for python sounddevice
+    libpulseaudio # shared lib for python pulsectl
+    ydotool # required for synthetic key injection
     carapace # cli command completions and suggestions
     rustc
     cargo
@@ -368,7 +378,7 @@
       HOME = "/home/spas";
       HSA_OVERRIDE_GFX_VERSION = "11.0.0";
       NPM_CONFIG_PREFIX = "$HOME/.npm-global";
-      GTK_THEME = "catppuccin-macchiato-muave-standard";
+      # GTK_THEME = "catppuccin-macchiato-muave-standard";
     };
     sessionVariables = {
       XDG_SESSION_TYPE = "wayland";

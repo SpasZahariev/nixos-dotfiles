@@ -941,6 +941,22 @@ $env.PATH = (
   | prepend $"($env.HOME)/.local/bin"
 )
 
+# Run hyprwhspr with scoped env vars (no global PYTHONPATH).
+def hw [...args] {
+    let base_ld = "/run/current-system/sw/lib:/nix/store/yg2xx432yq265irljbz8ddjsjnxajfvw-libpulseaudio-17.0/lib"
+    let existing_ld = ($env | get -i LD_LIBRARY_PATH | default "")
+    let merged_ld = if $existing_ld == "" { $base_ld } else { $"($base_ld):($existing_ld)" }
+
+    with-env {
+        HYPRWHSPR_ROOT: $"($env.HOME)/small-apps/hyprwhspr",
+        PYTHONPATH: $"($env.HOME)/small-apps/hyprwhspr/lib",
+        LD_LIBRARY_PATH: $merged_ld
+    } {
+        ~/.local/share/hyprwhspr/venv/bin/python ~/small-apps/hyprwhspr/lib/cli.py ...$args
+    }
+}
+alias hyprwhspr = hw
+
 # setup yazi wrapper so that when i exit with q - it moves me to the currently viewed directly
 def ya [...args] {
     let tmp = (mktemp -t "yazi-cwd.XXXXXX")
