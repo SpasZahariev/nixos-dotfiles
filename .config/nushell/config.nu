@@ -927,6 +927,7 @@ alias nix-fast = sudo nixos-rebuild switch --flake ~/dotfiles/nixos#nixos -I nix
 # show weaether in zurich
 alias weather = curl "wttr.in/zuerich"
 alias weather2 = curl "wttr.in/zuerich?format=v2"
+alias lg = lazygit
 
 # to set my wallpapers easily
 alias sw = ~/dotfiles/.config/hypr/scripts/set_wallpaper_all.sh

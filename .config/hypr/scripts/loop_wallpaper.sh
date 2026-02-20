@@ -1,63 +1,132 @@
-# #!/usr/bin/env bash
-#
-# ### SHOULD loop through my wallpapers and put one wallpaper on all three monitors ###
+#!/usr/bin/env bash
 
 # === Config ===
 WIDE_WALLPAPER_DIR="$HOME/dotfiles/wallpapers/wide"
 CURRENT_WALL=$(hyprctl hyprpaper listloaded)
 
-MONITORS=(
+ALL_MONITORS=(
   "HDMI-A-1"
   "DP-1"
   "DP-2"
 )
 
+# === Defaults ===
+DIRECTION=1 # 1 for next, -1 for previous
+TARGET_MONITOR=""
+
+# === Usage ===
+usage() {
+  cat <<EOF
+Usage: $(basename "$0") [OPTIONS] [MONITOR]
+
+Options:
+  -p, --previous    Go to previous wallpaper instead of next
+  -m, --monitor     Specify monitor (HDMI-A-1, DP-1, DP-2)
+  -h, --help        Show this help message
+
+Examples:
+  $(basename "$0")                  # Next wallpaper on all monitors
+  $(basename "$0") -p               # Previous wallpaper on all monitors
+  $(basename "$0") DP-1             # Next wallpaper on DP-1 only
+  $(basename "$0") -p -m HDMI-A-1   # Previous wallpaper on HDMI-A-1
+EOF
+  exit 0
+}
+
+# === Argument Parsing ===
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+  -p | --previous)
+    DIRECTION=-1
+    shift
+    ;;
+  -m | --monitor)
+    TARGET_MONITOR="$2"
+    shift 2
+    ;;
+  -h | --help)
+    usage
+    ;;
+  *)
+    # Assume it's a monitor name
+    TARGET_MONITOR="$1"
+    shift
+    ;;
+  esac
+done
+
+# === Determine target monitors ===
+if [[ -n "$TARGET_MONITOR" ]]; then
+  # Validate monitor name
+  if [[ ! " ${ALL_MONITORS[*]} " =~ " ${TARGET_MONITOR} " ]]; then
+    echo "Error: Invalid monitor '$TARGET_MONITOR'"
+    echo "Valid monitors: ${ALL_MONITORS[*]}"
+    exit 1
+  fi
+  MONITORS=("$TARGET_MONITOR")
+else
+  MONITORS=("${ALL_MONITORS[@]}")
+fi
+
 # === Functions ===
 
-# Get the next wallpaper in the directory
-get_next_wallpaper() {
+# Get wallpapers sorted by most recently added (newest first)
+get_sorted_wallpapers() {
+  local dir="$1"
+  find "$dir" -type f -printf '%T@ %p\n' | sort -rn | cut -d' ' -f2-
+}
+
+# Get the next or previous wallpaper
+get_wallpaper() {
   local dir="$1"
   local current_wall="$2"
+  local direction="$3"
 
-  # Get all wallpapers in the directory and sort them
+  # Get all wallpapers sorted by most recently added
   local wallpapers
-  wallpapers=$(find "$dir" -type f | sort)
+  mapfile -t wallpapers < <(get_sorted_wallpapers "$dir")
 
-  # Find the next wallpaper after the current one
-  local next_wallpaper
-  next_wallpaper=""
-  found_current=false
+  local count=${#wallpapers[@]}
 
-  # Iterate through the wallpapers
-  for wallpaper in $wallpapers; do
-    if [[ "$found_current" == true ]]; then
-      next_wallpaper="$wallpaper"
+  if [[ $count -eq 0 ]]; then
+    echo "Error: No wallpapers found in $dir" >&2
+    exit 1
+  fi
+
+  local current_index=-1
+
+  # Find current wallpaper index
+  for i in "${!wallpapers[@]}"; do
+    if [[ "${wallpapers[$i]}" == "$current_wall" ]]; then
+      current_index=$i
       break
-    fi
-
-    if [[ "$wallpaper" == "$current_wall" ]]; then
-      found_current=true
     fi
   done
 
-  # If no next wallpaper was found (i.e., we were at the end), start from the first one
-  if [[ -z "$next_wallpaper" ]]; then
-    next_wallpaper=$(echo "$wallpapers" | head -n 1)
+  # Calculate next index with wrapping
+  local next_index
+  if [[ $current_index -eq -1 ]]; then
+    next_index=0
+  else
+    next_index=$(((current_index + direction + count) % count))
   fi
 
-  echo "$next_wallpaper"
+  echo "${wallpapers[$next_index]}"
 }
 
 # === Main ===
 
-# Reload hyprpaper and apply
+# Get the next/previous wallpaper
+NEXT_WALL=$(get_wallpaper "$WIDE_WALLPAPER_DIR" "$CURRENT_WALL" "$DIRECTION")
+
+# Unload current wallpapers
 hyprctl hyprpaper unload all
 
-# Get the next wallpaper to apply
-NEXT_WALL=$(get_next_wallpaper "$WIDE_WALLPAPER_DIR" "$CURRENT_WALL")
+# Preload once
+hyprctl hyprpaper preload "$NEXT_WALL"
 
+# Apply to target monitors
 for MONITOR in "${MONITORS[@]}"; do
   echo "Setting wallpaper for $MONITOR: $NEXT_WALL"
-  hyprctl hyprpaper preload "$NEXT_WALL"
   hyprctl hyprpaper wallpaper "$MONITOR,$NEXT_WALL"
 done
