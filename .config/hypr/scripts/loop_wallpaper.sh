@@ -2,6 +2,7 @@
 
 # === Config ===
 WIDE_WALLPAPER_DIR="$HOME/dotfiles/wallpapers/wide"
+VERTICAL_WALLPAPER_DIR="$HOME/dotfiles/wallpapers/vertical"
 CURRENT_WALL=$(hyprctl hyprpaper listloaded)
 
 ALL_MONITORS=(
@@ -10,9 +11,15 @@ ALL_MONITORS=(
   "DP-2"
 )
 
+VERTICAL_MONITORS=(
+  "HDMI-A-1"
+  "DP-2"
+)
+
 # === Defaults ===
 DIRECTION=1 # 1 for next, -1 for previous
 TARGET_MONITOR=""
+VERTICAL_MODE=0
 
 # === Usage ===
 usage() {
@@ -21,12 +28,14 @@ Usage: $(basename "$0") [OPTIONS] [MONITOR]
 
 Options:
   -p, --previous    Go to previous wallpaper instead of next
+  -v, --vertical    Use vertical wallpapers (applies to left and right monitors only)
   -m, --monitor     Specify monitor (HDMI-A-1, DP-1, DP-2)
   -h, --help        Show this help message
 
 Examples:
   $(basename "$0")                  # Next wallpaper on all monitors
   $(basename "$0") -p               # Previous wallpaper on all monitors
+  $(basename "$0") -v               # Next vertical wallpaper on left/right monitors
   $(basename "$0") DP-1             # Next wallpaper on DP-1 only
   $(basename "$0") -p -m HDMI-A-1   # Previous wallpaper on HDMI-A-1
 EOF
@@ -38,6 +47,10 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
   -p | --previous)
     DIRECTION=-1
+    shift
+    ;;
+  -v | --vertical)
+    VERTICAL_MODE=1
     shift
     ;;
   -m | --monitor)
@@ -55,6 +68,13 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+# === Select wallpaper directory ===
+if [[ $VERTICAL_MODE -eq 1 ]]; then
+  WALLPAPER_DIR="$VERTICAL_WALLPAPER_DIR"
+else
+  WALLPAPER_DIR="$WIDE_WALLPAPER_DIR"
+fi
+
 # === Determine target monitors ===
 if [[ -n "$TARGET_MONITOR" ]]; then
   # Validate monitor name
@@ -64,6 +84,8 @@ if [[ -n "$TARGET_MONITOR" ]]; then
     exit 1
   fi
   MONITORS=("$TARGET_MONITOR")
+elif [[ $VERTICAL_MODE -eq 1 ]]; then
+  MONITORS=("${VERTICAL_MONITORS[@]}")
 else
   MONITORS=("${ALL_MONITORS[@]}")
 fi
@@ -117,7 +139,7 @@ get_wallpaper() {
 # === Main ===
 
 # Get the next/previous wallpaper
-NEXT_WALL=$(get_wallpaper "$WIDE_WALLPAPER_DIR" "$CURRENT_WALL" "$DIRECTION")
+NEXT_WALL=$(get_wallpaper "$WALLPAPER_DIR" "$CURRENT_WALL" "$DIRECTION")
 
 # Unload current wallpapers
 hyprctl hyprpaper unload all
