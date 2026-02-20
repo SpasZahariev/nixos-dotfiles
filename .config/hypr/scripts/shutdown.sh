@@ -9,6 +9,6 @@ hyprctl clients -j | jq -r '.[].address' | while read addr; do
 done
 
 # Wait for windows to close
-sleep 2
+sleep 3
 
 systemctl poweroff
