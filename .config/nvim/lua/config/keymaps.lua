@@ -21,10 +21,14 @@ vim.keymap.set("n", "J", "mzJ`z", opts)
 -- Normal mode
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", opts)
 vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", opts)
+vim.keymap.set("n", "<A-Up>", ":m .-2<CR>==", opts)
+vim.keymap.set("n", "<A-Down>", ":m .+1<CR>==", opts)
 
 -- Visual mode
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
+vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", opts)
+vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", opts)
 
 -- Reselect after indent/dedent in visual mode
 vim.keymap.set("v", "<", "<gv", opts)
@@ -84,3 +88,40 @@ end, { noremap = true, silent = true, desc = "Reload current" })
 -- center the screen when I am moving to next and prev (also opens folds)
 -- vim.keymap.set("n", "n", "nzzzv", opts) -- center on pressing n
 -- vim.keymap.set("n", "N", "Nzzzv", opts) -- center on pressing N
+
+
+-- Duplicate line up/down (Monaco-like)
+vim.keymap.set("n", "<C-A-S-Up>", "yyP", opts)
+vim.keymap.set("n", "<C-A-S-Down>", "yyp", opts)
+vim.keymap.set("v", "<C-A-S-Up>", "yyP", opts)
+vim.keymap.set("v", "<C-A-S-Down>", "yyp", opts)
+-- Duplicate line up/down (Monaco-like) with jk
+vim.keymap.set("n", "<C-A-S-k>", "yyP", opts)
+vim.keymap.set("n", "<C-A-S-j>", "yyp", opts)
+vim.keymap.set("v", "<C-A-S-k>", "yyP", opts)
+vim.keymap.set("v", "<C-A-S-j>", "yyp", opts)
+
+-- Delete line (Monaco-like)
+vim.keymap.set("n", "<C-S-k>", "dd", opts)
+
+-- Insert blank lines (Monaco-like)
+-- vim.keymap.set("n", "<C-CR>", "o<Esc>", opts)
+-- vim.keymap.set("n", "<C-S-CR>", "O<Esc>", opts)
+
+-- Indent/outdent (Monaco-like)
+vim.keymap.set("n", "<C-[>", "<<", opts)
+vim.keymap.set("n", "<C-]>", ">>", opts)
+vim.keymap.set("v", "<C-[>", "<gv", opts)
+vim.keymap.set("v", "<C-]>", ">gv", opts)
+
+-- Toggle comment with Ctrl+/ (Monaco-like)
+vim.keymap.set("n", "<C-/>", "gcc", { remap = true, desc = "Toggle Comment" })
+vim.keymap.set("v", "<C-/>", "gc", { remap = true, desc = "Toggle Comment" })
+vim.keymap.set("n", "<C-_>", "gcc", { remap = true, desc = "Toggle Comment" })
+vim.keymap.set("v", "<C-_>", "gc", { remap = true, desc = "Toggle Comment" })
+
+-- Toggle terminal with Ctrl+`
+vim.keymap.set({ "n", "i" }, "<C-`>", function()
+  Snacks.terminal()
+end, { desc = "Toggle Terminal" })
+vim.keymap.set("t", "<C-`>", "<cmd>close<cr>", { desc = "Hide Terminal" })
