@@ -56,8 +56,19 @@ vim.keymap.set("n", "<leader>sv", ":source $MYVIMRC<CR>", opts)
 -- Keep visual selection after formatting
 vim.keymap.set("v", "=", "=gv", opts)
 
-vim.keymap.set("i", "<C-H>", "<C-w>", opts)     -- Ctrl+Backspace
+vim.keymap.set("i", "<C-H>", "<C-w>", opts)     -- Ctrl+Backspace (legacy)
+vim.keymap.set("i", "<C-BS>", "<C-w>", opts)    -- Ctrl+Backspace (kitty protocol)
 vim.keymap.set("i", "<C-Del>", "<C-o>dw", opts) -- Ctrl+Delete
+
+-- Ctrl+Backspace in terminal -> send Ctrl+W (delete word) to the shell
+local function term_send_ctrl_w()
+  local job_id = vim.b.terminal_job_id
+  if job_id then
+    vim.api.nvim_chan_send(job_id, "\x17")
+  end
+end
+vim.keymap.set("t", "<C-H>", term_send_ctrl_w, opts)
+vim.keymap.set("t", "<C-BS>", term_send_ctrl_w, opts)
 
 vim.keymap.set("n", "x", '"_x')                 -- when I delete with x it wont override my register
 

@@ -672,11 +672,11 @@ $env.config = {
             event: { edit: delete }
         }
         {
-            name: delete_one_character_backward
+            name: delete_one_word_backward
             modifier: control
             keycode: char_h
             mode: [emacs, vi_insert]
-            event: { edit: backspace }
+            event: { edit: backspaceword }
         }
         {
             name: delete_one_word_backward
