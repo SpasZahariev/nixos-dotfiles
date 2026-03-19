@@ -52,6 +52,9 @@
   networking.networkmanager.enable =
     true; # Easiest to use and most distros use this by default.
 
+  # Allow docker containers on my machine to reach out to stuff running on my nixos like e.g. ollama
+  networking.firewall.trustedInterfaces = [ "docker0" "br-+" ];
+
   # Set your time zone.
   time.timeZone = "Europe/Zurich";
 
@@ -120,6 +123,7 @@
       enable = true;
       package = unstablePkgs.ollama-rocm or unstablePkgs.ollama;
       acceleration = "rocm";
+      host = "0.0.0.0";
     };
   };
   programs = {
