@@ -370,6 +370,7 @@
     rocmPackages.rocm-smi
     postgresql # db and includes psql client
     pnpm # faster npm
+    claude-code
   ];
 
   # Env session variables for better wayland support
