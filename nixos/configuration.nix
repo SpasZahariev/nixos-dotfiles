@@ -46,14 +46,16 @@
     };
   };
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable =
-    true; # Easiest to use and most distros use this by default.
+  networking = {
+    hostName = "nixos"; # Define your hostname.
+    # Pick only one of the below networking options.
+    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+    networkmanager.enable =
+      true; # Easiest to use and most distros use this by default.
 
-  # Allow docker containers on my machine to reach out to stuff running on my nixos like e.g. ollama
-  networking.firewall.trustedInterfaces = [ "docker0" "br-+" ];
+    # Allow docker containers on my machine to reach out to stuff running on my nixos like e.g. ollama
+    firewall.trustedInterfaces = [ "docker0" "br-+" ];
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Zurich";
@@ -174,6 +176,7 @@
     };
     gamemode.enable = true; # daemon that will improve game performance on linux
 
+    coolercontrol.enable = true; # control fan curves gui
   };
 
   xdg.portal = {
@@ -375,6 +378,10 @@
     postgresql # db and includes psql client
     pnpm # faster npm
     claude-code
+    kubectl
+    minikube
+    loupe # rust image viewer
+    lm_sensors # to be able to see my hardware is detected like fans etc
   ];
 
   # Env session variables for better wayland support
