@@ -16,7 +16,7 @@
   boot = {
     # GPU
     # make the kernel use the correct driver early
-    initrd.kernelModules = [ "amdgpu" ];
+    initrd.kernelModules = [ "amdgpu" "nct6687" ];
     # Bootloader
     # boot.loader.grub.device = "/dev/nvme1n1p5";
     #boot.loader.efi.efiSysMountPoint = "/mnt/boot"
@@ -44,6 +44,13 @@
           false; # nix rebuild switch will skip GRUB regeneration unless the bootloader config actually changed
       };
     };
+    # fan detection motherboard kernel drivers
+    extraModulePackages = [ config.boot.kernelPackages.nct6687d ];
+    kernelParams = [ "acpi_enforce_resources=lax" ];
+    extraModprobeConfig = ''
+      blacklist nct6683
+      options nct6687 msi_fan_brute_force=1
+    '';
   };
 
   networking = {
@@ -177,6 +184,15 @@
     gamemode.enable = true; # daemon that will improve game performance on linux
 
     coolercontrol.enable = true; # control fan curves gui
+
+    # btop = {
+    #   enable = true;
+    #   # package = pkgs.btop-rocm;
+    #   settings = {
+    #     color_theme = "tokyo-night";
+    #     vim_keys = true;
+    #   };
+    # };
   };
 
   xdg.portal = {
