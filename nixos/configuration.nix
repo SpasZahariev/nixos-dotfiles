@@ -130,11 +130,14 @@
     ollama = {
 
       enable = true;
-      package = unstablePkgs.ollama-rocm or unstablePkgs.ollama;
       acceleration = "rocm";
+      package = unstablePkgs.ollama-rocm;
       host = "0.0.0.0";
       environmentVariables = {
         OLLAMA_MODELS = "/home/spas/dev/ollama_models";
+        HSA_OVERRIDE_GFX_VERSION = "11.0.0";
+        # ROCM_PATH = "${pkgs.rocmPackages.clr}";
+        AMD_SERIALIZE_KERNEL = "3";
       };
     };
   };
@@ -313,7 +316,7 @@
     graphics = {
       enable = true;
       enable32Bit = true; # some 32 Bit software might need my GPU too
-      extraPackages = with pkgs; [
+      extraPackages = with unstablePkgs; [
         rocmPackages.clr
         rocmPackages.clr.icd
         rocmPackages.rocm-runtime
