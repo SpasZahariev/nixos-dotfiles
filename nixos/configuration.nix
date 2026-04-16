@@ -133,6 +133,9 @@
       package = unstablePkgs.ollama-rocm or unstablePkgs.ollama;
       acceleration = "rocm";
       host = "0.0.0.0";
+      environmentVariables = {
+        OLLAMA_MODELS = "/home/spas/dev/ollama_models";
+      };
     };
   };
   programs = {
@@ -250,25 +253,45 @@
 
   nixpkgs.config.allowUnfree = true; # FU Spotify
 
-  systemd.user.services.diary-habit-tracker = {
-    description = "habit tracker";
-    wantedBy = [ "default.target" ];
-    after = [
-      "network-online.target"
-      "ssh-agent.service"
-    ]; # Dependency on internet setup
-    wants = [ "network-online.target" ]; # Depend on internet is setup
-    path = [ pkgs.git pkgs.openssh ]; # depends on these cli apps
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStartPre =
-        "${pkgs.coreutils}/bin/sleep 30"; # Wait 30 seconds after OS started
-      ExecStart =
-        "${pkgs.python3}/bin/python /home/spas/dev/py-projects/diary-habit-tracker/main.py";
-      WorkingDirectory = "/home/spas/dev/py-projects/diary-habit-tracker";
-      Environment = "SSH_AUTH_SOCK=%t/ssh-agent"; # If using ssh-agent
+  systemd = {
+    # --- System-wide Services ---
+    services = {
+
+      ollama.serviceConfig = {
+        ProtectHome = lib.mkForce "read-only";
+        ReadWritePaths = [ "/home/spas/dev/ollama_models" ];
+      };
+
+      docker.serviceConfig = {
+        ProtectHome = lib.mkForce "read-only";
+        ReadWritePaths = [ "/home/spas/dev/docker" ];
+      };
+
+    };
+
+    # --- User-specific Services ---
+    user.services = {
+
+      diary-habit-tracker = {
+        description = "habit tracker";
+        wantedBy = [ "default.target" ];
+        after = [ "network-online.target" "ssh-agent.service" ];
+        wants = [ "network-online.target" ];
+        path = with pkgs; [ git openssh ];
+
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStartPre = "${pkgs.coreutils}/bin/sleep 30";
+          ExecStart =
+            "${pkgs.python3}/bin/python /home/spas/dev/py-projects/diary-habit-tracker/main.py";
+          WorkingDirectory = "/home/spas/dev/py-projects/diary-habit-tracker";
+          Environment = "SSH_AUTH_SOCK=%t/ssh-agent";
+        };
+      };
+
     };
   };
+
   ####################
 
   # gtk thunar setup
@@ -446,6 +469,15 @@
       device = "LABEL=Caring";
       fsType = "ntfs";
       options = [ "rw" "uid=1000" "gid=100" "unmask=0022" "nofail" ];
+    };
+    # Bind Mount /var/lib/ollama to your /home partition
+    "/var/lib/ollama" = {
+      device = "/home/spas/dev/ollama_models";
+      options = [ "bind" ];
+    };
+    "/var/lib/docker" = {
+      device = "/home/spas/dev/docker/";
+      options = [ "bind" ];
     };
   };
 

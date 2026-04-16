@@ -28,8 +28,6 @@ theme = catppuccin-macchiato.conf
 cursor-style = bar
 cursor-style-blink = true
 
-# Map Ctrl+f to the find/search function
-keybind = ctrl+f=text_search:start
 
 # window-padding-x = 2
 #

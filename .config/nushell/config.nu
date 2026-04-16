@@ -392,13 +392,6 @@ $env.config = {
 
     keybindings: [
         {
-          name: unbind_ctrl_f
-          modifier: control
-          keycode: char_f
-          mode: [emacs, vi_insert, vi_normal]
-          event: null # This tells Nushell to ignore the key
-        }
-        {
             name: completion_menu
             modifier: none
             keycode: tab
