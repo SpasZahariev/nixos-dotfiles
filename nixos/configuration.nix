@@ -419,7 +419,7 @@
     rocmPackages.rocm-smi
     postgresql # db and includes psql client
     pnpm # faster npm
-    claude-code
+    unstablePkgs.claude-code
     kubectl
     minikube
     loupe # rust image viewer
