@@ -907,16 +907,7 @@ alias z = zoxide
 alias tk = tmux kill-server
 # like an alias create a main session or attach to it
 def t [] {
-    # Try to get sessions, ignore errors
-    let sessions = (tmux list-sessions err> /dev/null | default "")
-
-    if $sessions == "" {
-        # No server / no sessions → create new
-        tmux new -s sess
-    } else {
-        # Server exists → attach to main
-        tmux attach -t sess
-    }
+    try { tmux attach -t sess } catch { tmux new -s sess }
 }
 
 alias cat = bat
