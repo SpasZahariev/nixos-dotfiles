@@ -934,7 +934,7 @@ $env.PATH = (
 # Run hyprwhspr with scoped env vars (no global PYTHONPATH).
 def hw [...args] {
     let base_ld = "/run/current-system/sw/lib:/nix/store/yg2xx432yq265irljbz8ddjsjnxajfvw-libpulseaudio-17.0/lib"
-    let existing_ld = ($env | get -i LD_LIBRARY_PATH | default "")
+    let existing_ld = ($env | get -o LD_LIBRARY_PATH | default "")
     let merged_ld = if $existing_ld == "" { $base_ld } else { $"($base_ld):($existing_ld)" }
 
     with-env {
@@ -990,7 +990,7 @@ print "\u{1b}c"
 # fastfetch --color 256
 # show fastfetch if there is enough space
 let size = term size
-if $size.columns >= 90 and $size.rows >= 24 and ($env | get -i TMUX | is-empty) {
+if $size.columns >= 90 and $size.rows >= 24 and ($env | get -o TMUX | is-empty) {
     fastfetch
 }
 
