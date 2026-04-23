@@ -905,10 +905,8 @@ alias vim = nvim
 alias z = zoxide
 # alias cd = z # if zoxide has a problem this messes me up
 alias tk = tmux kill-server
-# like an alias create a main session or attach to it
-def t [] {
-    tmux new-session -A -s sess
-}
+# -A is smart attach (attach or create session)
+alias t = tmux new-session -A -s sess
 
 alias cat = bat
 alias nix-vim = nvim ~/dotfiles/nixos/configuration.nix
@@ -992,7 +990,7 @@ print "\u{1b}c"
 # fastfetch --color 256
 # show fastfetch if there is enough space
 let size = term size
-if $size.columns >= 90 and $size.rows >= 24 {
+if $size.columns >= 90 and $size.rows >= 24 and ($env | get -i TMUX | is-empty) {
     fastfetch
 }
 
