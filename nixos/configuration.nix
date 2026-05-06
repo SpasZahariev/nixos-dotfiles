@@ -190,15 +190,6 @@
     gamemode.enable = true; # daemon that will improve game performance on linux
 
     coolercontrol.enable = true; # control fan curves gui
-
-    # btop = {
-    #   enable = true;
-    #   # package = pkgs.btop-rocm;
-    #   settings = {
-    #     color_theme = "tokyo-night";
-    #     vim_keys = true;
-    #   };
-    # };
   };
 
   xdg.portal = {
