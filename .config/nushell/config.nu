@@ -963,6 +963,21 @@ mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 alias f = with-env { _PR_LAST_COMMAND : (history | last).command,_PR_ALIAS : "",_PR_SHELL : nu } { /run/current-system/sw/bin/pay-respects }
 
+# Start llama-server then launch opencode once server is healthy
+def opencode-local [] {
+    print "Starting llama-server..."
+    systemctl --user start llama-server
+    print "Waiting for llama-server to be ready..."
+    loop {
+        let result = (try { http get http://localhost:11434/health | get status } catch { "down" })
+        if $result == "ok" { break }
+        sleep 2sec
+    }
+    print "llama-server ready. Launching opencode..."
+    opencode
+}
+alias oc = opencode-local
+
 # env variable for bettwer color compatibility with tmux
 # $env.TERM = "tmux-256color"
 # $env.COLORTERM = "truecolor"

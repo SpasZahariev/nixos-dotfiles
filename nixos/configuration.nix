@@ -282,6 +282,18 @@
         };
       };
 
+      llama-server = {
+        description = "Local llama.cpp inference server";
+        # Manual start only — no wantedBy. Use: systemctl --user start llama-server
+
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = "${unstablePkgs.llama-cpp-vulkan}/bin/llama-server -hf unsloth/Qwen3.6-27B-GGUF:UD-Q4_K_XL --port 11434 --api-key \"sk-local-token\" -ngl 99 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 -c 32768 -t 16 -b 2048 --mlock --temp 1.0 --top_p 0.95 --top_k 20 --presence_penalty 1.5";
+          Restart = "on-failure";
+          RestartSec = "5s";
+        };
+      };
+
       diary-habit-tracker = {
         description = "habit tracker";
         wantedBy = [ "default.target" ];
