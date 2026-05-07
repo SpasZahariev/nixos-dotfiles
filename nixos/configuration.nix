@@ -129,7 +129,7 @@
     };
     ollama = {
 
-      enable = true;
+      enable = false;
       acceleration = "rocm";
       package = unstablePkgs.ollama-rocm;
       host = "0.0.0.0";
@@ -394,9 +394,6 @@
     unstablePkgs.gemini-cli # some ai terminal goodness
     python315
     uv # better venv
-    cmake # build dependency for hyprwhspr/whisper backends
-    portaudio # microphone I/O backend for python sounddevice
-    libpulseaudio # shared lib for python pulsectl
     ydotool # required for synthetic key injection
     carapace # cli command completions and suggestions
     rustc
@@ -415,6 +412,11 @@
     minikube
     loupe # rust image viewer
     lm_sensors # to be able to see my hardware is detected like fans etc
+    unstablePkgs.llama-cpp-vulkan # Gerogi Georgiev lets gooo!!
+    gh # github cli tool
+    unstablePkgs.worktrunk # better worktrees
+    ngrok # allows me to expose a local web server to the internet
+    unstablePkgs.dioxus-cli # rust fullstack app sdk
   ];
 
   # Env session variables for better wayland support
