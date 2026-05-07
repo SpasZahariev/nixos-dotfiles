@@ -235,6 +235,9 @@
       "video"
       "render"
       "ydotool"
+      "input"
+      "networkManager"
+      "audio"
     ]; # Enable ‘sudo’ for the user.
   };
 
@@ -265,6 +268,19 @@
 
     # --- User-specific Services ---
     user.services = {
+
+      openwhispr = {
+        description = "OpenWhispr voice transcription";
+        wantedBy = [ "graphical-session.target" ];
+        after = [ "graphical-session.target" ];
+
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = "${pkgs.appimage-run}/bin/appimage-run /home/spas/small-apps/openwhispr/OpenWhispr-1.7.0-linux-x86_64.AppImage --enable-features=UseOzonePlatform --ozone-platform=wayland";
+          Restart = "on-failure";
+          RestartSec = "5s";
+        };
+      };
 
       diary-habit-tracker = {
         description = "habit tracker";
@@ -301,7 +317,7 @@
 
   hardware = {
     # bluetooth
-    # bluetooth.enable = true;
+    bluetooth.enable = true;
 
     # AMD GPU (used to be OpenGl)/ ROCm support 
     graphics = {
@@ -344,7 +360,7 @@
     mpd # music player client
     inputs.swww.packages.${pkgs.stdenv.hostPlatform.system}.swww # daemon for changing wallpapers
     hyprpaper
-    nodejs
+    unstablePkgs.nodejs
     yarn # or npm
     ripgrep
     unzip
@@ -395,6 +411,8 @@
     python315
     uv # better venv
     ydotool # required for synthetic key injection
+    appimage-run # run AppImages (used for openwhispr)
+    wtype # wayland-native key injection (preferred by openwhispr over ydotool on hyprland)
     carapace # cli command completions and suggestions
     rustc
     cargo
