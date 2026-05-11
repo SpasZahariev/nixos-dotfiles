@@ -150,9 +150,6 @@
     pay-respects.enable = true;
     pay-respects.alias = "fuck";
 
-    # fallback dynamic linker for binaries that expect a traditional Linux environment
-    nix-ld.enable = true;
-
     # for using direnv .envrc files in my programming projects so ican use package managers like pip npm cargo
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
@@ -190,6 +187,54 @@
     gamemode.enable = true; # daemon that will improve game performance on linux
 
     coolercontrol.enable = true; # control fan curves gui
+    adb.enable = true; # android debug bridge
+    nix-ld = {
+      # fallback dynamic linker for binaries that expect a traditional Linux environment
+      # android emulator can't work without these
+      enable = true;
+      libraries = with pkgs; [
+        # For Slay The Spire 2 mods
+        stdenv.cc.cc.lib # This provides libgcc_s and libstdc++
+        libunwind # This provides libunwind
+        zlib # Common dependency
+
+        #   stdenv.cc.cc
+        #   libGL
+        #   vulkan-loader
+        #   libpulseaudio
+        #   libpng
+        #
+        #   # Corrected names:
+        #   nss # This provides libnss3.so
+        #   nspr # Required by nss
+        #   libxcrypt # Replacement for the old glibc crypt
+        #
+        #   # The rest of the essentials:
+        #   zlib
+        #   ncurses
+        #   expat
+        #   dbus
+        #   libdrm
+        #   mesa
+        #   libxkbcommon
+        #
+        #   # X11 Windowing
+        #   xorg.libX11
+        #   xorg.libXext
+        #   xorg.libXcursor
+        #   xorg.libXi
+        #   xorg.libXrender
+        #   xorg.libXcomposite
+        #   xorg.libXdamage
+        #   xorg.libXfixes
+        #   xorg.libXrandr
+        #   xorg.libxcb
+        #   libxkbcommon
+        #   xorg.libXtst
+        #   xorg.libxkbfile
+        #   libbsd
+      ];
+    };
   };
 
   xdg.portal = {
@@ -206,6 +251,8 @@
     rootless.enable = true;
     package = unstablePkgs.docker;
   };
+  # android phone emulation
+  virtualisation.libvirtd.enable = true;
 
   # #home manager config
   # programs.home-manager.enable = true;
@@ -238,6 +285,9 @@
       "input"
       "networkManager"
       "audio"
+      "libvirtd"
+      "adbusers"
+      "kvm"
     ]; # Enable ‘sudo’ for the user.
   };
 
@@ -271,8 +321,8 @@
 
       openwhispr = {
         description = "OpenWhispr voice transcription";
-        wantedBy = [ "graphical-session.target" ];
-        after = [ "graphical-session.target" ];
+        wantedBy = [ "default.target" ];
+        after = [ "default.target" ];
 
         serviceConfig = {
           Type = "simple";
@@ -449,6 +499,10 @@
     unstablePkgs.worktrunk # better worktrees
     ngrok # allows me to expose a local web server to the internet
     unstablePkgs.dioxus-cli # rust fullstack app sdk
+    android-studio
+    android-tools
+    openjdk
+
   ];
 
   # Env session variables for better wayland support
@@ -467,9 +521,13 @@
       QT_QPA_PLATFORM = "wayland"; # Force Wayland for Qt apps like VLC
       SDL_VIDEODRIVER = "wayland";
       NO_UPDATE_NOTIFIER = "1"; # should Disable gemini-cli from autoupdating
+      ANDROID_NDK_HOME = "/home/spas/Android/Sdk/ndk/30.0.14904198";
+      JAVA_HOME = "${pkgs.openjdk}/lib/openjdk";
+      ANDROID_HOME = "/home/spas/Android/Sdk";
       PATH = builtins.concatStringsSep ":" [
         "$HOME/.bun/bin"
         "$HOME/.npm-global/bin"
+        "$HOME/.cargo/bin"
         "$PATH"
       ];
 
