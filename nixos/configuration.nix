@@ -340,7 +340,9 @@
         serviceConfig = {
           Type = "simple";
           ExecStart = ''
-            ${unstablePkgs.llama-cpp-vulkan}/bin/llama-server -hf unsloth/Qwen3.6-27B-GGUF:UD-Q4_K_XL --port 11434 --api-key "sk-local-token" -ngl 99 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 -c 115344 -t 16 -b 2048 --mlock --temp 1.0 --top_p 0.95 --top_k 20 --presence_penalty 1.5'';
+            ${unstablePkgs.llama-cpp-vulkan}/bin/llama-server -hf unsloth/Qwen3.6-27B-MTP-GGUF:UD-Q4_K_XL --port 11434 --api-key "sk-local-token" -ngl 99 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 -c 115344 -t 16 -b 2048 --mlock --temp 1.0 --top_p 0.95 --top_k 20 --presence_penalty 1.5 --spec-type draft-mtp --spec-draft-n-max 1'';
+          # ExecStart = ''
+          #   ${unstablePkgs.llama-cpp-vulkan}/bin/llama-server -hf unsloth/Qwen3.6-27B-GGUF:UD-Q4_K_XL --port 11434 --api-key "sk-local-token" -ngl 99 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 -c 115344 -t 16 -b 2048 --mlock --temp 1.0 --top_p 0.95 --top_k 20 --presence_penalty 1.5'';
           Restart = "on-failure";
           RestartSec = "5s";
         };
@@ -502,7 +504,7 @@
     android-studio
     android-tools
     openjdk
-
+    dust # Rust based - check dir sizes
   ];
 
   # Env session variables for better wayland support

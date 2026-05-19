@@ -13,17 +13,17 @@ return {
     local ret = {
       -- options for vim.diagnostic.config()
       ---@type vim.diagnostic.Opts
-      diagnostics = {
-        underline = true,
-        update_in_insert = false,
-        virtual_text = {
-          spacing = 4,
-          source = "if_many",
-          prefix = "●",
-          -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
-          -- prefix = "icons",
-        },
-        severity_sort = true,
+       diagnostics = {
+          underline = true,
+          update_in_insert = false,
+          virtual_text = {
+            spacing = 4,
+            source = "if_many",
+            prefix = "●",
+            -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
+            -- prefix = "icons",
+          },
+          severity_sort = true,
         signs = {
           text = {
             [vim.diagnostic.severity.ERROR] = LazyVim.config.icons.diagnostics.Error,
@@ -76,6 +76,7 @@ return {
           -- stylua: ignore
           keys = {
             { "<leader>cl", function() Snacks.picker.lsp_config() end,          desc = "Lsp Info" },
+            { "<leader>vd", function() vim.cmd("ToggleDiagnosticsVirtText") end, desc = "Toggle Diagnostic Virtual Text" },
             { "gd",         vim.lsp.buf.definition,                             desc = "Goto Definition",            has = "definition" },
             { "gr",         vim.lsp.buf.references,                             desc = "References",                 nowait = true },
             { "gI",         vim.lsp.buf.implementation,                         desc = "Goto Implementation" },
@@ -235,6 +236,28 @@ return {
       end
     end
     vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
+
+    -- Markdown: hide virtual_text (line-length warnings), keep signs in gutter
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "markdown",
+      callback = function(args)
+        vim.diagnostic.config({ virtual_text = false }, args.buf)
+      end,
+    })
+
+    -- Leader-key toggle for all diagnostics virtual text: <leader>vd
+    local virtual_text_state = true
+    vim.api.nvim_create_user_command("ToggleDiagnosticsVirtText", function()
+      if virtual_text_state then
+        vim.diagnostic.config({ virtual_text = false })
+        Snacks.notify.info("Diagnostics virtual text OFF")
+        virtual_text_state = false
+      else
+        vim.diagnostic.config({ virtual_text = true, prefix = "●" })
+        Snacks.notify.info("Diagnostics virtual text ON")
+        virtual_text_state = true
+      end
+    end, {})
 
     -- format file/buffer on save
     vim.api.nvim_create_autocmd("BufWritePre", {
