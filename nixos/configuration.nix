@@ -311,7 +311,11 @@
 
       docker.serviceConfig = {
         ProtectHome = lib.mkForce "read-only";
-        ReadWritePaths = [ "/home/spas/dev/docker" ];
+        ReadWritePaths = [
+          "/home/spas/dev/docker"
+          "/home/spas/dev/epam"
+          "/home/spas/.cache/huggingface"
+        ];
       };
 
     };
@@ -506,6 +510,7 @@
     android-tools
     openjdk
     dust # Rust based - check dir sizes
+    vscode
   ];
 
   # Env session variables for better wayland support
