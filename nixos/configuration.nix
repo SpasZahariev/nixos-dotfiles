@@ -441,6 +441,7 @@
     mpv
     mesa # amd gpu drivers
     vesktop
+    discord # for when i want to screenshare
     spotify
     jq # json query - useful in bash commands
     # Thunar file manager GTK stuff
@@ -511,6 +512,10 @@
     openjdk
     dust # Rust based - check dir sizes
     vscode
+    (texlive.combine {
+      inherit (texlive)
+        scheme-full; # compile .tex files with "xelatex resume.text"
+    })
   ];
 
   # Env session variables for better wayland support
@@ -538,6 +543,7 @@
         "$HOME/.cargo/bin"
         "$PATH"
       ];
+      NIXOS_OZONE_WL = "1"; # should let vencord screenshare systemwide
 
       # VDPAU_DRIVER = "radeonsi"; # idk if this will fix my video playback problem, let's try
       # XDG_ICON_DIR = "${pkgs.catppuccin-papirus-folders}/share/icons/Papirus-Dark";
