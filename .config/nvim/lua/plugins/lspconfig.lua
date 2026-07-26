@@ -13,17 +13,17 @@ return {
     local ret = {
       -- options for vim.diagnostic.config()
       ---@type vim.diagnostic.Opts
-       diagnostics = {
-          underline = true,
-          update_in_insert = false,
-          virtual_text = {
-            spacing = 4,
-            source = "if_many",
-            prefix = "●",
-            -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
-            -- prefix = "icons",
-          },
-          severity_sort = true,
+      diagnostics = {
+        underline = true,
+        update_in_insert = false,
+        virtual_text = {
+          spacing = 4,
+          source = "if_many",
+          prefix = "●",
+          -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
+          -- prefix = "icons",
+        },
+        severity_sort = true,
         signs = {
           text = {
             [vim.diagnostic.severity.ERROR] = LazyVim.config.icons.diagnostics.Error,
@@ -75,22 +75,22 @@ return {
           },
           -- stylua: ignore
           keys = {
-            { "<leader>cl", function() Snacks.picker.lsp_config() end,          desc = "Lsp Info" },
+            { "<leader>cl", function() Snacks.picker.lsp_config() end,           desc = "Lsp Info" },
             { "<leader>vd", function() vim.cmd("ToggleDiagnosticsVirtText") end, desc = "Toggle Diagnostic Virtual Text" },
-            { "gd",         vim.lsp.buf.definition,                             desc = "Goto Definition",            has = "definition" },
-            { "gr",         vim.lsp.buf.references,                             desc = "References",                 nowait = true },
-            { "gI",         vim.lsp.buf.implementation,                         desc = "Goto Implementation" },
-            { "gy",         vim.lsp.buf.type_definition,                        desc = "Goto T[y]pe Definition" },
-            { "gD",         vim.lsp.buf.declaration,                            desc = "Goto Declaration" },
-            { "K",          function() return vim.lsp.buf.hover() end,          desc = "Hover" },
-            { "gK",         function() return vim.lsp.buf.signature_help() end, desc = "Signature Help",             has = "signatureHelp" },
-            { "<c-k>",      function() return vim.lsp.buf.signature_help() end, mode = "i",                          desc = "Signature Help", has = "signatureHelp" },
-            { "<leader>ca", vim.lsp.buf.code_action,                            desc = "Code Action",                mode = { "n", "x" },     has = "codeAction" },
-            { "<leader>cc", vim.lsp.codelens.run,                               desc = "Run Codelens",               mode = { "n", "x" },     has = "codeLens" },
-            { "<leader>cC", vim.lsp.codelens.refresh,                           desc = "Refresh & Display Codelens", mode = { "n" },          has = "codeLens" },
-            { "<leader>cR", function() Snacks.rename.rename_file() end,         desc = "Rename File",                mode = { "n" },          has = { "workspace/didRenameFiles", "workspace/willRenameFiles" } },
-            { "<leader>cr", vim.lsp.buf.rename,                                 desc = "Rename",                     has = "rename" },
-            { "<leader>cA", LazyVim.lsp.action.source,                          desc = "Source Action",              has = "codeAction" },
+            { "gd",         vim.lsp.buf.definition,                              desc = "Goto Definition",               has = "definition" },
+            { "gr",         vim.lsp.buf.references,                              desc = "References",                    nowait = true },
+            { "gI",         vim.lsp.buf.implementation,                          desc = "Goto Implementation" },
+            { "gy",         vim.lsp.buf.type_definition,                         desc = "Goto T[y]pe Definition" },
+            { "gD",         vim.lsp.buf.declaration,                             desc = "Goto Declaration" },
+            { "K",          function() return vim.lsp.buf.hover() end,           desc = "Hover" },
+            { "gK",         function() return vim.lsp.buf.signature_help() end,  desc = "Signature Help",                has = "signatureHelp" },
+            { "<c-k>",      function() return vim.lsp.buf.signature_help() end,  mode = "i",                             desc = "Signature Help", has = "signatureHelp" },
+            { "<leader>ca", vim.lsp.buf.code_action,                             desc = "Code Action",                   mode = { "n", "x" },     has = "codeAction" },
+            { "<leader>cc", vim.lsp.codelens.run,                                desc = "Run Codelens",                  mode = { "n", "x" },     has = "codeLens" },
+            { "<leader>cC", vim.lsp.codelens.refresh,                            desc = "Refresh & Display Codelens",    mode = { "n" },          has = "codeLens" },
+            { "<leader>cR", function() Snacks.rename.rename_file() end,          desc = "Rename File",                   mode = { "n" },          has = { "workspace/didRenameFiles", "workspace/willRenameFiles" } },
+            { "<leader>cr", vim.lsp.buf.rename,                                  desc = "Rename",                        has = "rename" },
+            { "<leader>cA", LazyVim.lsp.action.source,                           desc = "Source Action",                 has = "codeAction" },
             {
               "]]",
               function() Snacks.words.jump(vim.v.count1) end,
@@ -237,13 +237,13 @@ return {
     end
     vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
-    -- Markdown: hide virtual_text (line-length warnings), keep signs in gutter
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "markdown",
-      callback = function(args)
-        vim.diagnostic.config({ virtual_text = false }, args.buf)
-      end,
-    })
+    -- -- Markdown: hide virtual_text (line-length warnings), keep signs in gutter
+    -- vim.api.nvim_create_autocmd("FileType", {
+    --   pattern = "markdown",
+    --   callback = function(args)
+    --     vim.diagnostic.config({ virtual_text = false }, args.buf)
+    --   end,
+    -- })
 
     -- Leader-key toggle for all diagnostics virtual text: <leader>vd
     local virtual_text_state = true
