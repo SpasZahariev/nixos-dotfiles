@@ -282,6 +282,7 @@
       "video"
       "render"
       "ydotool"
+      "uinput"
       "input"
       "networkManager"
       "audio"
@@ -299,6 +300,8 @@
   # nixpkgs.channel = "nixos-unstable";
 
   nixpkgs.config.allowUnfree = true; # FU Spotify
+  nixpkgs.config.permittedInsecurePackages =
+    [ "docker-28.5.2" ]; # temporary until it is updated
 
   systemd = {
     # --- System-wide Services ---
@@ -332,7 +335,7 @@
         serviceConfig = {
           Type = "simple";
           ExecStart =
-            "${pkgs.appimage-run}/bin/appimage-run /home/spas/small-apps/openwhispr/OpenWhispr-1.7.0-linux-x86_64.AppImage --enable-features=UseOzonePlatform --ozone-platform=wayland";
+            "${pkgs.appimage-run}/bin/appimage-run /home/spas/small-apps/openwhispr/OpenWhispr-1.7.6-linux-x86_64.AppImage --enable-features=UseOzonePlatform --ozone-platform=wayland";
           Restart = "on-failure";
           RestartSec = "5s";
         };
@@ -516,6 +519,8 @@
       inherit (texlive)
         scheme-full; # compile .tex files with "xelatex resume.text"
     })
+    unstablePkgs.herdr # new and better tmux
+    unstablePkgs.pi-coding-agent
   ];
 
   # Env session variables for better wayland support
