@@ -371,13 +371,30 @@
         description = "Local llama.cpp inference server";
         # Manual start only — no wantedBy. Use: systemctl --user start llama-server
 
+        # env variables
+        environment = {
+          MODEL_DIR = "/home/spas/.cache/huggingface/hub/models--prism-ml--Ternary-Bonsai-27B-gguf/snapshots/abbae723028d71be674e71e1a71201a6f43fab22";
+        };
+
         serviceConfig = {
           Type = "simple";
-          # ExecStart = ''
-          #   ${unstablePkgs.llama-cpp-vulkan}/bin/llama-server -hf unsloth/Qwen3.6-27B-MTP-GGUF:UD-Q4_K_XL --port 11434 --api-key "sk-local-token" -ngl 99 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 -c 115344 -t 16 -b 2048 --mlock --temp 1.0 --top_p 0.95 --top_k 20 --presence_penalty 1.5 --spec-type draft-mtp --spec-draft-n-max 1'';
-          ExecStart = ''${unstablePkgs.llama-cpp-vulkan}/bin/llama-server -hf unsloth/Qwen3.6-27B-GGUF:UD-Q4_K_XL --port 11434 --api-key "sk-local-token" -ngl 99 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 -c 115344 -t 16 -b 2048 --mlock --temp 1.0 --top_p 0.95 --top_k 20 --presence_penalty 1.5'';
+          # ExecStart = ''${unstablePkgs.llama-cpp-vulkan}/bin/llama-server -hf unsloth/Qwen3.6-27B-GGUF:UD-Q4_K_XL --port 11434 --api-key "sk-local-token" -ngl 99 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 -c 115344 -t 16 -b 2048 --mlock --temp 1.0 --top_p 0.95 --top_k 20 --presence_penalty 1.5'';
+          ExecStart = ''
+            ${inputs.llama-cpp.packages.${pkgs.system}.vulkan}/bin/llama-server \
+              -m ''${MODEL_DIR}/Ternary-Bonsai-27B-Q2_g64.gguf \
+              --mmproj ''${MODEL_DIR}/Ternary-Bonsai-27B-mmproj-BF16.gguf \
+              --spec-draft-n-max 4 \
+              --port 11434 \
+              --api-key "sk-local-token" \
+              -ngl 99 -ngld 99 \
+              --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 \
+              -c 400000 \
+              -t 16 -b 2048 --load-mode mlock \
+              --temp 0.1 --top_p 0.95 --top_k 20 --presence_penalty 1.5
+          '';
           Restart = "on-failure";
           RestartSec = "5s";
+          WorkingDirectory = "/home/spas";
         };
       };
 
@@ -553,6 +570,7 @@
     unstablePkgs.herdr # new and better tmux
     unstablePkgs.pi-coding-agent
     inputs.treehouse.packages.${pkgs.system}.default # kun chen's worktree helper
+    python3Packages.huggingface-hub # to download models with "hf"
   ];
 
   # Env session variables for better wayland support
