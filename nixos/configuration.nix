@@ -2,21 +2,35 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, inputs, unstablePkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  unstablePkgs,
+  ...
+}:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     inputs.spicetify-nix.nixosModules.default
     # inputs.home-manager.nixosModules.home-manager
   ];
 
-  nix.settings.experimental-features = [ "flakes" "nix-command" ];
+  nix.settings.experimental-features = [
+    "flakes"
+    "nix-command"
+  ];
 
   boot = {
     # GPU
     # make the kernel use the correct driver early
-    initrd.kernelModules = [ "amdgpu" "nct6687" ];
+    initrd.kernelModules = [
+      "amdgpu"
+      "nct6687"
+    ];
     # Bootloader
     # boot.loader.grub.device = "/dev/nvme1n1p5";
     #boot.loader.efi.efiSysMountPoint = "/mnt/boot"
@@ -38,10 +52,8 @@
         # default = "Windows Boot Manager";
 
         # skip grub-install and grub-mkconfig for faster nixos rebuilds
-        useOSProber =
-          true; # if true will scan for windows boot config and add it to grub window!
-        forceInstall =
-          false; # nix rebuild switch will skip GRUB regeneration unless the bootloader config actually changed
+        useOSProber = true; # if true will scan for windows boot config and add it to grub window!
+        forceInstall = false; # nix rebuild switch will skip GRUB regeneration unless the bootloader config actually changed
       };
     };
     # fan detection motherboard kernel drivers
@@ -57,11 +69,13 @@
     hostName = "nixos"; # Define your hostname.
     # Pick only one of the below networking options.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-    networkmanager.enable =
-      true; # Easiest to use and most distros use this by default.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
     # Allow docker containers on my machine to reach out to stuff running on my nixos like e.g. ollama
-    firewall.trustedInterfaces = [ "docker0" "br-+" ];
+    firewall.trustedInterfaces = [
+      "docker0"
+      "br-+"
+    ];
   };
 
   # Set your time zone.
@@ -90,8 +104,7 @@
         layout = "us,bg";
         variant = ",phonetic"; # Empty for "us", phonetic for "bg"
         # xkbOptions = "grp:alt_shift_toggle"; # Switch layout with Shift + Alt
-        options =
-          "grp:caps_toggle,grp_led:caps"; # Switch with caps and light says on for second layout
+        options = "grp:caps_toggle,grp_led:caps"; # Switch with caps and light says on for second layout
       };
     };
     # Enable seatd for better input handling in wayland with keyboard and mouse of non-root users
@@ -123,7 +136,12 @@
           "bluez5.enable-sbc-xq" = true;
           "bluez5.enable-msbc" = true;
           "bluez5.enable-hw-volume" = true;
-          "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+          "bluez5.roles" = [
+            "hsp_hs"
+            "hsp_ag"
+            "hfp_hf"
+            "hfp_ag"
+          ];
         };
       };
     };
@@ -159,23 +177,31 @@
       enable = true;
       config = {
         # Fuck 3 way conflict resolution
-        mergetool = { hideResolved = true; };
-        init = { defaultBranch = "main"; };
+        mergetool = {
+          hideResolved = true;
+        };
+        init = {
+          defaultBranch = "main";
+        };
       };
     };
 
     ### spotify customization
-    spicetify = let
-      spicePkgs =
-        inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-    in {
-      enable = true;
-      # theme = spicePkgs.themes.starryNight;
-      theme = spicePkgs.themes.ziro;
-      colorScheme = "rose-pine";
-      enabledCustomApps = with spicePkgs.apps; [ ncsVisualizer ];
-      enabledSnippets = with spicePkgs.snippets; [ rotatingCoverart pointer ];
-    };
+    spicetify =
+      let
+        spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+      in
+      {
+        enable = true;
+        # theme = spicePkgs.themes.starryNight;
+        theme = spicePkgs.themes.ziro;
+        colorScheme = "rose-pine";
+        enabledCustomApps = with spicePkgs.apps; [ ncsVisualizer ];
+        enabledSnippets = with spicePkgs.snippets; [
+          rotatingCoverart
+          pointer
+        ];
+      };
 
     steam = {
       enable = true;
@@ -247,7 +273,9 @@
   virtualisation.docker = {
     enable = true;
     enableOnBoot = true;
-    daemon.settings = { experimental = true; };
+    daemon.settings = {
+      experimental = true;
+    };
     rootless.enable = true;
     package = unstablePkgs.docker;
   };
@@ -300,8 +328,7 @@
   # nixpkgs.channel = "nixos-unstable";
 
   nixpkgs.config.allowUnfree = true; # FU Spotify
-  nixpkgs.config.permittedInsecurePackages =
-    [ "docker-28.5.2" ]; # temporary until it is updated
+  nixpkgs.config.permittedInsecurePackages = [ "docker-28.5.2" ]; # temporary until it is updated
 
   systemd = {
     # --- System-wide Services ---
@@ -334,8 +361,7 @@
 
         serviceConfig = {
           Type = "simple";
-          ExecStart =
-            "${pkgs.appimage-run}/bin/appimage-run /home/spas/small-apps/openwhispr/OpenWhispr-1.7.6-linux-x86_64.AppImage --enable-features=UseOzonePlatform --ozone-platform=wayland";
+          ExecStart = "${pkgs.appimage-run}/bin/appimage-run /home/spas/small-apps/openwhispr/OpenWhispr-1.7.6-linux-x86_64.AppImage --enable-features=UseOzonePlatform --ozone-platform=wayland";
           Restart = "on-failure";
           RestartSec = "5s";
         };
@@ -349,8 +375,7 @@
           Type = "simple";
           # ExecStart = ''
           #   ${unstablePkgs.llama-cpp-vulkan}/bin/llama-server -hf unsloth/Qwen3.6-27B-MTP-GGUF:UD-Q4_K_XL --port 11434 --api-key "sk-local-token" -ngl 99 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 -c 115344 -t 16 -b 2048 --mlock --temp 1.0 --top_p 0.95 --top_k 20 --presence_penalty 1.5 --spec-type draft-mtp --spec-draft-n-max 1'';
-          ExecStart = ''
-            ${unstablePkgs.llama-cpp-vulkan}/bin/llama-server -hf unsloth/Qwen3.6-27B-GGUF:UD-Q4_K_XL --port 11434 --api-key "sk-local-token" -ngl 99 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 -c 115344 -t 16 -b 2048 --mlock --temp 1.0 --top_p 0.95 --top_k 20 --presence_penalty 1.5'';
+          ExecStart = ''${unstablePkgs.llama-cpp-vulkan}/bin/llama-server -hf unsloth/Qwen3.6-27B-GGUF:UD-Q4_K_XL --port 11434 --api-key "sk-local-token" -ngl 99 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 -c 115344 -t 16 -b 2048 --mlock --temp 1.0 --top_p 0.95 --top_k 20 --presence_penalty 1.5'';
           Restart = "on-failure";
           RestartSec = "5s";
         };
@@ -359,15 +384,20 @@
       diary-habit-tracker = {
         description = "habit tracker";
         wantedBy = [ "default.target" ];
-        after = [ "network-online.target" "ssh-agent.service" ];
+        after = [
+          "network-online.target"
+          "ssh-agent.service"
+        ];
         wants = [ "network-online.target" ];
-        path = with pkgs; [ git openssh ];
+        path = with pkgs; [
+          git
+          openssh
+        ];
 
         serviceConfig = {
           Type = "oneshot";
           ExecStartPre = "${pkgs.coreutils}/bin/sleep 30";
-          ExecStart =
-            "${pkgs.python3}/bin/python /home/spas/dev/py-projects/diary-habit-tracker/main.py";
+          ExecStart = "${pkgs.python3}/bin/python /home/spas/dev/py-projects/diary-habit-tracker/main.py";
           WorkingDirectory = "/home/spas/dev/py-projects/diary-habit-tracker";
           Environment = "SSH_AUTH_SOCK=%t/ssh-agent";
         };
@@ -393,7 +423,7 @@
     # bluetooth
     bluetooth.enable = true;
 
-    # AMD GPU (used to be OpenGl)/ ROCm support 
+    # AMD GPU (used to be OpenGl)/ ROCm support
     graphics = {
       enable = true;
       enable32Bit = true; # some 32 Bit software might need my GPU too
@@ -505,7 +535,7 @@
     minikube
     loupe # rust image viewer
     lm_sensors # to be able to see my hardware is detected like fans etc
-    unstablePkgs.llama-cpp-vulkan # Gerogi Georgiev lets gooo!!
+    inputs.llama-cpp.packages.${pkgs.system}.vulkan # Georgi Georgiev lets gooo!!
     gh # github cli tool
     unstablePkgs.worktrunk # better worktrees
     ngrok # allows me to expose a local web server to the internet
@@ -517,10 +547,12 @@
     vscode
     (texlive.combine {
       inherit (texlive)
-        scheme-full; # compile .tex files with "xelatex resume.text"
+        scheme-full
+        ; # compile .tex files with "xelatex resume.text"
     })
     unstablePkgs.herdr # new and better tmux
     unstablePkgs.pi-coding-agent
+    inputs.treehouse.packages.${pkgs.system}.default # kun chen's worktree helper
   ];
 
   # Env session variables for better wayland support
@@ -554,8 +586,7 @@
       # XDG_ICON_DIR = "${pkgs.catppuccin-papirus-folders}/share/icons/Papirus-Dark";
 
       # Setup env vars for where steam should be installed
-      STEAM_EXTRA_COMPAT_TOOLS_PATHS =
-        "/home/user/.steam/root/compatibilitytools.d";
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/home/user/.steam/root/compatibilitytools.d";
     };
   };
 
@@ -566,14 +597,24 @@
   ];
 
   # browser video playback doesn't work and adding this didn't fix it
-  nixpkgs.config = { brave = { enableWideVine = true; }; };
+  nixpkgs.config = {
+    brave = {
+      enableWideVine = true;
+    };
+  };
 
   # Settings to remember mount points instead of editing etc/fstab (in this case for the shared drive with windows)
   fileSystems = {
     "/shared" = {
       device = "LABEL=Caring";
       fsType = "ntfs";
-      options = [ "rw" "uid=1000" "gid=100" "unmask=0022" "nofail" ];
+      options = [
+        "rw"
+        "uid=1000"
+        "gid=100"
+        "unmask=0022"
+        "nofail"
+      ];
     };
     # Bind Mount /var/lib/ollama to your /home partition
     "/var/lib/ollama" = {
