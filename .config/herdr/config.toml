@@ -19,3 +19,7 @@ agent_panel_sort = "spaces"
 
 [terminal]
 default_shell = "nu"
+
+[theme]
+name = "catppuccin"
+

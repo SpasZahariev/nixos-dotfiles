@@ -158,7 +158,9 @@
         AMD_SERIALIZE_KERNEL = "3";
       };
     };
+    tailscale.enable = true;
   };
+
   programs = {
     hyprland.enable = true;
     ydotool.enable = true;
@@ -376,6 +378,7 @@
           MODEL_DIR = "/home/spas/.cache/huggingface/hub/models--prism-ml--Ternary-Bonsai-27B-gguf/snapshots/abbae723028d71be674e71e1a71201a6f43fab22";
         };
 
+        # I have enough VRAM for -c 400000 tokens context but Qwen3.6 only supports up to -c 262144. Maximize other resources
         serviceConfig = {
           Type = "simple";
           # ExecStart = ''${unstablePkgs.llama-cpp-vulkan}/bin/llama-server -hf unsloth/Qwen3.6-27B-GGUF:UD-Q4_K_XL --port 11434 --api-key "sk-local-token" -ngl 99 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 -c 115344 -t 16 -b 2048 --mlock --temp 1.0 --top_p 0.95 --top_k 20 --presence_penalty 1.5'';
@@ -388,7 +391,7 @@
               --api-key "sk-local-token" \
               -ngl 99 -ngld 99 \
               --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 \
-              -c 400000 \
+              -c 262144 \
               -t 16 -b 2048 --load-mode mlock \
               --temp 0.1 --top_p 0.95 --top_k 20 --presence_penalty 1.5
           '';
@@ -656,10 +659,16 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    # settings = {
+    #   PasswordAuthentication = true;
+    #   PermitRootLogin = "no";
+    # };
+  };
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedTCPPorts = [ 22 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
