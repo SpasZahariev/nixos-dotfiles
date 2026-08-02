@@ -375,28 +375,42 @@
 
         # env variables
         environment = {
-          MODEL_DIR = "/home/spas/.cache/huggingface/hub/models--prism-ml--Ternary-Bonsai-27B-gguf/snapshots/abbae723028d71be674e71e1a71201a6f43fab22";
+          QWEN_DIR = "/home/spas/.cache/huggingface/hub/models--unsloth--Qwen3.6-27B-GGUF/snapshots/82d411acf4a06cfb8d9b073a5211bf410bfc29bf";
+          # MODEL_DIR = "/home/spas/.cache/huggingface/hub/models--prism-ml--Ternary-Bonsai-27B-gguf/snapshots/abbae723028d71be674e71e1a71201a6f43fab22";
         };
 
         # I have enough VRAM for -c 400000 tokens context but Qwen3.6 only supports up to -c 262144. Maximize other resources
         serviceConfig = {
           Type = "simple";
-          # ExecStart = ''${unstablePkgs.llama-cpp-vulkan}/bin/llama-server -hf unsloth/Qwen3.6-27B-GGUF:UD-Q4_K_XL --port 11434 --api-key "sk-local-token" -ngl 99 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 -c 115344 -t 16 -b 2048 --mlock --temp 1.0 --top_p 0.95 --top_k 20 --presence_penalty 1.5'';
           ExecStart = ''
             ${inputs.llama-cpp.packages.${pkgs.system}.vulkan}/bin/llama-server \
-              -m ''${MODEL_DIR}/Ternary-Bonsai-27B-Q2_g64.gguf \
-              --mmproj ''${MODEL_DIR}/Ternary-Bonsai-27B-mmproj-BF16.gguf \
+              -m ''${QWEN_DIR}/Qwen3.6-27B-UD-Q4_K_XL.gguf \
+              --mmproj ''${QWEN_DIR}/mmproj-BF16.gguf \
+              --port 11434 --api-key "sk-local-token" \
               --spec-draft-n-max 4 \
               -ngl 99 -ngld 99 \
-              --port 11434 \
-              --api-key "sk-local-token" \
               --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 \
-              -np 1 \
-              -c 262144 \
-              -t 16  --load-mode mlock \
-              -b 2048 -ub 2048 \
+              -c 115344 \
+              -t 16 -b 2048 -ub 2048\
+              --load-mode mlock \
               --temp 0.1 --top_p 0.95 --top_k 20 --presence_penalty 1.5
           '';
+
+          # ExecStart = ''
+          #   ${inputs.llama-cpp.packages.${pkgs.system}.vulkan}/bin/llama-server \
+          #     -m ''${MODEL_DIR}/Ternary-Bonsai-27B-Q2_g64.gguf \
+          #     --mmproj ''${MODEL_DIR}/Ternary-Bonsai-27B-mmproj-BF16.gguf \
+          #     --spec-draft-n-max 4 \
+          #     -ngl 99 -ngld 99 \
+          #     --port 11434 \
+          #     --api-key "sk-local-token" \
+          #     --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 \
+          #     -np 1 \
+          #     -c 262144 \
+          #     -t 16  --load-mode mlock \
+          #     -b 2048 -ub 2048 \
+          #     --temp 0.1 --top_p 0.95 --top_k 20 --presence_penalty 1.5
+          # '';
           Restart = "on-failure";
           RestartSec = "5s";
           WorkingDirectory = "/home/spas";
