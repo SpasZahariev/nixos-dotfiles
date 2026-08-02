@@ -387,12 +387,14 @@
               -m ''${MODEL_DIR}/Ternary-Bonsai-27B-Q2_g64.gguf \
               --mmproj ''${MODEL_DIR}/Ternary-Bonsai-27B-mmproj-BF16.gguf \
               --spec-draft-n-max 4 \
+              -ngl 99 -ngld 99 \
               --port 11434 \
               --api-key "sk-local-token" \
-              -ngl 99 -ngld 99 \
               --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 \
+              -np 1 \
               -c 262144 \
-              -t 16 -b 2048 --load-mode mlock \
+              -t 16  --load-mode mlock \
+              -b 2048 -ub 2048 \
               --temp 0.1 --top_p 0.95 --top_k 20 --presence_penalty 1.5
           '';
           Restart = "on-failure";
