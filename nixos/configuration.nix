@@ -590,6 +590,7 @@
     unstablePkgs.pi-coding-agent
     inputs.treehouse.packages.${pkgs.system}.default # kun chen's worktree helper
     python3Packages.huggingface-hub # to download models with "hf"
+    parted # create / destroy / resize drive partitions
   ];
 
   # Env session variables for better wayland support
@@ -661,6 +662,10 @@
     "/var/lib/docker" = {
       device = "/home/spas/dev/docker/";
       options = [ "bind" ];
+    };
+    "/mnt/data" = {
+      device = "/dev/disk/by-uuid/c8df0964-23df-4746-af54-a2cc20c77a42";
+      fsType = "ext4";
     };
   };
 
