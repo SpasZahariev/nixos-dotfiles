@@ -19,7 +19,7 @@
   outputs =
     { nixpkgs, nixpkgs-unstable, ... }@inputs:
     let
-      stdenv.hostPlatform.system = "x86_64-linux";
+      system = "x86_64-linux";
 
       # For importing packages, use 'system' (this is correct)
       unstablePkgs = import nixpkgs-unstable {
