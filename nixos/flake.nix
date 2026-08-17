@@ -10,7 +10,7 @@
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
     treehouse.url = "github:kunchenguid/treehouse";
     # catppuccin.url = "github:catppuccin/nix";
-    llama-cpp.url = "github:ggml-org/llama.cpp/b10217"; # newest release tag
+    llama-cpp.url = "github:ggml-org/llama.cpp/b10472"; # newest release tag
 
     # TO UPDATE ALL THESE FLAKES TO THE LATEST VERSION:
     # "nix flake update"

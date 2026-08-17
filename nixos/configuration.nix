@@ -375,7 +375,8 @@
 
         # env variables
         environment = {
-          QWEN_DIR = "/home/spas/.cache/huggingface/hub/models--unsloth--Qwen3.6-27B-GGUF/snapshots/82d411acf4a06cfb8d9b073a5211bf410bfc29bf";
+          QWEN_DIR = "/home/spas/.cache/huggingface/hub/models--unsloth--Qwen3.8-27B-GGUF/snapshots/f1bfb127c64f7072bdd2cad55f258b9c8b2910fe";
+          # QWEN_DIR = "/home/spas/.cache/huggingface/hub/models--unsloth--Qwen3.6-27B-GGUF/snapshots/82d411acf4a06cfb8d9b073a5211bf410bfc29bf";
           # MODEL_DIR = "/home/spas/.cache/huggingface/hub/models--prism-ml--Ternary-Bonsai-27B-gguf/snapshots/abbae723028d71be674e71e1a71201a6f43fab22";
         };
 
@@ -384,16 +385,15 @@
           Type = "simple";
           ExecStart = ''
             ${inputs.llama-cpp.packages.${pkgs.system}.vulkan}/bin/llama-server \
-              -m ''${QWEN_DIR}/Qwen3.6-27B-UD-Q4_K_XL.gguf \
-              --mmproj ''${QWEN_DIR}/mmproj-BF16.gguf \
+              -m ''${QWEN_DIR}/Qwen3.8-27B-UD-Q4_K_XL.gguf \
               --port 11434 --api-key "sk-local-token" \
               --spec-draft-n-max 4 \
               -ngl 99 -ngld 99 \
               --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 \
-              -c 115344 \
+              -c 140000 \
               -t 16 -b 2048 -ub 2048\
               --load-mode mlock \
-              --temp 0.1 --top_p 0.95 --top_k 20 --presence_penalty 1.5
+              --temp 1.0 --top_p 0.95 --top_k 20 --min_p 0.0 --presence_penalty 0.0 --repeat_penalty 1.0
           '';
 
           # ExecStart = ''
@@ -589,7 +589,7 @@
     unstablePkgs.herdr # new and better tmux
     unstablePkgs.pi-coding-agent
     inputs.treehouse.packages.${pkgs.system}.default # kun chen's worktree helper
-    python3Packages.huggingface-hub # to download models with "hf"
+    unstablePkgs.python314Packages.huggingface-hub # to download models with "hf"
     parted # create / destroy / resize drive partitions
   ];
 
