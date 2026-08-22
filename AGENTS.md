@@ -14,3 +14,16 @@
 - Apply that same high standard to engineering excellence: lint, test failures, and test flakiness.
   If you see one, even if it is not caused by what you are working on right now, still get it fixed.
 - Before using "dynamic workflows", "ultra code" or any harness feature that immediately spawns a large swarm of subagents, always explain the tradeoffs and ask the user for explicit approval.
+
+
+# Tools
+When you need to search docs, use context7 tools.
+
+## Browser automation
+Use the `playwright` MCP tools (`playwright_*`) for anything that requires a real browser:
+navigating to a URL, clicking/filling elements, verifying rendered UI, reproducing a
+reported bug, or capturing a screenshot. Prefer the accessibility-snapshot tools over
+screenshots when just inspecting page structure — they're cheaper on context.
+
+Don't use `playwright` for things `web_fetch`/`curl` can already answer (static page
+content, API responses) — reserve it for actual interaction.
