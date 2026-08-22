@@ -902,7 +902,7 @@ $env.config.show_banner = false
 ### ALIAS SETTINGS ###
 alias v = nvim
 alias vim = nvim
-alias z = zoxide
+# alias z = zoxide
 # alias cd = z # if zoxide has a problem this messes me up
 alias tk = tmux kill-server
 # -A is smart attach (attach or create session)
@@ -986,9 +986,65 @@ alias oc = opencode-local
 
 # reset the terminal colors for tmux resurrect issue
 # tput init
-print "\u{1b}c"
+# print "\u{1b}c"
 # print pretty distro text
 # fastfetch --color 256
+
+####################
+# llama-server setup
+####################
+
+def llama-profiles [] {
+    {
+        qwen38-thinking: {
+            model: "/home/spas/.cache/huggingface/hub/models--unsloth--Qwen3.8-27B-GGUF/snapshots/f1bfb127c64f7072bdd2cad55f258b9c8b2910fe/Qwen3.8-27B-UD-Q4_K_XL.gguf"
+            args: '
+                --port 11434 --api-key sk-local-token
+                --spec-draft-n-max 4
+                -ngl 99 -ngld 99
+                --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0
+                -c 140000
+                -t 16 -b 2048 -ub 2048
+                --load-mode mlock
+                --temp 1.0 --top_p 0.95 --top_k 20 --min_p 0.0 --presence_penalty 0.0 --repeat_penalty 1.0
+            '
+        }
+        qwen38-instruct: {
+            model: "/home/spas/.cache/huggingface/hub/models--unsloth--Qwen3.8-27B-GGUF/snapshots/f1bfb127c64f7072bdd2cad55f258b9c8b2910fe/Qwen3.8-27B-UD-Q4_K_XL.gguf"
+            args: '
+                --port 11434 --api-key sk-local-token
+                --spec-draft-n-max 4
+                -ngl 99 -ngld 99
+                --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0
+                -c 140000
+                -t 16 -b 2048 -ub 2048
+                --load-mode mlock
+                --chat-template-kwargs {"enable_thinking":false}
+                --reasoning-budget 0
+                --temp 0.7 --top_p 0.80 --top_k 20 --min_p 0.0 --presence_penalty 1.5 --repeat_penalty 1.0
+            '
+        }
+    }
+}
+
+def llama-start [profile: string] {
+    let profiles = (llama-profiles)
+    if not ($profile in ($profiles | columns)) {
+        print $"Unknown profile: ($profile). Options: ($profiles | columns | str join ', ')"
+        return
+    }
+    llama-stop
+    let cfg = ($profiles | get $profile)
+    let arg_list = ($cfg.args | str trim | split row -r '\s+')
+    systemd-run --user --unit=llama-server --collect -p LimitMEMLOCK=infinity -- llama-server -m $cfg.model ...$arg_list
+    print $"Started ($profile). Logs: journalctl --user -u llama-server -f"
+}
+
+def llama-stop [] {
+    systemctl --user stop llama-server.service | ignore
+}
+
+
 # show fastfetch if there is enough space
 let size = term size
 if $size.columns >= 90 and $size.rows >= 24 and ($env | get -o TMUX | is-empty) {
