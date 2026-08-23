@@ -898,6 +898,8 @@ $env.config = {
     ]
 }
 $env.config.show_banner = false
+# fix a rust build issue with stale paths 
+$env.RUSTFLAGS = $"-C linker=($nu.home-dir)/.local/bin/gcc"
 
 ### ALIAS SETTINGS ###
 alias v = nvim
@@ -998,6 +1000,7 @@ def llama-profiles [] {
     {
         qwen38-thinking: {
             model: "/home/spas/.cache/huggingface/hub/models--unsloth--Qwen3.8-27B-GGUF/snapshots/f1bfb127c64f7072bdd2cad55f258b9c8b2910fe/Qwen3.8-27B-UD-Q4_K_XL.gguf"
+            mmproj: "/home/spas/.cache/huggingface/hub/models--unsloth--Qwen3.8-27B-GGUF/snapshots/4ca720788d1e01f1bff70c033e0d0028fd02e502/mmproj-F16.gguf"
             args: '
                 --port 11434 --api-key sk-local-token
                 --spec-draft-n-max 4
@@ -1011,6 +1014,7 @@ def llama-profiles [] {
         }
         qwen38-instruct: {
             model: "/home/spas/.cache/huggingface/hub/models--unsloth--Qwen3.8-27B-GGUF/snapshots/f1bfb127c64f7072bdd2cad55f258b9c8b2910fe/Qwen3.8-27B-UD-Q4_K_XL.gguf"
+            mmproj: "/home/spas/.cache/huggingface/hub/models--unsloth--Qwen3.8-27B-GGUF/snapshots/4ca720788d1e01f1bff70c033e0d0028fd02e502/mmproj-F16.gguf"
             args: '
                 --port 11434 --api-key sk-local-token
                 --spec-draft-n-max 4
@@ -1035,11 +1039,15 @@ def llama-start [profile: string] {
     }
     llama-stop
     let cfg = ($profiles | get $profile)
-    let arg_list = ($cfg.args | str trim | split row -r '\s+')
+    mut arg_list = ($cfg.args | str trim | split row -r '\s+')
+
+    if "mmproj" in ($cfg | columns) and ($cfg.mmproj | str trim | is-not-empty) {
+        $arg_list = ($arg_list | append ["--mmproj" $cfg.mmproj])
+    }
+
     systemd-run --user --unit=llama-server --collect -p LimitMEMLOCK=infinity -- llama-server -m $cfg.model ...$arg_list
     print $"Started ($profile). Logs: journalctl --user -u llama-server -f"
 }
-
 def llama-stop [] {
     systemctl --user stop llama-server.service | ignore
 }
@@ -1053,3 +1061,4 @@ if $size.columns >= 90 and $size.rows >= 24 and ($env | get -o TMUX | is-empty) 
 
 source ~/.config/nushell/.secrets.nu
 source ~/.zoxide.nu
+source "~/.cargo/env.nu"

@@ -485,7 +485,6 @@
     tree
     wofi
     cava
-    rustup
     xdg-desktop-portal-hyprland
     grim
     slurp
@@ -557,6 +556,7 @@
     carapace # cli command completions and suggestions
     rustc
     cargo
+    rust-analyzer
     cliphist # clipboard manager wayland compatible
     wl-clip-persist # keep wl clipboard even after programs close
     statix # linter for .nix files
@@ -591,6 +591,7 @@
     inputs.treehouse.packages.${pkgs.system}.default # kun chen's worktree helper
     unstablePkgs.python314Packages.huggingface-hub # to download models with "hf"
     parted # create / destroy / resize drive partitions
+    just # better "make "
   ];
 
   # Env session variables for better wayland support
