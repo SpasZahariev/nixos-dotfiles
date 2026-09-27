@@ -1,110 +1,87 @@
-/* # By knightfall01 on Github as a part of https://github.com/Knightfall01/Hyprland-config */
-window {
-    background-color: #24273a;
-    border-radius: 12px;
-    border: 2px solid #363a4f;
-    color: #cad3f5;
+/* Catppuccin Macchiato */
+
+* {
     font-family: "JetBrainsMono Nerd Font", "JetBrains Mono NF", "JetBrains Mono", monospace;
-    font-size: 16px;
+    font-size: 15px;
 }
 
-#input {
-    background-color: #1e2030;
-    color: #cad3f5;
-    border-radius: 8px;
+window {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
     border: none;
-    padding: 8px 12px;
-    margin: 12px;
+    border-radius: 0;
+    color: #cad3f5;
 }
 
 #outer-box {
-    margin: 12px;
+    margin: 0;
+    padding: 12px;
+    background-color: #24273a;
+    border: 2px solid #c6a0f6;
+    border-radius: 18px;
+}
+
+#input {
+    margin: 0 12px 12px 0;
+    padding: 12px 16px;
+    background-color: #1e2030;
+    border: 1px solid #494d64;
+    border-radius: 12px;
+    color: #cad3f5;
+    caret-color: #c6a0f6;
+}
+
+#input:focus {
+    border-color: #c6a0f6;
+}
+
+#prompt {
+    margin: 0 10px 0 0;
+    color: #c6a0f6;
+    font-weight: bold;
+}
+
+#inner-box {
+    margin: 0;
+    padding: 0;
 }
 
 #scroll {
-    border-radius: 8px;
-    background-color: #24273a;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 12px;
 }
 
 #entry {
-    padding: 8px 12px;
-    border-radius: 6px;
-    margin-bottom: 4px;
+    min-height: 18px;
+    margin: 3px 12px 3px 0;
+    padding: 10px 12px;
     background-color: transparent;
+    border-radius: 10px;
+    color: #cad3f5;
+}
+
+#entry:hover {
+    background-color: #363a4f;
     color: #cad3f5;
 }
 
 #entry:selected {
-    background-color: #8aadf4;
+    background-color: #c6a0f6;
     color: #24273a;
 }
-/* #entry:selected { */
-/*     background-image: linear-gradient(90deg, #8aadf4 0%, #c6a0f6 100%); */
-/*     background-color: #8aadf4; /* fallback for compositors that don't support gradients */ */
-/*     color: #24273a; */
-/* } */
 
-#prompt {
-    color: #c6a0f6;
-    font-weight: bold;
-    margin-bottom: 8px;
-    font-size: 18px;
+#entry:selected #text {
+    color: #24273a;
 }
-/* * { */
-/*   font-family: "JetBrainsMono Nerd Font"; */
-/*   color: #c4d3da; */
-/* } */
-/**/
-/* window { */
-/*   /*border: 3px solid #94e2d5;*/ */
-/*   border: 1px solid #51556C; */
-/*   background: #1e2030; */
-/*   border-radius: 15px; */
-/* } */
-/**/
-/* #input { */
-/*   margin: 1.5em; */
-/*   margin-bottom: 0em; */
-/*   padding: 1em; */
-/*   border: none; */
-/*   font-weight: bold; */
-/*   background: #1e2030; */
-/*   color: #c4d3da; */
-/*   border-radius: 15px; */
-/* } */
-/**/
-/* #input:focus { */
-/*   border: 1px solid #94e2d5; */
-/* } */
-/**/
-/* #inner-box { */
-/*   margin: 1.5em; */
-/*   margin-top: 0.5em; */
-/* } */
-/**/
-/* #outer-box { */
-/*   margin-bottom: 0.5em; */
-/* } */
-/**/
-/* #scroll { */
-/*   margin-top: 5px 0; */
-/*   display: none; */
-/* } */
-/**/
-/* #text { */
-/*   margin-left: 0.5em; */
-/*   color: #c4d3da; */
-/* } */
-/**/
-/* #text:selected { */
-/*   color: #16161e; */
-/* } */
-/**/
-/* #entry { */
-/*   margin-top: 0.5em; */
-/*   border-radius: 15px; */
-/* } */
-/**/
-/* #entry:selected { */
-/*   background: linear-gradient(90deg, #90cdfa 0%, #b69bf1 80%); */
-/* } */
+
+#text {
+    margin: 0 4px;
+    color: #cad3f5;
+}
+
+#img {
+    margin-right: 10px;
+}

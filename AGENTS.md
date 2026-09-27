@@ -17,7 +17,9 @@
 
 
 # Tools
-When you need to search docs, use context7 tools.
+- When you need to search docs, use context7 tools.
+
+- prefer using 'rg' (ripgrep) instead of 'grep'
 
 ## Browser automation
 Use the `playwright` MCP tools (`playwright_*`) for anything that requires a real browser:

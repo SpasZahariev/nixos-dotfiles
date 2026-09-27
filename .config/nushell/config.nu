@@ -1006,7 +1006,22 @@ def llama-profiles [] {
                 --spec-draft-n-max 4
                 -ngl 99 -ngld 99
                 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0
-                -c 140000
+                -c 135000
+                -t 16 -b 2048 -ub 2048
+                --load-mode mlock
+                --temp 1.0 --top_p 0.95 --top_k 20 --min_p 0.0 --presence_penalty 0.0 --repeat_penalty 1.0
+            '
+        }
+    # for when i want it to work and I want to play sts2 at the same time
+        gaming: {
+            model: "/home/spas/.cache/huggingface/hub/models--unsloth--Qwen3.8-27B-GGUF/snapshots/f1bfb127c64f7072bdd2cad55f258b9c8b2910fe/Qwen3.8-27B-UD-Q4_K_XL.gguf"
+            mmproj: "/home/spas/.cache/huggingface/hub/models--unsloth--Qwen3.8-27B-GGUF/snapshots/4ca720788d1e01f1bff70c033e0d0028fd02e502/mmproj-F16.gguf"
+            args: '
+                --port 11434 --api-key sk-local-token
+                --spec-draft-n-max 4
+                -ngl 99 -ngld 99
+                --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0
+                -c 75000
                 -t 16 -b 2048 -ub 2048
                 --load-mode mlock
                 --temp 1.0 --top_p 0.95 --top_k 20 --min_p 0.0 --presence_penalty 0.0 --repeat_penalty 1.0
@@ -1020,7 +1035,7 @@ def llama-profiles [] {
                 --spec-draft-n-max 4
                 -ngl 99 -ngld 99
                 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0
-                -c 140000
+                -c 135000
                 -t 16 -b 2048 -ub 2048
                 --load-mode mlock
                 --chat-template-kwargs {"enable_thinking":false}
