@@ -355,39 +355,6 @@
     # --- User-specific Services ---
     user.services = {
 
-      openwhispr = {
-        description = "OpenWhispr voice transcription";
-        # Commented out wantedBy - i want to start this manually for now
-        # wantedBy = [ "default.target" ];
-        # after = [ "default.target" ];
-
-        # OpenWhispr shells out to paste helpers (wtype preferred on Hyprland,
-        # ydotool fallback) plus which/pgrep/ps/pactl/wl-copy for its setup
-        # checks. A service without `path` only gets coreutils/findutils/grep,
-        # so `which` itself is missing and every check fails with
-        # "ydotool setup incomplete". Give it the tools explicitly.
-        path = with pkgs; [
-          ydotool
-          wtype
-          wl-clipboard
-          which
-          procps # pgrep, ps
-          pulseaudio # pactl (pipewire-pulse compat)
-          xdotool # XWayland fallback
-        ];
-
-        environment = {
-          YDOTOOL_SOCKET = "/run/ydotoold/socket";
-        };
-
-        serviceConfig = {
-          Type = "simple";
-          ExecStart = "${pkgs.appimage-run}/bin/appimage-run /home/spas/small-apps/openwhispr/OpenWhispr-1.7.6-linux-x86_64.AppImage --enable-features=UseOzonePlatform --ozone-platform=wayland";
-          Restart = "on-failure";
-          RestartSec = "5s";
-        };
-      };
-
       # llama-server = {
       #   description = "Local llama.cpp inference server";
       #   # Manual start only — no wantedBy. Use: systemctl --user start llama-server
@@ -574,8 +541,8 @@
     python315
     uv # better venv
     # ydotool client comes from programs.ydotool.enable (do not duplicate here)
-    appimage-run # run AppImages (used for openwhispr)
-    wtype # wayland-native key injection (preferred by openwhispr over ydotool on hyprland)
+    wtype # wayland-native key injection (used by my scripts)
+    (pkgs.callPackage ./nixosModules/programs/openwhispr.nix { }) # voice dictation, vendored recipe (upstream flake pins 1.7.4)
     carapace # cli command completions and suggestions
     rustc
     cargo

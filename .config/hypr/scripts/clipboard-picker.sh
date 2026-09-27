@@ -42,7 +42,7 @@ selection="$(
             --ghost='Filter history...' \
             --info=inline-right \
             --header='' \
-            --footer=$'Enter copy   Esc close   Ctrl+R reset\nCtrl+/ preview   Ctrl+U/D scroll' \
+            --footer=$'Enter paste   Esc close   Ctrl+R reset\nCtrl+/ preview   Ctrl+U/D scroll' \
             --footer-border=top \
             --gutter=' ' \
             --pointer='▸' \
@@ -59,4 +59,14 @@ selection="$(
 
 # fzf strips ANSI output, but remove it defensively before decoding.
 selection=$(printf '%s\n' "$selection" | sed $'s/\033\\[[0-9;]*m//g')
-printf '%s\n' "$selection" | cliphist decode | wl-copy
+
+# When launched from clipboard.sh, decode into $CLIPBOARD_PASTE_FILE and let
+# the parent type at the cursor after this Ghostty window has closed (so
+# focus is back on the target). Standalone runs just copy.
+if [[ -n "${CLIPBOARD_PASTE_FILE:-}" ]]; then
+    printf '%s\n' "$selection" | cliphist decode > "$CLIPBOARD_PASTE_FILE"
+    wl-copy < "$CLIPBOARD_PASTE_FILE"
+    printf '%s' "$selection" > "$CLIPBOARD_PASTE_FILE.sel"
+else
+    printf '%s\n' "$selection" | cliphist decode | wl-copy
+fi

@@ -1,2 +1,5 @@
 # flake.lock # it is suggested that I git commit this
 ~/.config/nushell/.secrets.nu
+# nix build artifacts
+result
+result-*
