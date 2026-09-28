@@ -509,6 +509,7 @@
     unrar
     xfce.thunar
     xfce.thunar-archive-plugin
+    xfce.exo # provides exo-open for Thunar "Open Terminal Here" (TerminalEmulator category)
     catppuccin-papirus-folders # nice folder icons for thunar
     nwg-look
     catppuccin-gtk # should turn thunar dark
