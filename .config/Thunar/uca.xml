@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>edit-copy</icon>
+	<name>Copy Path</name>
+	<submenu></submenu>
+	<unique-id>1755881000000006</unique-id>
+	<command>/home/spas/.local/bin/copy-paths %F</command>
+	<description>Copy the full path of the selection to the clipboard (one per line)</description>
+	<range></range>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>extract-archive</icon>
+	<name>Extract Here</name>
+	<submenu></submenu>
+	<unique-id>1755881000000001</unique-id>
+	<command>/home/spas/.local/bin/extract-archives here %F</command>
+	<description>Extract the selected archive(s) into the folder they are in</description>
+	<range></range>
+	<patterns>*.zip;*.ZIP;*.tar;*.TAR;*.tar.gz;*.tgz;*.TGZ;*.TAR.GZ;*.tar.xz;*.txz;*.TXZ;*.TAR.XZ;*.tar.bz2;*.tbz2;*.TBZ2;*.TAR.BZ2;*.tar.zst;*.tzst;*.TZST;*.TAR.ZST;*.tar.lzma;*.tlz;*.TLZ;*.TAR.LZMA;*.7z;*.rar;*.RAR;*.gz;*.GZ;*.bz2;*.BZ2;*.xz;*.XZ;*.lzma;*.LZMA;*.zst;*.ZST;*.zstd;*.ZSTD</patterns>
+	<other-files/>
+</action>
+<action>
+	<icon>folder-new</icon>
+	<name>Extract to New Folder</name>
+	<submenu></submenu>
+	<unique-id>1755881000000002</unique-id>
+	<command>/home/spas/.local/bin/extract-archives folder %F</command>
+	<description>Extract the selected archive(s) into a new folder named after the archive</description>
+	<range></range>
+	<patterns>*.zip;*.ZIP;*.tar;*.TAR;*.tar.gz;*.tgz;*.TGZ;*.TAR.GZ;*.tar.xz;*.txz;*.TXZ;*.TAR.XZ;*.tar.bz2;*.tbz2;*.TBZ2;*.TAR.BZ2;*.tar.zst;*.tzst;*.TZST;*.TAR.ZST;*.tar.lzma;*.tlz;*.TLZ;*.TAR.LZMA;*.7z;*.rar;*.RAR;*.gz;*.GZ;*.bz2;*.BZ2;*.xz;*.XZ;*.lzma;*.LZMA;*.zst;*.ZST;*.zstd;*.ZSTD</patterns>
+	<other-files/>
+</action>
+<action>
+	<icon>package-x-generic</icon>
+	<name>ZIP archive</name>
+	<submenu>Create Archive</submenu>
+	<unique-id>1755881000000003</unique-id>
+	<command>/home/spas/.local/bin/create-archive zip %F</command>
+	<description>Create a .zip archive next to the selection (opens natively on Windows, macOS and Linux)</description>
+	<range></range>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>package-x-generic</icon>
+	<name>7z archive</name>
+	<submenu>Create Archive</submenu>
+	<unique-id>1755881000000004</unique-id>
+	<command>/home/spas/.local/bin/create-archive 7z %F</command>
+	<description>Create a .7z archive next to the selection (smaller files, needs 7-Zip to open)</description>
+	<range></range>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>package-x-generic</icon>
+	<name>tar.gz archive</name>
+	<submenu>Create Archive</submenu>
+	<unique-id>1755881000000005</unique-id>
+	<command>/home/spas/.local/bin/create-archive tar.gz %F</command>
+	<description>Create a .tar.gz archive next to the selection (preserves Unix permissions, best Linux-to-Linux)</description>
+	<range></range>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here</name>
+	<submenu></submenu>
+	<unique-id>1744149967585697-1</unique-id>
+	<command>ghostty --working-directory=%f</command>
+	<description>Example for a custom action</description>
+	<range></range>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+</actions>
