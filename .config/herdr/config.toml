@@ -11,7 +11,7 @@ new_tab   = "prefix+c"
 close_tab = "prefix+ampersand"
 workspace_picker = "prefix+w"
 goto             = "prefix+g"
-copy_mode  = "prefix+y"  # herdr's copy-mode entry key; copy-mode's own internal keys (v/space select, y/Enter copy, q/Esc cancel) aren't configurable
+copy_mode  = ["prefix+y", "prefix+f"]  # herdr's copy-mode entry keys (prefix+f = scrollback search entry); copy-mode's own internal keys (v/space select, y/Enter copy, q/Esc cancel, / or ? search, n/N repeat) aren't configurable
 
 [ui]
 # Agents panel order: explicit choice of "spaces" (grouped by space, the default) over "priority".
