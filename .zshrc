@@ -11,6 +11,11 @@ typeset -U path PATH
 path=("$HOME/.cargo/bin" "$HOME/.local/bin" "$HOME/.npm-global/bin" "$HOME/.bun/bin" $path)
 eval "$(dircolors -b)"
 
+# ==================== Environment variables ====================
+
+export EDITOR=nvim
+export VISUAL=nvim
+
 # ==================== History and shell options ====================
 
 HISTFILE="$HOME/.zsh_history"
