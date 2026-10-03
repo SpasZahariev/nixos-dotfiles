@@ -475,6 +475,7 @@
     neovim
     zsh-autosuggestions
     zsh-syntax-highlighting
+    atuin
     hyprland
     seatd
     brave

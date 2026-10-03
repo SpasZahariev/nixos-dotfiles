@@ -19,6 +19,18 @@ NixOS owns desktop/session environment variables and installs zsh and its plugin
 needed. Put local credentials in `~/.config/zsh/secrets.zsh` with mode `0600`,
 not in this repository. History is stored in `~/.zsh_history`.
 
+Atuin records searchable history locally in addition to zsh's history file.
+Ctrl+R or Ctrl+Q opens its compact, 10-line inline search; Up keeps normal shell
+history navigation. Preview and help panels are hidden.
+
+After rebuilding, link the configuration and import existing history once:
+
+```sh
+ln -s "$HOME/dotfiles/.config/atuin" "$HOME/.config/atuin"
+source "$HOME/.zshrc"
+atuin import zsh
+```
+
 Ghostty and herdr explicitly launch zsh so inherited shell settings cannot
 select a different shell. Existing panes keep their current shell until closed.
 

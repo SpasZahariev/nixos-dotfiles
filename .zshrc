@@ -205,6 +205,11 @@ eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 
+if (( $+commands[atuin] )); then
+    eval "$(atuin init zsh --disable-up-arrow)"
+    bindkey '^Q' atuin-search
+fi
+
 # ==================== Startup display ====================
 
 if (( COLUMNS >= 90 && LINES >= 24 )); then
