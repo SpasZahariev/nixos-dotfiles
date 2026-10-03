@@ -32,6 +32,8 @@ command = /run/current-system/sw/bin/zsh
 shell-integration = detect
 shell-integration-features = no-cursor
 
+#fun
+custom-shader = ~/.config/ghostty/shaders/glitchy.glsl
 
 # window-padding-x = 2
 #

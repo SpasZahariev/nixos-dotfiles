@@ -86,6 +86,22 @@ alias f='fuck'
 
 # ==================== Utility functions ====================
 
+# copy recently viewed file into current dir
+c() {
+    local dir file
+    dir=$(command zoxide query --interactive -- "$@") || return
+    file=$(
+        builtin cd -- "$dir" || exit 1
+        command find . \( -type f -o -xtype f \) -print0 |
+            command fzf --read0 --print0 --no-multi --height=7 \
+                --layout=reverse --prompt='File to copy > ' \
+                --header="From: $dir"
+    ) || return
+    file=${file%$'\0'}
+    [[ -n "$file" ]] || return 1
+    command cp -iv -- "$dir/$file" .
+}
+
 ya() {
     local tmp cwd exit_code=0
     tmp=$(mktemp -t yazi-cwd.XXXXXX) || return
@@ -102,20 +118,6 @@ ya() {
     return "$exit_code"
 }
 
-show_git_info() {
-    local branch
-    local -a changed_files
-    branch=$(git symbolic-ref --short HEAD 2>/dev/null ||
-        git rev-parse --short HEAD 2>/dev/null) || branch=None
-    changed_files=("${(@f)$(git status --short 2>/dev/null)}")
-    [[ -z "${changed_files[1]}" ]] && changed_files=()
-    printf '╭─ Git Repo ───────────────────────────────╮\n│ Branch: %s\n│ Status: %d changed files\n╰──────────────────────────────────────────╯\n' \
-        "$branch" "${#changed_files}"
-}
-
-top-3-ps() {
-    command ps -eo pid,user,pcpu,pmem,comm --sort=-pcpu | head -n 4
-}
 
 # ==================== Local AI functions ====================
 
