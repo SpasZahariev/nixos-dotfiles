@@ -23,10 +23,14 @@
 font-family = "JetBrainsMono Nerd Font"
 # font-family = "Hack"
 font-size = 12
-font-feature = liga # enables standard ligatures => != ==
+# Enable standard ligatures.
+font-feature = liga
 theme = catppuccin-macchiato.conf
 cursor-style = block
 cursor-style-blink = true
+command = /run/current-system/sw/bin/zsh
+shell-integration = detect
+shell-integration-features = no-cursor
 
 
 # window-padding-x = 2
@@ -50,4 +54,3 @@ cursor-style-blink = true
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
-

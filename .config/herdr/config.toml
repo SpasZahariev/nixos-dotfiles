@@ -18,8 +18,7 @@ copy_mode  = ["prefix+y", "prefix+f"]  # herdr's copy-mode entry keys (prefix+f 
 agent_panel_sort = "spaces"
 
 [terminal]
-default_shell = "nu"
+default_shell = "/run/current-system/sw/bin/zsh"
 
 [theme]
 name = "catppuccin"
-

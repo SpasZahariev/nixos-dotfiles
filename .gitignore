@@ -1,5 +1,6 @@
 # flake.lock # it is suggested that I git commit this
-~/.config/nushell/.secrets.nu
+.config/zsh/secrets.zsh
+.zsh_history
 # nix build artifacts
 result
 result-*

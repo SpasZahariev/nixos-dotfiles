@@ -156,7 +156,6 @@ return {
         },
       },
       -- MY Langage Servers!
-      nushell = {},
       vtsls = {}, -- javascript, typescript, html lsp
       -- html = {},
       tailwindcss = {},

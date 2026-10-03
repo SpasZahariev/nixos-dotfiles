@@ -2,6 +2,30 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+-- Move between editor splits first, then Herdr panes at the editor's edge.
+for key, direction in pairs({ h = "left", j = "down", k = "up", l = "right" }) do
+  vim.keymap.set("n", "<C-" .. key .. ">", function()
+    local current = vim.api.nvim_get_current_win()
+    vim.cmd("wincmd " .. key)
+    if vim.api.nvim_get_current_win() ~= current or vim.env.HERDR_ENV ~= "1" then
+      return
+    end
+    if not vim.env.HERDR_PANE_ID or vim.fn.executable("herdr") ~= 1 then
+      return
+    end
+    vim.system({
+      "herdr", "pane", "focus", "--pane", vim.env.HERDR_PANE_ID, "--direction", direction,
+    }, { text = true }, function(result)
+      if result.code ~= 0 then
+        vim.schedule(function()
+          vim.notify(result.stderr or "Herdr pane navigation failed", vim.log.levels.WARN)
+        end)
+      end
+    end)
+  end, { desc = "Navigate " .. direction })
+end
+vim.keymap.set("n", "<C-\\>", "<C-w>p", { desc = "Previous editor split" })
+
 -- Horizontal and vertical splits
 vim.api.nvim_set_keymap("n", "<leader>_", ":split<CR>", { noremap = true, silent = true, desc = "Horizontal Split" })
 vim.api.nvim_set_keymap("n", "<leader>\\", ":vsplit<CR>", { noremap = true, silent = true, desc = "Vertical Split" })

@@ -58,7 +58,6 @@ return {
       "vimdoc",
       "xml",
       "yaml",
-      "nu",
       "css",
     },
   },

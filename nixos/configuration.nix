@@ -166,6 +166,17 @@
     ydotool.enable = true;
     # programs.hyprpanel.enable = true;
 
+    zsh = {
+      enable = true;
+      enableCompletion = true; # Install completion files and expose their search paths.
+      enableGlobalCompInit = false; # Personal initialization lives in ~/dotfiles/.zshrc.
+      enableLsColors = false;
+      promptInit = "";
+      interactiveShellInit = lib.mkForce ""; # Avoid duplicate tool hooks from other modules.
+      shellAliases = lib.mapAttrs (_: _: null) config.environment.shellAliases;
+      setOptions = [ ];
+    };
+
     # Rust version of fuck aka pay-respects
     pay-respects.enable = true;
     pay-respects.alias = "fuck";
@@ -174,7 +185,6 @@
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
 
-    tmux.enable = true;
     git = {
       enable = true;
       config = {
@@ -288,7 +298,6 @@
   # programs.home-manager.enable = true;
   # home-manager.users.spas = { pkgs, ... }: {
   #    home.packages = [
-  #      pkgs.tmux
   #    ];
   # };
 
@@ -301,7 +310,7 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
-  users.defaultUserShell = unstablePkgs.nushell;
+  users.defaultUserShell = pkgs.zsh;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.spas = {
@@ -328,9 +337,6 @@
   # programs.firefox.enable = true;
   # programs.ghostty.enable = true;
   # nixpkgs.channel = "nixos-unstable";
-
-  nixpkgs.config.allowUnfree = true; # FU Spotify
-  nixpkgs.config.permittedInsecurePackages = [ "docker-28.5.2" ]; # temporary until it is updated
 
   systemd = {
     # --- System-wide Services ---
@@ -467,7 +473,8 @@
     wget
     ghostty
     neovim
-    unstablePkgs.nushell
+    zsh-autosuggestions
+    zsh-syntax-highlighting
     hyprland
     seatd
     brave
@@ -577,7 +584,7 @@
         scheme-full
         ; # compile .tex files with "xelatex resume.text"
     })
-    unstablePkgs.herdr # new and better tmux
+    unstablePkgs.herdr # persistent terminal workspaces
     unstablePkgs.pi-coding-agent
     inputs.treehouse.packages.${pkgs.system}.default # kun chen's worktree helper
     unstablePkgs.python314Packages.huggingface-hub # to download models with "hf"
@@ -587,6 +594,10 @@
 
   # Env session variables for better wayland support
   environment = {
+    pathsToLink = [
+      "/share/zsh-autosuggestions"
+      "/share/zsh-syntax-highlighting"
+    ];
     variables = {
       EDITOR = "nvim";
       TERMINAL = "ghostty";
@@ -628,6 +639,8 @@
 
   # browser video playback doesn't work and adding this didn't fix it
   nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [ "docker-28.5.2" ]; # temporary until it is updated
     brave = {
       enableWideVine = true;
     };

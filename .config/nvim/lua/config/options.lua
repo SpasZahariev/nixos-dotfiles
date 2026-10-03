@@ -11,6 +11,5 @@ vim.opt.guicursor = {
 
 -- vim.filetype.add({
 --   extension = {
---     nu = "nushell",
 --   },
 -- })
