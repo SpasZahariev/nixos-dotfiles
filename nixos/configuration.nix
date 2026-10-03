@@ -487,6 +487,7 @@
     slurp
     starship
     bat
+    eza
     btop-rocm
     gcc
     # copyq

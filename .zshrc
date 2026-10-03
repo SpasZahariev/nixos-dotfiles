@@ -58,8 +58,6 @@ zle -N edit-command-line
 bindkey '^O' edit-command-line
 zle_bracketed_paste=($'\e[?2004h' $'\e[?2004l')
 
-[[ -r "$HOME/.openclaw/completions/openclaw.zsh" ]] &&
-    source "$HOME/.openclaw/completions/openclaw.zsh"
 # Carapace's generated aliases must not override the personal PATH priority.
 typeset _completion_path="$PATH"
 eval "$(carapace _carapace zsh)"
@@ -70,10 +68,10 @@ unset _completion_path
 
 alias v='nvim'
 alias vim='nvim'
-alias tk='herdr server stop'
-alias t='herdr'
+alias h='herdr'
 alias cat='bat'
-alias ls='ls --color=auto'
+alias r='source "$HOME/.zshrc"'
+alias ls='eza --long --icons --group-directories-first'
 alias nix-vim='nvim "$HOME/dotfiles/nixos/configuration.nix"'
 alias vim-nix='nix-vim'
 alias nix-switch='sudo nixos-rebuild switch --flake "$HOME/dotfiles/nixos#nixos" -I "nixos-config=$HOME/dotfiles/nixos/configuration.nix"'
@@ -209,7 +207,7 @@ eval "$(zoxide init zsh)"
 
 # ==================== Startup display ====================
 
-if [[ -t 0 && -t 1 && "${HERDR_ENV:-}" != 1 ]] && (( COLUMNS >= 90 && LINES >= 24 )); then
+if (( COLUMNS >= 90 && LINES >= 24 )); then
     fastfetch
 fi
 
@@ -227,5 +225,5 @@ ZSH_HIGHLIGHT_STYLES[function]='fg=green'
 ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
 ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=green'
 ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=green'
-ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=white,bg=red,bold'
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
 source /run/current-system/sw/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
