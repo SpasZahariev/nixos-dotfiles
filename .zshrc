@@ -56,6 +56,14 @@ bindkey '^[[1;5C' forward-word
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^O' edit-command-line
+bindkey '^X^E' edit-command-line
+
+copy-buffer() {
+  print -rn -- "$BUFFER" | wl-copy
+  zle -M "Copied to clipboard"
+}
+zle -N copy-buffer
+bindkey '^X^Y' copy-buffer
 zle_bracketed_paste=($'\e[?2004h' $'\e[?2004l')
 
 # Carapace's generated aliases must not override the personal PATH priority.
@@ -70,7 +78,7 @@ alias v='nvim'
 alias vim='nvim'
 alias h='herdr'
 alias cat='bat'
-alias r='source "$HOME/.zshrc"'
+alias r='source "$HOME/.zshrc" && echo ".zshrc reloaded!"'
 alias ls='eza --long --icons --group-directories-first'
 alias nix-vim='nvim "$HOME/dotfiles/nixos/configuration.nix"'
 alias vim-nix='nix-vim'
@@ -83,6 +91,19 @@ alias sw='"$HOME/dotfiles/.config/hypr/scripts/set_wallpaper_all.sh"'
 alias oc='opencode-local'
 eval "$(pay-respects zsh --alias fuck --nocnf)"
 alias f='fuck'
+
+# Suffix aliases: typing `file.md` opens it directly
+alias -s md=nvim
+alias -s json=nvim
+alias -s png=loupe
+alias -s jpg=loupe
+alias -s jpeg=loupe
+alias -s pdf=brave
+
+# Global aliases: can be typed anywhere in the buffer (not just the start)
+# this one is for piping error logs into the nether
+alias -g NE='2>/dev/null'
+
 
 # ==================== Utility functions ====================
 
@@ -204,6 +225,16 @@ llama-stop() {
 # ==================== Prompt and shell integrations ====================
 
 eval "$(starship init zsh)"
+
+# Transient prompt: keep full prompt on active line, collapse previous lines to $character.
+# Starship has no built-in zsh `enable_transience`, so emulate via zle-line-finish.
+autoload -Uz add-zle-hook-widget
+TRANSIENT_PROMPT="${PROMPT// prompt / prompt --profile transient }"
+TRANSIENT_RPROMPT=""
+transient-prompt() {
+  PROMPT="$TRANSIENT_PROMPT" RPROMPT="$TRANSIENT_RPROMPT" zle .reset-prompt 2>/dev/null
+}
+add-zle-hook-widget zle-line-finish transient-prompt
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 

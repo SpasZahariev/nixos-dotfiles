@@ -33,9 +33,10 @@ shell-integration = detect
 shell-integration-features = no-cursor
 
 #fun
+## shader-toggle: custom-shader = ~/.config/ghostty/shaders/sonic_boom_cursor.glsl
 # shader-toggle: custom-shader = ~/.config/ghostty/shaders/glitchy.glsl
-## custom-shader = ~/.config/ghostty/shaders/glow-rgbsplit-twitchy.glsl
-## custom-shader = ~/.config/ghostty/shaders/vhs.glsl
+## shader-toggle: custom-shader = ~/.config/ghostty/shaders/glow-rgbsplit-twitchy.glsl
+## shader-toggle: custom-shader = ~/.config/ghostty/shaders/vhs.glsl
 
 # window-padding-x = 2
 #
