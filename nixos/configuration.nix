@@ -547,7 +547,6 @@
     catppuccin-cursors.mochaMauve # i can see it in nwg but can't make it work right now soo rose pine it is
     hyprshot # screenshots
     lsof # "List open files" in unix everything is a file including sockets, network ports and directories
-    unstablePkgs.gemini-cli # some ai terminal goodness
     python315
     uv # better venv
     # ydotool client comes from programs.ydotool.enable (do not duplicate here)
@@ -613,7 +612,6 @@
       XDG_CURRENT_DESKTOP = "Hyprland";
       QT_QPA_PLATFORM = "wayland"; # Force Wayland for Qt apps like VLC
       SDL_VIDEODRIVER = "wayland";
-      NO_UPDATE_NOTIFIER = "1"; # should Disable gemini-cli from autoupdating
       ANDROID_NDK_HOME = "/home/spas/Android/Sdk/ndk/30.0.14904198";
       JAVA_HOME = "${pkgs.openjdk}/lib/openjdk";
       ANDROID_HOME = "/home/spas/Android/Sdk";

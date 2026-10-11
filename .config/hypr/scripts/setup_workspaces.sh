@@ -2,7 +2,7 @@
 
 # Workspace 1 on left monitor
 hyprctl dispatch workspace 1
-hyprctl dispatch exec brave
+hyprctl dispatch exec brave --remote-debugging-port=9222
 sleep 0.2 # since the focus change happens faster than the app start
 
 # Workspace 2 on main monitor

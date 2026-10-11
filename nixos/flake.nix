@@ -21,9 +21,9 @@
     let
       system = "x86_64-linux";
 
-      # For importing packages, use 'system' (this is correct)
+      # For importing packages, use 'localSystem' (the 'system' argument is deprecated)
       unstablePkgs = import nixpkgs-unstable {
-        inherit system;
+        localSystem = system;
         config = {
           allowUnfree = true;
         };
