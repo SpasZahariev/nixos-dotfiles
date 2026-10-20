@@ -16,6 +16,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     inputs.spicetify-nix.nixosModules.default
+    ./nixosModules/programs/mangohud.nix
     # inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -223,6 +224,9 @@
       dedicatedServer.openFirewall = true;
     };
     gamemode.enable = true; # daemon that will improve game performance on linux
+
+    # in game overlay (FPS, frame time) plus 1% low / 99th percentile measurement
+    mangohud.enable = true;
 
     coolercontrol.enable = true; # control fan curves gui
     adb.enable = true; # android debug bridge
@@ -538,7 +542,6 @@
     pay-respects # alternative to fuck cli
     gnumake # so I can use the "make command"
     go
-    mangohud # hame overlay FPS counter
     protonup-ng # for installing proton GE for playing games
     hyprpanel
     unstablePkgs.opencode # terminal ai agent from unstable channel

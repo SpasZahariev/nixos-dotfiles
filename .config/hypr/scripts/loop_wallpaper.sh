@@ -3,7 +3,6 @@
 # === Config ===
 WIDE_WALLPAPER_DIR="$HOME/dotfiles/wallpapers/wide"
 VERTICAL_WALLPAPER_DIR="$HOME/dotfiles/wallpapers/vertical"
-CURRENT_WALL=$(hyprctl hyprpaper listloaded)
 
 ALL_MONITORS=(
   "HDMI-A-1"
@@ -137,6 +136,10 @@ get_wallpaper() {
 }
 
 # === Main ===
+
+# Current wallpaper on the first target monitor, so we cycle relative to it.
+# `listloaded` returns every loaded image, so read the monitor-specific value.
+CURRENT_WALL=$(hyprctl hyprpaper listactive | awk -F' = ' -v m="${MONITORS[0]}" '$1 == m { print $2; exit }')
 
 # Get the next/previous wallpaper
 NEXT_WALL=$(get_wallpaper "$WALLPAPER_DIR" "$CURRENT_WALL" "$DIRECTION")
